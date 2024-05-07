@@ -11,10 +11,11 @@ public class ZombieFollowPlayer : MonoBehaviour
     //Nhận biết tấn công player 
     GameObject targetGameObject;
 
+    [SerializeField] int hp = 4;
+
     private void Awake()
     {
         rigidbody2D=GetComponent<Rigidbody2D>();
-        targetGameObject=targetDestination.gameObject;
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -28,5 +29,15 @@ public class ZombieFollowPlayer : MonoBehaviour
     private void Attack()
     {
         Debug.Log("Attacked player");
+    }
+
+    public void ZombieTakeDmg(int dmg)
+    {
+        hp -= dmg;
+        Debug.Log(hp);
+        if(hp <= 0 )
+        {
+            Destroy(gameObject);
+        }
     }
 }

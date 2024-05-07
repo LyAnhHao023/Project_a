@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: 6a46f5dc3fb296a46b193c1f02f99119
-NativeFormatImporter:
+guid: 030e7f4fbd7038847858e7cd3a17b66f
+DefaultImporter:
   externalObjects: {}
-  mainObjectFileID: 7400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -11,5 +10,5 @@ AssetOrigin:
   productId: 238068
   packageName: Undead Survivor Assets Pack
   packageVersion: 1.3
-  assetPath: Assets/Undead Survivor/Animations/Enemy/HitEnemy 4.anim
+  assetPath: Assets/Undead Survivor/Complete Pack.unitypackage
   uploadId: 633846

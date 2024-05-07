@@ -1,12 +1,5 @@
 fileFormatVersion: 2
 guid: 57a1443e67528144aa07582927559650
-AssetOrigin:
-  serializedVersion: 1
-  productId: 238068
-  packageName: Undead Survivor Assets Pack
-  packageVersion: 1.3
-  assetPath: Assets/Undead Survivor/Sprites/Farmer 3.png
-  uploadId: 624805
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -401,19 +394,26 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Dead 0: 369909130
-      Dead 1: 1773231339
       Run 0: -2088749509
-      Run 1: -1836318166
+      Run 5: -2066638598
+      Stand 3: 1883720508
       Run 2: -198311514
       Run 3: -1997520891
-      Run 4: -1017442464
-      Run 5: -2066638598
       Stand 0: 938132271
-      Stand 1: -791905833
       Stand 2: 1684076649
-      Stand 3: 1883720508
+      Run 4: -1017442464
+      Run 1: -1836318166
+      Dead 1: 1773231339
+      Stand 1: -791905833
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238068
+  packageName: Undead Survivor Assets Pack
+  packageVersion: 1.3
+  assetPath: Assets/Undead Survivor/Sprites/New Folder/Farmer 3.png
+  uploadId: 633846

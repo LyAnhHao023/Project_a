@@ -1,13 +1,17 @@
-using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ExpTest : MonoBehaviour
+public class CharacterInfo_1 : MonoBehaviour
 {
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    public HealthBar healthBar;
+
     public ExpBar expBar;
-    public Slider slider;
+    public Slider expSlider;
     public int level;
     public int maxExpValue;
 
@@ -16,6 +20,9 @@ public class ExpTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+
         level = 1;
         maxExpValue = 10;
         currentExp = 0;
@@ -29,16 +36,22 @@ public class ExpTest : MonoBehaviour
         {
             GainExp(2);
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage(2);
+        }
+
     }
 
     void GainExp(int exp)
     {
-        for(int i = 0; i < exp; i++)
+        for (int i = 0; i < exp; i++)
         {
             currentExp += 1;
             expBar.SetExp(currentExp);
 
-            if (slider.value == slider.maxValue)
+            if (expSlider.value == expSlider.maxValue)
             {
                 level++;
                 maxExpValue += maxExpValue % 10 + 5;
@@ -47,5 +60,12 @@ public class ExpTest : MonoBehaviour
                 currentExp = 0;
             }
         }
+    }
+
+    void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        healthBar.SetHealth(currentHealth);
     }
 }

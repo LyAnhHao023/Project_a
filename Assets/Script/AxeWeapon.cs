@@ -6,7 +6,9 @@ using UnityEngine;
 public class AxeWeapon : MonoBehaviour
 {
     [SerializeField]
+
     float timeAttack=4f;
+
     float timer;
 
     [SerializeField] GameObject rightAxe;
@@ -52,10 +54,10 @@ public class AxeWeapon : MonoBehaviour
     {
         for(int i = 0; i < colliders.Length; i++)
         {
-            ZombieFollowPlayer z = colliders[i].GetComponent<ZombieFollowPlayer>();
+            ZombieScript z = colliders[i].GetComponent<ZombieScript>();
             if(z != null)
             {
-                colliders[i].GetComponent<ZombieFollowPlayer>().ZombieTakeDmg(AxeDmg);
+                colliders[i].GetComponent<ZombieScript>().ZombieTakeDmg(AxeDmg);
 
             }
         }

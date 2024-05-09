@@ -14,20 +14,14 @@ public class AxeWeapon : MonoBehaviour
     [SerializeField] GameObject rightAxe;
     [SerializeField] GameObject leftAxe;
 
-    //Bien nhan gia tri vi tri cua player
-    playerMove playerMove;
 
     //dmg cua Axe
     [SerializeField]
     private int AxeDmg=2;
 
     [SerializeField]
-    private readonly Vector2 AxeAttackSize=new Vector2(4f,3f);
+    private Vector2 AxeAttackSize=new Vector2(4f,3f);
 
-    private void Awake()
-    {
-        playerMove=GetComponentInParent<playerMove>();
-    }
     private void Update()
     {
         timer -= Time.deltaTime;
@@ -46,7 +40,10 @@ public class AxeWeapon : MonoBehaviour
         //Lay danh sach thong tin cua vat the ma Axe va cham
         Collider2D[] colliders =  Physics2D.OverlapBoxAll(rightAxe.transform.position, AxeAttackSize, 0f);
 
-        ApllyDmg(colliders);
+        if(colliders.Length > 0 ) 
+        {
+            ApllyDmg(colliders);
+        }
 
     }
 
@@ -57,7 +54,7 @@ public class AxeWeapon : MonoBehaviour
             ZombieScript z = colliders[i].GetComponent<ZombieScript>();
             if(z != null)
             {
-                colliders[i].GetComponent<ZombieScript>().ZombieTakeDmg(AxeDmg);
+                z.ZombieTakeDmg(AxeDmg);
 
             }
         }

@@ -82,7 +82,7 @@ public class ZombieScript : MonoBehaviour
 
     private void ChanceDrop()
     {
-        if (Random.value * 100 <= 100)
+        if (Random.value * 100 <= chanceDropHeath)
         {
             Transform health = Instantiate(HealthPrefab).transform;
             health.position = transform.position;

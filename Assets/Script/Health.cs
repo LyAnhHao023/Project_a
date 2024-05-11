@@ -21,7 +21,7 @@ public class Health : MonoBehaviour
         {
             heartPlayer.HealthByPercent(healthPercent);
             animator.SetBool("isBroken", true);
-            Invoke("DestroyHeart", 0.6f);
+            Invoke("DestroyHeart", 0.3f);
         }
     }
 

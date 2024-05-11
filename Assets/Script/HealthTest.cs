@@ -28,7 +28,12 @@ public class HealthTest : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+    }
 
+    public void HealthByPercent(int health)
+    {
+        currentHealth += maxHealth*health;
         healthBar.SetHealth(currentHealth);
     }
 }

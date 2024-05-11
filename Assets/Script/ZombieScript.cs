@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ZombieScript : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class ZombieScript : MonoBehaviour
 
     playerMove playerMove;
 
+    [SerializeField]
     int zombieDmg = 1;
 
     [SerializeField]
@@ -22,10 +24,26 @@ public class ZombieScript : MonoBehaviour
 
     Animator animator;
 
+    float positionXchage=0;
+
+    [SerializeField]
+    [Range(0f,10f)] float chanceDropHeath=1f;
+
+    [SerializeField]
+    GameObject HealthPrefab;
+    [SerializeField]
+    GameObject ChestPrefab;
+
     private void Awake()
     {
         playerMove = GetComponent<playerMove>();
         animator = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        positionXchage= transform.position.x > targetGameObject.transform.position.x?-1:1;
+        transform.localScale = new Vector3(positionXchage,1,1);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -48,7 +66,6 @@ public class ZombieScript : MonoBehaviour
     {
         hp -= dmg;
         animator.SetTrigger("Hit");
-        Debug.Log(hp);
         if (hp <= 0)
         {
             gameObject.GetComponent<AIPath>().canMove=false;
@@ -60,5 +77,18 @@ public class ZombieScript : MonoBehaviour
     private void DestroyZombie()
     {
         Destroy(gameObject);
+        ChanceDrop();
+    }
+
+    private void ChanceDrop()
+    {
+        if (Random.value * 100 <= 100)
+        {
+            Transform health = Instantiate(HealthPrefab).transform;
+            health.position = transform.position;
+        }
+
+        Transform chest = Instantiate(ChestPrefab).transform;
+        chest.position = transform.position;
     }
 }

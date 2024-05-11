@@ -43,7 +43,6 @@ public class TowerDeathRay : MonoBehaviour
         timer =attackSpeed;
         deathRayObject.SetActive(true);
         randomInt=UnityEngine.Random.Range(0, 4);
-        Debug.Log(randomInt);
         transform.rotation=Quaternion.Euler(randomInt == 2 ? 180f : 0f, randomInt==1?180f:0f, angel[randomInt]);
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(deathRayObject.transform.position, attackSize,0f);
 

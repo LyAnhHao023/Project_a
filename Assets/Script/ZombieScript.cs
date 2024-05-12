@@ -8,7 +8,7 @@ public class ZombieScript : MonoBehaviour
 {
     [SerializeField]
     //Nhận biết tấn công player 
-    GameObject targetGameObject;
+    public GameObject targetGameObject;
 
     [SerializeField] int hp = 4;
 
@@ -40,10 +40,15 @@ public class ZombieScript : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    public void SetTarget(GameObject GameObject)
+    {
+        targetGameObject = GameObject;
+    }
+
     private void Update()
     {
-        positionXchage= transform.position.x > targetGameObject.transform.position.x?-1:1;
-        transform.localScale = new Vector3(positionXchage,1,1);
+        positionXchage = transform.position.x > targetGameObject.transform.position.x ? -1 : 1;
+        transform.localScale = new Vector3(positionXchage, 1, 1);
     }
 
     private void OnCollisionStay2D(Collision2D collision)

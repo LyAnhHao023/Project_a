@@ -64,7 +64,7 @@ public class ZombieScript : MonoBehaviour
     {
         
         timeAttack = cdAttack;
-        targetGameObject.GetComponent<HealthTest>().TakeDamage(zombieDmg);
+        targetGameObject.GetComponent<CharacterInfo_1>().TakeDamage(zombieDmg);
     }
 
     public void ZombieTakeDmg(int dmg)

@@ -16,7 +16,7 @@ public class Health : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        HealthTest heartPlayer = collision.GetComponent<HealthTest>();
+        CharacterInfo_1 heartPlayer = collision.GetComponent<CharacterInfo_1>();
         if (heartPlayer != null)
         {
             heartPlayer.HealthByPercent(healthPercent);

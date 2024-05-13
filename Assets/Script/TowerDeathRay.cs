@@ -72,7 +72,7 @@ public class TowerDeathRay : MonoBehaviour
             }
             else if (player != null)
             {
-                player.GetComponent<HealthTest>().TakeDamage(dmgRay);
+                player.GetComponent<CharacterInfo_1>().TakeDamage(dmgRay);
             }
         }
     }

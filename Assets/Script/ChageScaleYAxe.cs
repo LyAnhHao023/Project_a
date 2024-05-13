@@ -15,11 +15,11 @@ public class ChageScaleYAxe : MonoBehaviour
     {
         if(playerMove.scaleX==1) 
         {
-            transform.localScale.Set(1,1,1);
+            transform.localScale = new Vector3(-1, -1, 1);
         }
         else
         {
-            transform.localScale.Set(-1, -1, 1);
+            transform.localScale = new Vector3(-1, 1, 1);
         }
     }
 }

@@ -74,6 +74,8 @@ public class ZombieScript : MonoBehaviour
         if (hp <= 0)
         {
             gameObject.GetComponent<AIPath>().canMove=false;
+            Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
+            rigidbody.simulated = false;
             animator.SetBool("Dead", true);
             Invoke("DestroyZombie", 1);
         }

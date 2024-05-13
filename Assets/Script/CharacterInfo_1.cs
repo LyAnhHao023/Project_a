@@ -71,7 +71,11 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void HealthByPercent(int health)
     {
-        currentHealth += maxHealth * health;
+        currentHealth += maxHealth * health/100;
+        if(currentHealth>maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
         healthBar.SetHealth(currentHealth);
     }
 }

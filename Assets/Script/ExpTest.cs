@@ -47,6 +47,5 @@ public class ExpTest : MonoBehaviour
                 currentExp = 0;
             }
         }
-        Debug.Log(currentExp);
     }
 }

@@ -33,6 +33,18 @@ public class ZombieScript : MonoBehaviour
     GameObject HealthPrefab;
     [SerializeField]
     GameObject ChestPrefab;
+    [SerializeField]
+    GameObject ExpGreenPrefab;
+    [SerializeField]
+    GameObject ExpRedPrefab;
+    [SerializeField]
+    GameObject CoinPrefab;
+    [SerializeField]
+    [Range(0f, 10f)] float chanceDropExpRed=1f;
+    [SerializeField]
+    [Range(0f, 20f)] float chanceDropCoin = 1f;
+
+    GameObject ParentDropItem;
 
     private void Awake()
     {
@@ -43,6 +55,11 @@ public class ZombieScript : MonoBehaviour
     public void SetTarget(GameObject GameObject)
     {
         targetGameObject = GameObject;
+    }
+
+    public void SetParentDropItem(GameObject gameObject)
+    {
+        ParentDropItem = gameObject;
     }
 
     private void Update()
@@ -93,9 +110,33 @@ public class ZombieScript : MonoBehaviour
         {
             Transform health = Instantiate(HealthPrefab).transform;
             health.position = transform.position;
+            health.transform.parent = ParentDropItem.transform;
         }
 
-        Transform chest = Instantiate(ChestPrefab).transform;
-        chest.position = transform.position;
+        //Transform chest = Instantiate(ChestPrefab).transform;
+        //chest.position = transform.position;
+
+        if(Random.value * 100 <= chanceDropExpRed)
+        {
+            GameObject createExpRed = Instantiate(ExpRedPrefab);
+            createExpRed.transform.position = transform.position;
+            createExpRed.GetComponent<CapsuleExp>().SetPlayer(targetGameObject);
+            createExpRed.transform.parent = ParentDropItem.transform;
+        }
+        else
+        {
+            GameObject createGreen = Instantiate(ExpGreenPrefab);
+            createGreen.transform.position = transform.position;
+            createGreen.GetComponent<CapsuleExp>().SetPlayer(targetGameObject);
+            createGreen.transform.parent = ParentDropItem.transform;
+        }
+
+        if (Random.value * 100 <= chanceDropCoin)
+        {
+            GameObject createCoins = Instantiate(CoinPrefab);
+            createCoins.transform.position = transform.position;
+            createCoins.GetComponent<CoinScript>().SetPlayer(targetGameObject);
+            createCoins.transform.parent = ParentDropItem.transform;
+        }
     }
 }

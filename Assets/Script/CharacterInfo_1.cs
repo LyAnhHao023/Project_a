@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +18,8 @@ public class CharacterInfo_1 : MonoBehaviour
     public int maxExpValue;
 
     int currentExp;
+
+    private int coins=0;
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +48,12 @@ public class CharacterInfo_1 : MonoBehaviour
 
     }
 
-    void GainExp(int exp)
+    public void GainCoin(int coinGain)
+    {
+        coins += coinGain;
+    }
+
+    public void GainExp(int exp)
     {
         for (int i = 0; i < exp; i++)
         {
@@ -67,6 +76,15 @@ public class CharacterInfo_1 : MonoBehaviour
         currentHealth -= damage;
 
         healthBar.SetHealth(currentHealth);
+        if(currentHealth <= 0)
+        {
+            EditorApplication.isPaused = !EditorApplication.isPaused;
+            int coinLocal = PlayerPrefs.GetInt("Coins", 0);
+            //Debug.Log(coinLocal +" local");
+            PlayerPrefs.SetInt("Coins", coinLocal+coins);
+            PlayerPrefs.Save();
+            //Debug.Log(PlayerPrefs.GetInt("Coins", 0));
+        }
     }
 
     public void HealthByPercent(int health)

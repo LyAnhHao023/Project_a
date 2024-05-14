@@ -7,13 +7,28 @@ public class Health : MonoBehaviour
     [SerializeField]
     int healthPercent;
 
+    [SerializeField]
+    float timeAutoDestroy=10f;
+
+    float timer;
+
     Animator animator;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        timer = timeAutoDestroy;
     }
 
+    private void Update()
+    {
+        timer-= Time.deltaTime;
+        if(timer < 0)
+        {
+            animator.SetBool("isBroken", true);
+            Invoke("DestroyHeart", 0.3f);
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         CharacterInfo_1 heartPlayer = collision.GetComponent<CharacterInfo_1>();

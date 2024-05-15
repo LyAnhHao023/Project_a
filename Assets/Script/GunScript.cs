@@ -20,6 +20,11 @@ public class GunScript : MonoBehaviour
     [SerializeField]
     int dmgBullet;
 
+    [SerializeField]
+    GameObject imgFire;
+    [SerializeField]
+    GameObject fireEffect;
+
 
     playerMove playerMove;
 
@@ -45,6 +50,9 @@ public class GunScript : MonoBehaviour
         createBullet.GetComponent<BulletScript>().SetDmg(dmgBullet);
         Rigidbody2D rigidbody2D=createBullet.GetComponent<Rigidbody2D>();
         rigidbody2D.AddForce(transform.right * bulletForce, ForceMode2D.Impulse);
+
+        GameObject createImgFire = Instantiate(imgFire, firePos.position, transform.rotation,transform);
+        GameObject createFireEffect = Instantiate(fireEffect, firePos.position, transform.rotation, transform);
     }
 
     private void RotationGun()

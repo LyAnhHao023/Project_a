@@ -80,5 +80,6 @@ public class MenuManager : MonoBehaviour
     public void BackToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+        Unpause();
     }
 }

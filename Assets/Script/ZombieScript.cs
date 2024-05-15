@@ -94,13 +94,13 @@ public class ZombieScript : MonoBehaviour
             Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
             rigidbody.simulated = false;
             animator.SetBool("Dead", true);
-            Invoke("DestroyZombie", 1);
+            DestroyZombie();
         }
     }
 
     private void DestroyZombie()
     {
-        Destroy(gameObject);
+        Destroy(gameObject,1f);
         ChanceDrop();
     }
 

@@ -15,9 +15,13 @@ public class playerMove : MonoBehaviour
     [HideInInspector]
     public float scaleX;
 
+    [SerializeField]
+    SpriteRenderer spriteRenderer;
+
     private void Start()
     {
         animation = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -33,12 +37,12 @@ public class playerMove : MonoBehaviour
 
             if(moveInput.x > 0)
             {
-               transform.localScale = new Vector3(1, 1, 1);
+                spriteRenderer.transform.rotation = Quaternion.Euler(0, 0, 0);
                 scaleX = 1;
             }
             else
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                spriteRenderer.transform.rotation = Quaternion.Euler(0, 180, 0);
                 scaleX = -1;
             }
         }

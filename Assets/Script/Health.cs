@@ -26,7 +26,7 @@ public class Health : MonoBehaviour
         if(timer < 0)
         {
             animator.SetBool("isBroken", true);
-            Invoke("DestroyHeart", 0.3f);
+            Destroy(gameObject, 0.3f);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -36,13 +36,8 @@ public class Health : MonoBehaviour
         {
             heartPlayer.HealthByPercent(healthPercent);
             animator.SetBool("isBroken", true);
-            Invoke("DestroyHeart", 0.3f);
+            Destroy(gameObject, 0.3f);
         }
-    }
-
-    public void DestroyHeart()
-    {
-        Destroy(gameObject);
     }
 
 }

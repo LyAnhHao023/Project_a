@@ -5,6 +5,22 @@ using UnityEngine;
 
 public class GunScript : MonoBehaviour
 {
+    [SerializeField]
+    GameObject Bullet;
+
+    [SerializeField]
+    Transform firePos;
+    [SerializeField]
+    float timeFire=0.2f;
+    float timer;
+    [SerializeField]
+    float bulletForce=1;
+    [SerializeField]
+    GameObject BulletsObject;
+    [SerializeField]
+    int dmgBullet;
+
+
     playerMove playerMove;
 
     private void Awake()
@@ -14,6 +30,21 @@ public class GunScript : MonoBehaviour
     private void Update()
     {
         RotationGun();
+        timer -= Time.deltaTime;
+        if (timer < 0)
+        {
+            timer = timeFire;
+            FireBullet();
+        }
+    }
+
+    private void FireBullet()
+    {
+        GameObject createBullet=Instantiate(Bullet,firePos.position,Quaternion.identity);
+        createBullet.transform.parent = BulletsObject.transform;
+        createBullet.GetComponent<BulletScript>().SetDmg(dmgBullet);
+        Rigidbody2D rigidbody2D=createBullet.GetComponent<Rigidbody2D>();
+        rigidbody2D.AddForce(transform.right * bulletForce, ForceMode2D.Impulse);
     }
 
     private void RotationGun()
@@ -26,11 +57,11 @@ public class GunScript : MonoBehaviour
         transform.rotation = rotation;
         if(transform.eulerAngles.z>90&& transform.eulerAngles.z < 270)
         {
-            transform.localScale=new Vector3(playerMove.scaleX, -1,1);
+            transform.localScale=new Vector3(1, -1,1);
         }
         else
         {
-            transform.localScale = new Vector3(playerMove.scaleX, 1, 1);
+            transform.localScale = new Vector3(1, 1, 1);
         }
 
     }

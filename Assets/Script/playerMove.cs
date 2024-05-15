@@ -6,8 +6,6 @@ public class playerMove : MonoBehaviour
 {
     public float moveSpeed = 5f;
 
-    private Rigidbody2D rigidbody2D;
-
     private Animator animation;
 
     //Ẩn đi phần chỉnh sửa trên Inspector
@@ -35,7 +33,7 @@ public class playerMove : MonoBehaviour
 
             if(moveInput.x > 0)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+               transform.localScale = new Vector3(1, 1, 1);
                 scaleX = 1;
             }
             else

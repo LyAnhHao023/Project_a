@@ -18,7 +18,7 @@ public class GunScript : MonoBehaviour
     [SerializeField]
     GameObject BulletsObject;
     [SerializeField]
-    int dmgBullet;
+    int dmgBullet=1;
 
     [SerializeField]
     GameObject imgFire;
@@ -27,10 +27,17 @@ public class GunScript : MonoBehaviour
 
 
     playerMove playerMove;
+    CharacterStats characterStats;
+
+    public void SetCharacterStats()
+    {
+        characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
+    }
 
     private void Awake()
     {
         playerMove = GetComponentInParent<playerMove>();
+        characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
     }
     private void Update()
     {
@@ -47,7 +54,10 @@ public class GunScript : MonoBehaviour
     {
         GameObject createBullet=Instantiate(Bullet,firePos.position,Quaternion.identity);
         createBullet.transform.parent = BulletsObject.transform;
-        createBullet.GetComponent<BulletScript>().SetDmg(dmgBullet);
+        //Set dmg
+        float dmg = UnityEngine.Random.value * 100 < characterStats.crit ?
+                    (dmgBullet + characterStats.strenght) * characterStats.critDmg : (dmgBullet + characterStats.strenght);
+        createBullet.GetComponent<BulletScript>().SetDmg((int)dmg);
         Rigidbody2D rigidbody2D=createBullet.GetComponent<Rigidbody2D>();
         rigidbody2D.AddForce(transform.right * bulletForce, ForceMode2D.Impulse);
 

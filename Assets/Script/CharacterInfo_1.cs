@@ -5,9 +5,9 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class CharacterInfo_1 : MonoBehaviour
 {
-    public int maxHealth = 100;
     public int currentHealth;
 
     public HealthBar healthBar;
@@ -19,13 +19,25 @@ public class CharacterInfo_1 : MonoBehaviour
 
     int currentExp;
 
-    private int coins=0;
+    private int coins = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    int maxHealth = 100;
+
+    GameObject character;
+    public CharacterStats characterStats;
+
+    int speed = 5;
+
+    public int numberMonsterKilled=0;
+
+
+    private void Awake()
     {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        character = GameObject.Find("FistCharDev");
+        characterStats = character.GetComponent<CharacterStats>();
+
+        currentHealth = characterStats.maxHealth;
+        healthBar.SetMaxHealth(characterStats.maxHealth);
 
         level = 1;
         maxExpValue = 10;
@@ -46,6 +58,11 @@ public class CharacterInfo_1 : MonoBehaviour
             TakeDamage(2);
         }
 
+    }
+
+    public void KilledMonster()
+    {
+        ++numberMonsterKilled;
     }
 
     public void GainCoin(int coinGain)
@@ -96,4 +113,15 @@ public class CharacterInfo_1 : MonoBehaviour
         }
         healthBar.SetHealth(currentHealth);
     }
+
+    public void HealthByNumber(int health)
+    {
+        currentHealth += health;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        healthBar.SetHealth(currentHealth);
+    }
 }
+

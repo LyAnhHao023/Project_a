@@ -27,7 +27,11 @@ public class BulletScript : MonoBehaviour
             ZombieScript z=collision.GetComponent<ZombieScript>();
             if(z != null)
             {
-                z.ZombieTakeDmg(dmgBullet);
+                bool isDead= z.ZombieTakeDmg(dmgBullet);
+                if (isDead)
+                {
+                    GameObject.Find("Player").GetComponent<CharacterInfo_1>().KilledMonster();
+                }
                 Rigidbody2D rb=GetComponent<Rigidbody2D>();
                 rb.velocity = Vector3.zero;
                 Destroy(gameObject, 0.4f);

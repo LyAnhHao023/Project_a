@@ -84,7 +84,7 @@ public class ZombieScript : MonoBehaviour
         targetGameObject.GetComponent<CharacterInfo_1>().TakeDamage(zombieDmg);
     }
 
-    public void ZombieTakeDmg(int dmg)
+    public bool ZombieTakeDmg(int dmg)
     {
         hp -= dmg;
         animator.SetTrigger("Hit");
@@ -95,7 +95,9 @@ public class ZombieScript : MonoBehaviour
             rigidbody.simulated = false;
             animator.SetBool("Dead", true);
             DestroyZombie();
+            return true;
         }
+        return false;
     }
 
     private void DestroyZombie()

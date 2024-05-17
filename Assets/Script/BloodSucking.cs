@@ -2,22 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BloodSucking : MonoBehaviour
+public class BloodSucking : ItemBase
 {
     [SerializeField]
     int heath=5;
     [SerializeField]
     int level=1;
-    [SerializeField]
+
     int monsterKilled=0;
 
-    private void Update()
+    public override void ItemEffect()
     {
-        int updateMonsterKilled= GetComponentInParent<CharacterInfo_1>().numberMonsterKilled;
-        if (monsterKilled <updateMonsterKilled) 
+        int updateMonsterKilled =  GetComponentInParent<CharacterInfo_1>().numberMonsterKilled;
+        if (monsterKilled < updateMonsterKilled)
         {
             monsterKilled = updateMonsterKilled;
             GetComponentInParent<CharacterInfo_1>().HealthByNumber(heath);
         }
+    }
+
+    public override void Update()
+    {
+        ItemEffect();
     }
 }

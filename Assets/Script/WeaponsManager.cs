@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-class weaponEnquip
+public class weaponEnquip
 {
     public WeaponData weaponData;
     public GameObject weaponObject;
@@ -24,7 +24,7 @@ public class WeaponsManager : MonoBehaviour
     WeaponData gunWeapon;
     [SerializeField]
     WeaponData axeWeapon;
-    List<weaponEnquip> weapons_lst=new List<weaponEnquip>(5);
+    public List<weaponEnquip> weapons_lst=new List<weaponEnquip>(5);
 
     int i = 0;
 

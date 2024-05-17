@@ -6,21 +6,11 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AxeWeapon : MonoBehaviour
+public class AxeWeapon : WeaponBase
 {
-    [SerializeField]
-
-    float timeAttack=4f;
-
-    float timer;
 
     [SerializeField] GameObject rightAxe;
     [SerializeField] GameObject leftAxe;
-
-
-    //dmg cua Axe
-    [SerializeField]
-    private int AxeDmg=1;
 
     [SerializeField]
     private Vector2 AxeAttackSize=new Vector2(4f,3f);
@@ -29,30 +19,34 @@ public class AxeWeapon : MonoBehaviour
 
     CharacterStats characterStats;
 
-    public void SetCharacterStats()
-    {
-        characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
-    }
 
     private void Awake()
     {
         playerMove = GetComponentInParent<playerMove>();
-        characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
+        SetCharacterStats();
     }
 
-    private void Update()
+    private void ApllyDmg(Collider2D[] colliders)
     {
-        timer -= Time.deltaTime;
-        if(timer < 0)
+        for(int i = 0; i < colliders.Length; i++)
         {
-            Attack();
-            
+            ZombieScript z = colliders[i].GetComponent<ZombieScript>();
+            if(z != null)
+            {
+                float dmg = UnityEngine.Random.value * 100 < characterStats.crit ?
+                    (weaponStats.dmg + characterStats.strenght) * characterStats.critDmg : (weaponStats.dmg + characterStats.strenght);
+                bool isDead=z.ZombieTakeDmg((int)dmg);
+                if(isDead)
+                {
+                    GetComponentInParent<CharacterInfo_1>().KilledMonster();
+                }
+
+            }
         }
     }
 
-    private void Attack()
+    public override void Attack()
     {
-        timer = timeAttack;
         Collider2D[] colliders;
         if (playerMove.scaleX == 1)
         {
@@ -68,29 +62,14 @@ public class AxeWeapon : MonoBehaviour
 
         //Lay danh sach thong tin cua vat the ma Axe va cham
 
-        if(colliders.Length > 0&&colliders!=null ) 
+        if (colliders.Length > 0)
         {
             ApllyDmg(colliders);
         }
-
     }
 
-    private void ApllyDmg(Collider2D[] colliders)
+    public override void SetCharacterStats()
     {
-        for(int i = 0; i < colliders.Length; i++)
-        {
-            ZombieScript z = colliders[i].GetComponent<ZombieScript>();
-            if(z != null)
-            {
-                float dmg = UnityEngine.Random.value * 100 < characterStats.crit ?
-                    (AxeDmg + characterStats.strenght) * characterStats.critDmg : (AxeDmg + characterStats.strenght);
-                bool isDead=z.ZombieTakeDmg((int)dmg);
-                if(isDead)
-                {
-                    GetComponentInParent<CharacterInfo_1>().KilledMonster();
-                }
-
-            }
-        }
+        characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
     }
 }

@@ -28,7 +28,6 @@ public class playerMove : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(characterStats.speed);
         moveInput.x=Input.GetAxis("Horizontal");
         moveInput.y = Input.GetAxis("Vertical");
         transform.position += moveInput * characterStats.speed * Time.deltaTime;

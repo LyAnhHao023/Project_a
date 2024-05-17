@@ -3,66 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunScript : MonoBehaviour
+public class GunScript : WeaponBase
 {
     [SerializeField]
     GameObject Bullet;
 
     [SerializeField]
     Transform firePos;
-    [SerializeField]
-    float timeFire=0.2f;
-    float timer;
+
     [SerializeField]
     float bulletForce=1;
-    [SerializeField]
-    GameObject BulletsObject;
-    [SerializeField]
-    int dmgBullet=1;
 
     [SerializeField]
     GameObject imgFire;
     [SerializeField]
     GameObject fireEffect;
 
-
-    playerMove playerMove;
     CharacterStats characterStats;
 
-    public void SetCharacterStats()
-    {
-        characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
-    }
+    [SerializeField]
+    Transform bulletsObject;
 
     private void Awake()
     {
-        playerMove = GetComponentInParent<playerMove>();
-        characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
+        SetCharacterStats();
+        bulletsObject = GameObject.Find("BulletsObject").transform;
     }
-    private void Update()
+
+    public override void Update()
     {
         RotationGun();
-        timer -= Time.deltaTime;
-        if (timer < 0)
-        {
-            timer = timeFire;
-            FireBullet();
-        }
-    }
-
-    private void FireBullet()
-    {
-        GameObject createBullet=Instantiate(Bullet,firePos.position,Quaternion.identity);
-        createBullet.transform.parent = BulletsObject.transform;
-        //Set dmg
-        float dmg = UnityEngine.Random.value * 100 < characterStats.crit ?
-                    (dmgBullet + characterStats.strenght) * characterStats.critDmg : (dmgBullet + characterStats.strenght);
-        createBullet.GetComponent<BulletScript>().SetDmg((int)dmg);
-        Rigidbody2D rigidbody2D=createBullet.GetComponent<Rigidbody2D>();
-        rigidbody2D.AddForce(transform.right * bulletForce, ForceMode2D.Impulse);
-
-        GameObject createImgFire = Instantiate(imgFire, firePos.position, transform.rotation,transform);
-        GameObject createFireEffect = Instantiate(fireEffect, firePos.position, transform.rotation, transform);
+        base.Update();
     }
 
     private void RotationGun()
@@ -82,5 +53,27 @@ public class GunScript : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
         }
 
+    }
+
+    public override void Attack()
+    {
+
+        GameObject createBullet = Instantiate(Bullet, firePos.position, Quaternion.identity);
+        createBullet.transform.parent = bulletsObject.transform;
+        //Set dmg
+        float dmg = UnityEngine.Random.value * 100 < characterStats.crit ?
+                    (weaponStats.dmg + characterStats.strenght) * characterStats.critDmg : (weaponStats.dmg + characterStats.strenght);
+        createBullet.GetComponent<BulletScript>().SetDmg((int)dmg);
+        Rigidbody2D rigidbody2D = createBullet.GetComponent<Rigidbody2D>();
+        rigidbody2D.AddForce(transform.right * bulletForce, ForceMode2D.Impulse);
+
+        //effect gun fire
+        Instantiate(imgFire, firePos.position, transform.rotation, transform);
+        Instantiate(fireEffect, firePos.position, transform.rotation, transform);
+    }
+
+    public override void SetCharacterStats()
+    {
+        characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
     }
 }

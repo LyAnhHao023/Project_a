@@ -26,22 +26,46 @@ public class AxeWeapon : WeaponBase
         SetCharacterStats();
     }
 
-    private void ApllyDmg(Collider2D[] colliders)
-    {
-        for(int i = 0; i < colliders.Length; i++)
-        {
-            ZombieScript z = colliders[i].GetComponent<ZombieScript>();
-            if(z != null)
-            {
-                float dmg = UnityEngine.Random.value * 100 < characterStats.crit ?
-                    (weaponStats.dmg + characterStats.strenght) * characterStats.critDmg : (weaponStats.dmg + characterStats.strenght);
-                bool isDead=z.ZombieTakeDmg((int)dmg);
-                if(isDead)
-                {
-                    GetComponentInParent<CharacterInfo_1>().KilledMonster();
-                }
+    //private void ApllyDmg(Collider2D[] colliders)
+    //{
+    //    for(int i = 0; i < colliders.Length; i++)
+    //    {
+    //        ZombieScript z = colliders[i].GetComponent<ZombieScript>();
+    //        if(z != null)
+    //        {
+    //            bool isCrit = UnityEngine.Random.value * 100 < characterStats.crit;
+    //            float dmg = isCrit ?
+    //                (weaponStats.dmg + characterStats.strenght) * characterStats.critDmg : (weaponStats.dmg + characterStats.strenght);
 
+    //            PostDmg((int)dmg, z.transform.position, isCrit);
+
+    //            bool isDead=z.ZombieTakeDmg((int)dmg);
+    //            if(isDead)
+    //            {
+    //                GetComponentInParent<CharacterInfo_1>().KilledMonster();
+    //            }
+
+    //        }
+    //    }
+    //}
+
+    public void ApllyDmg(Collider2D collision)
+    {
+        ZombieScript z = collision.GetComponent<ZombieScript>();
+        if (z != null)
+        {
+            bool isCrit = UnityEngine.Random.value * 100 < characterStats.crit;
+            float dmg = isCrit ?
+                (weaponStats.dmg + characterStats.strenght) * characterStats.critDmg : (weaponStats.dmg + characterStats.strenght);
+
+            PostDmg((int)dmg, z.transform.position, isCrit);
+
+            bool isDead = z.ZombieTakeDmg((int)dmg);
+            if (isDead)
+            {
+                GetComponentInParent<CharacterInfo_1>().KilledMonster();
             }
+
         }
     }
 
@@ -52,20 +76,20 @@ public class AxeWeapon : WeaponBase
         {
             rightAxe.SetActive(true);
             //Lay danh sach thong tin cua vat the ma Axe va cham
-            colliders = Physics2D.OverlapBoxAll(rightAxe.transform.position, AxeAttackSize, 0f);
+            //colliders = Physics2D.OverlapBoxAll(rightAxe.transform.position, AxeAttackSize, 0f);
         }
         else
         {
             leftAxe.SetActive(true);
-            colliders = Physics2D.OverlapBoxAll(leftAxe.transform.position, AxeAttackSize, 0f);
+            //colliders = Physics2D.OverlapBoxAll(leftAxe.transform.position, AxeAttackSize, 0f);
         }
 
         //Lay danh sach thong tin cua vat the ma Axe va cham
 
-        if (colliders.Length > 0)
-        {
-            ApllyDmg(colliders);
-        }
+        //if (colliders.Length > 0)
+        //{
+        //    ApllyDmg(colliders);
+        //}
     }
 
     public override void SetCharacterStats()

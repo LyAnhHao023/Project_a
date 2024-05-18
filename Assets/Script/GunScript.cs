@@ -61,9 +61,11 @@ public class GunScript : WeaponBase
         GameObject createBullet = Instantiate(Bullet, firePos.position, Quaternion.identity);
         createBullet.transform.parent = bulletsObject.transform;
         //Set dmg
-        float dmg = UnityEngine.Random.value * 100 < characterStats.crit ?
+        bool isCrit = UnityEngine.Random.value * 100 < characterStats.crit;
+
+        float dmg = isCrit ?
                     (weaponStats.dmg + characterStats.strenght) * characterStats.critDmg : (weaponStats.dmg + characterStats.strenght);
-        createBullet.GetComponent<BulletScript>().SetDmg((int)dmg);
+        createBullet.GetComponent<BulletScript>().SetDmg((int)dmg,isCrit);
         Rigidbody2D rigidbody2D = createBullet.GetComponent<Rigidbody2D>();
         rigidbody2D.AddForce(transform.right * bulletForce, ForceMode2D.Impulse);
 

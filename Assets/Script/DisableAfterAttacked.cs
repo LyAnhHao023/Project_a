@@ -20,4 +20,9 @@ public class DisableAfterAttacked : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        GetComponentInParent<AxeWeapon>().ApllyDmg(collision);
+    }
 }

@@ -8,9 +8,11 @@ public class BulletScript : MonoBehaviour
     [SerializeField]
     float timeAutoDestroy=10f;
     Animator animator;
-    public void SetDmg(int dmg)
+    bool isCrit;
+    public void SetDmg(int dmg, bool isCrit)
     {
         dmgBullet= dmg;
+        this.isCrit = isCrit;
         animator = GetComponent<Animator>();
     }
 
@@ -27,6 +29,7 @@ public class BulletScript : MonoBehaviour
             ZombieScript z=collision.GetComponent<ZombieScript>();
             if(z != null)
             {
+                MessengerSystem.instance.DmgPopUp(dmgBullet.ToString(), z.transform.position,isCrit);
                 bool isDead= z.ZombieTakeDmg(dmgBullet);
                 if (isDead)
                 {

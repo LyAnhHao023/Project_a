@@ -12,8 +12,6 @@ public class ZombieScript : MonoBehaviour
 
     [SerializeField] int hp = 4;
 
-    playerMove playerMove;
-
     [SerializeField]
     int zombieDmg = 1;
 
@@ -24,7 +22,7 @@ public class ZombieScript : MonoBehaviour
 
     Animator animator;
 
-    float positionXchage=0;
+    int rotasionChange=0;
 
     [SerializeField]
     [Range(0f,10f)] float chanceDropHeath=1f;
@@ -48,7 +46,6 @@ public class ZombieScript : MonoBehaviour
 
     private void Awake()
     {
-        playerMove = GetComponent<playerMove>();
         animator = GetComponent<Animator>();
     }
 
@@ -64,8 +61,8 @@ public class ZombieScript : MonoBehaviour
 
     private void Update()
     {
-        positionXchage = transform.position.x > targetGameObject.transform.position.x ? -1 : 1;
-        transform.localScale = new Vector3(positionXchage, 1, 1);
+        rotasionChange = transform.position.x > targetGameObject.transform.position.x ? 180 : 0;
+        animator.transform.rotation = Quaternion.Euler(0, rotasionChange, 0);
     }
 
     private void OnCollisionStay2D(Collision2D collision)

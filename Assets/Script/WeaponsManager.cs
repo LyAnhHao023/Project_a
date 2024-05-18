@@ -31,6 +31,7 @@ public class WeaponsManager : MonoBehaviour
     public void Start()
     {
         AddWeapon(gunWeapon);
+        AddWeapon(axeWeapon);
     }
 
     public void AddWeapon(WeaponData weaponData)

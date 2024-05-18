@@ -21,10 +21,13 @@ public class PassiveItemsManager : MonoBehaviour
     [SerializeField] 
     Transform itemObjectTranform;
 
+    //Danh sach ItemsPassive Prefab
     [SerializeField]
     ItemsData bloodSuckingPrefab;
     [SerializeField]
     ItemsData increaseHitSpeed;
+    [SerializeField]
+    ItemsData bigWeapons;
 
     public List<ItemsEnquip> itemsEquip_lst = new List<ItemsEnquip>(5);
 
@@ -41,6 +44,7 @@ public class PassiveItemsManager : MonoBehaviour
         {
             i++;
             AddItem(increaseHitSpeed);
+            AddItem(bigWeapons);
             Debug.Log("trang bi thanh cong");
         }
     }

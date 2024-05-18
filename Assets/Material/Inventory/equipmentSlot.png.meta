@@ -224,7 +224,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      equipmentSlot_0: -2867603503050494315
+      equipmentSlot_1: -2396211244382255563
+      equipmentSlot_2: -1767457127590212539
+      equipmentSlot_3: -167453623463962507
+      equipmentSlot_4: 5088573648062257472
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

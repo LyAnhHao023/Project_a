@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject _mainMenuCanvas;
     /*[SerializeField] private GameObject _settingsMenuCanvas;*/
+    [SerializeField] private GameObject _gameOverUI;
 
     /*[SerializeField] private GameObject _mainMenuFirst;*/
     /*[SerializeField] private GameObject _settingsMenuFirst;*/
@@ -19,6 +20,7 @@ public class MenuManager : MonoBehaviour
     {
         _mainMenuCanvas.SetActive(false);
         /*_settingsMenuCanvas.SetActive(false);*/
+        _gameOverUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -81,5 +83,18 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
         Unpause();
+    }
+
+    public void RetryButton()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Unpause();
+    }
+
+    public void GameOverScreen()
+    {
+        _gameOverUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        Pause();
     }
 }

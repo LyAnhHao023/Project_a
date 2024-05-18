@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class CharacterInfo_1 : MonoBehaviour
 {
+    public MenuManager menuManager;
+
     public int currentHealth;
 
     public HealthBar healthBar;
@@ -16,6 +18,12 @@ public class CharacterInfo_1 : MonoBehaviour
     public Slider expSlider;
     public int level;
     public int maxExpValue;
+
+    public float elapsedTime;
+
+    public CountSys countSys;
+
+    public GameOverCoin overCoin;
 
     int currentExp;
 
@@ -43,6 +51,9 @@ public class CharacterInfo_1 : MonoBehaviour
         maxExpValue = 10;
         currentExp = 0;
         expBar.SetMaxExp(level, maxExpValue);
+        countSys.SetCoinCount(0);
+        countSys.SetKillCount(0);
+        overCoin.SetCoinGain(0);
     }
 
     // Update is called once per frame
@@ -58,16 +69,19 @@ public class CharacterInfo_1 : MonoBehaviour
             TakeDamage(2);
         }
 
+        elapsedTime += Time.deltaTime;
     }
 
     public void KilledMonster()
     {
         ++numberMonsterKilled;
+        countSys.SetKillCount(numberMonsterKilled);
     }
 
     public void GainCoin(int coinGain)
     {
         coins += coinGain;
+        countSys.SetCoinCount(coins);
     }
 
     public void GainExp(int exp)
@@ -95,7 +109,9 @@ public class CharacterInfo_1 : MonoBehaviour
         healthBar.SetHealth(currentHealth);
         if(currentHealth <= 0)
         {
-            EditorApplication.isPaused = !EditorApplication.isPaused;
+            menuManager.GameOverScreen();
+            coins = CoinGainPercent(coins, Mathf.FloorToInt(elapsedTime % 60));
+            overCoin.SetCoinGain(coins);
             int coinLocal = PlayerPrefs.GetInt("Coins", 0);
             //Debug.Log(coinLocal +" local");
             PlayerPrefs.SetInt("Coins", coinLocal+coins);
@@ -122,6 +138,18 @@ public class CharacterInfo_1 : MonoBehaviour
             currentHealth = maxHealth;
         }
         healthBar.SetHealth(currentHealth);
+    }
+
+    public int CoinGainPercent(int coins, int timer)
+    {
+        if (timer <= 600)
+            return ((int)((float)(coins * 0.25)));
+        else if (timer <= 900)
+            return ((int)((float)(coins * 0.5)));
+        else if (timer <= 1200)
+            return ((int)((float)(coins * 0.75)));
+
+        return coins;
     }
 }
 

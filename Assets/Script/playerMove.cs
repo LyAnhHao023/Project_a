@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class playerMove : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-
-    private Rigidbody2D rigidbody2D;
+    private int moveSpeed;
 
     private Animator animation;
 
@@ -17,16 +15,22 @@ public class playerMove : MonoBehaviour
     [HideInInspector]
     public float scaleX;
 
+    GameObject Character;
+
+    CharacterStats characterStats;
+
     private void Start()
     {
-        animation = GetComponent<Animator>();
+        Character = GameObject.Find("FistCharDev");
+        animation = Character.GetComponent<Animator>();
+        characterStats = GetComponent<CharacterInfo_1>().characterStats;
     }
 
     private void Update()
     {
         moveInput.x=Input.GetAxis("Horizontal");
         moveInput.y = Input.GetAxis("Vertical");
-        transform.position += moveInput * moveSpeed * Time.deltaTime;
+        transform.position += moveInput * characterStats.speed * Time.deltaTime;
 
         animation.SetFloat("Speed", moveInput.sqrMagnitude);
 
@@ -35,12 +39,12 @@ public class playerMove : MonoBehaviour
 
             if(moveInput.x > 0)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                animation.transform.rotation = Quaternion.Euler(0, 0, 0);
                 scaleX = 1;
             }
             else
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                animation.transform.rotation = Quaternion.Euler(0, 180, 0);
                 scaleX = -1;
             }
         }

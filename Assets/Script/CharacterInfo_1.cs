@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class CharacterInfo_1 : MonoBehaviour
 {
-    public int maxHealth = 100;
     public int currentHealth;
 
     public HealthBar healthBar;
@@ -17,11 +19,25 @@ public class CharacterInfo_1 : MonoBehaviour
 
     int currentExp;
 
-    // Start is called before the first frame update
-    void Start()
+    private int coins = 0;
+
+    int maxHealth = 100;
+
+    GameObject character;
+    public CharacterStats characterStats;
+
+    int speed = 5;
+
+    public int numberMonsterKilled=0;
+
+
+    private void Awake()
     {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        character = GameObject.Find("FistCharDev");
+        characterStats = character.GetComponent<CharacterStats>();
+
+        currentHealth = characterStats.maxHealth;
+        healthBar.SetMaxHealth(characterStats.maxHealth);
 
         level = 1;
         maxExpValue = 10;
@@ -44,7 +60,17 @@ public class CharacterInfo_1 : MonoBehaviour
 
     }
 
-    void GainExp(int exp)
+    public void KilledMonster()
+    {
+        ++numberMonsterKilled;
+    }
+
+    public void GainCoin(int coinGain)
+    {
+        coins += coinGain;
+    }
+
+    public void GainExp(int exp)
     {
         for (int i = 0; i < exp; i++)
         {
@@ -67,11 +93,35 @@ public class CharacterInfo_1 : MonoBehaviour
         currentHealth -= damage;
 
         healthBar.SetHealth(currentHealth);
+        if(currentHealth <= 0)
+        {
+            EditorApplication.isPaused = !EditorApplication.isPaused;
+            int coinLocal = PlayerPrefs.GetInt("Coins", 0);
+            //Debug.Log(coinLocal +" local");
+            PlayerPrefs.SetInt("Coins", coinLocal+coins);
+            PlayerPrefs.Save();
+            //Debug.Log(PlayerPrefs.GetInt("Coins", 0));
+        }
     }
 
     public void HealthByPercent(int health)
     {
-        currentHealth += maxHealth * health;
+        currentHealth += maxHealth * health/100;
+        if(currentHealth>maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        healthBar.SetHealth(currentHealth);
+    }
+
+    public void HealthByNumber(int health)
+    {
+        currentHealth += health;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
         healthBar.SetHealth(currentHealth);
     }
 }
+

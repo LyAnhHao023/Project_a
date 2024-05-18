@@ -12,7 +12,8 @@ public class SpawEnemy : MonoBehaviour
     [SerializeField] Vector2 spawArea;
     [SerializeField] GameObject player;
     float timer;
-
+    [SerializeField]
+    GameObject ParentDropItem;
     private void Update()
     {
         timer -= Time.deltaTime;
@@ -36,6 +37,7 @@ public class SpawEnemy : MonoBehaviour
         createEnemy.transform.position = position;
         createEnemy.GetComponent<ZombieScript>().SetTarget(player);
         createEnemy.GetComponent<AIDestinationSetter>().SetTarget(player);
+        createEnemy.GetComponent<ZombieScript>().SetParentDropItem(ParentDropItem);
         createEnemy.transform.parent = transform;
     }
 

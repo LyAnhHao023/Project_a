@@ -4,19 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class ZombieScript : MonoBehaviour
+public class ZombieScript : EnemyBase
 {
     [SerializeField]
     //Nhận biết tấn công player 
     public GameObject targetGameObject;
-
-    [SerializeField] int hp = 4;
-
-    [SerializeField]
-    int zombieDmg = 1;
-
-    [SerializeField]
-    float cdAttack=0.5f;
 
     float timeAttack;
 
@@ -47,14 +39,16 @@ public class ZombieScript : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        
     }
 
-    public void SetTarget(GameObject GameObject)
+    public override void SetTarget(GameObject GameObject)
     {
         targetGameObject = GameObject;
+        gameObject.GetComponent<AIPath>().maxSpeed = enemyStats.speed;
     }
 
-    public void SetParentDropItem(GameObject gameObject)
+    public override void SetParentDropItem(GameObject gameObject)
     {
         ParentDropItem = gameObject;
     }
@@ -76,34 +70,17 @@ public class ZombieScript : MonoBehaviour
 
     private void Attack()
     {
-        
-        timeAttack = cdAttack;
-        targetGameObject.GetComponent<CharacterInfo_1>().TakeDamage(zombieDmg);
-    }
-
-    public bool ZombieTakeDmg(int dmg)
-    {
-        hp -= dmg;
-        animator.SetTrigger("Hit");
-        if (hp <= 0)
-        {
-            gameObject.GetComponent<AIPath>().canMove=false;
-            Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
-            rigidbody.simulated = false;
-            animator.SetBool("Dead", true);
-            DestroyZombie();
-            return true;
-        }
-        return false;
+        timeAttack = enemyStats.timeAttack;
+        targetGameObject.GetComponent<CharacterInfo_1>().TakeDamage(enemyStats.dmg);
     }
 
     private void DestroyZombie()
     {
         Destroy(gameObject,1f);
-        ChanceDrop();
+        Drop();
     }
 
-    private void ChanceDrop()
+    private void Drop()
     {
         if (Random.value * 100 <= chanceDropHeath)
         {
@@ -137,5 +114,21 @@ public class ZombieScript : MonoBehaviour
             createCoins.GetComponent<CoinScript>().SetPlayer(targetGameObject);
             createCoins.transform.parent = ParentDropItem.transform;
         }
+    }
+
+    public override bool EnemyTakeDmg(int dmg)
+    {
+        enemyStats.hp -= dmg;
+        animator.SetTrigger("Hit");
+        if (enemyStats.hp <= 0)
+        {
+            gameObject.GetComponent<AIPath>().canMove = false;
+            Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
+            rigidbody.simulated = false;
+            animator.SetBool("Dead", true);
+            DestroyZombie();
+            return true;
+        }
+        return false;
     }
 }

@@ -64,11 +64,11 @@ public class TowerDeathRay : MonoBehaviour
         for (int i = 0; i < collider2Ds.Length; i++)
         {
             playerMove player = collider2Ds[i].GetComponent<playerMove>();
-            ZombieScript zombie= collider2Ds[i].GetComponent<ZombieScript>();
+            EnemyBase zombie= collider2Ds[i].GetComponent<EnemyBase>();
             if(zombie != null)
             {
                
-                zombie.ZombieTakeDmg(dmgRay);
+                zombie.EnemyTakeDmg(dmgRay);
             }
             else if (player != null)
             {

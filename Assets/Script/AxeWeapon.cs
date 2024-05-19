@@ -51,7 +51,7 @@ public class AxeWeapon : WeaponBase
 
     public void ApllyDmg(Collider2D collision)
     {
-        ZombieScript z = collision.GetComponent<ZombieScript>();
+        EnemyBase z = collision.GetComponent<EnemyBase>();
         if (z != null)
         {
             bool isCrit = UnityEngine.Random.value * 100 < characterStats.crit;
@@ -60,7 +60,7 @@ public class AxeWeapon : WeaponBase
 
             PostDmg((int)dmg, z.transform.position, isCrit);
 
-            bool isDead = z.ZombieTakeDmg((int)dmg);
+            bool isDead = z.EnemyTakeDmg((int)dmg);
             if (isDead)
             {
                 GetComponentInParent<CharacterInfo_1>().KilledMonster();

@@ -26,11 +26,11 @@ public class BulletScript : MonoBehaviour
         if(Physics2D.OverlapCircle(transform.position, 0.3f, LayerMask.GetMask("Monster")))
         {
             animator.SetBool("isExplode", true);
-            ZombieScript z=collision.GetComponent<ZombieScript>();
+            EnemyBase z =collision.GetComponent<EnemyBase>();
             if(z != null)
             {
                 MessengerSystem.instance.DmgPopUp(dmgBullet.ToString(), z.transform.position,isCrit);
-                bool isDead= z.ZombieTakeDmg(dmgBullet);
+                bool isDead= z.EnemyTakeDmg(dmgBullet);
                 if (isDead)
                 {
                     GameObject.Find("Player").GetComponent<CharacterInfo_1>().KilledMonster();

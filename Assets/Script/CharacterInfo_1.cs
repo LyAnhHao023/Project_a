@@ -25,11 +25,13 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public GameOverCoin overCoin;
 
+    public PlayerStatShow statShow;
+
     int currentExp;
 
     private int coins = 0;
 
-    int maxHealth = 100;
+    int maxHealth;
 
     GameObject character;
     public CharacterStats characterStats;
@@ -44,7 +46,8 @@ public class CharacterInfo_1 : MonoBehaviour
         character = GameObject.Find("FistCharDev");
         characterStats = character.GetComponent<CharacterStats>();
 
-        currentHealth = characterStats.maxHealth;
+        maxHealth = characterStats.maxHealth;
+        currentHealth = maxHealth;
         healthBar.SetMaxHealth(characterStats.maxHealth);
 
         level = 1;
@@ -54,6 +57,11 @@ public class CharacterInfo_1 : MonoBehaviour
         countSys.SetCoinCount(0);
         countSys.SetKillCount(0);
         overCoin.SetCoinGain(0);
+
+        statShow.SetHealth(characterStats.maxHealth);
+        statShow.SetAttack(characterStats.strenght);
+        statShow.SetSpeed(characterStats.speed);
+        statShow.SetCrit(characterStats.crit);
     }
 
     // Update is called once per frame

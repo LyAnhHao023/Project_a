@@ -71,7 +71,6 @@ public class AxeWeapon : WeaponBase
 
     public override void Attack()
     {
-        Collider2D[] colliders;
         if (playerMove.scaleX == 1)
         {
             rightAxe.SetActive(true);

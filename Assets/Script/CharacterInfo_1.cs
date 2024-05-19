@@ -8,6 +8,10 @@ using UnityEngine.UI;
 
 public class CharacterInfo_1 : MonoBehaviour
 {
+    public InventorySlotsManager inventorySlotsManager;
+
+    public MenuManager menuManager;
+
     public int currentHealth;
 
     public HealthBar healthBar;
@@ -17,11 +21,37 @@ public class CharacterInfo_1 : MonoBehaviour
     public int level;
     public int maxExpValue;
 
+    public float elapsedTime;
+
+    public CountSys countSys;
+
+    public GameOverCoin overCoin;
+
+    public PlayerStatShow statShow;
+
+    public LevelUpSelectBuff levelUpSelectBuff;
+
+    List<UpgradeData> upgradeDatas;
+    List<UpgradeData> weaponSlotsManager = new List<UpgradeData>();
+    List<UpgradeData> itemSlotsManager = new List<UpgradeData>();
+
+    /*WeaponsManager weaponsManager;*/
+
     int currentExp;
 
     private int coins = 0;
 
-    int maxHealth = 100;
+    int maxHealth;
+
+    public float healthPercent = 0;
+    public float attackPercent = 0;
+    public float speedPercent = 0;
+    public float critPercent = 0;
+
+    int baseHealth;
+    int baseAttack;
+    float baseCrit;
+    int baseSpeed;
 
     GameObject character;
     public CharacterStats characterStats;
@@ -30,19 +60,32 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public int numberMonsterKilled=0;
 
-
     private void Awake()
     {
         character = GameObject.Find("FistCharDev");
         characterStats = character.GetComponent<CharacterStats>();
 
-        currentHealth = characterStats.maxHealth;
-        healthBar.SetMaxHealth(characterStats.maxHealth);
+        baseAttack = characterStats.strenght;
+        baseCrit = characterStats.crit;
+        baseSpeed = characterStats.speed;
+        baseHealth = characterStats.maxHealth;
+
+        maxHealth = characterStats.maxHealth;
+        currentHealth = maxHealth + Mathf.FloorToInt(characterStats.maxHealth*healthPercent);
+        healthBar.SetMaxHealth(maxHealth);
 
         level = 1;
         maxExpValue = 10;
         currentExp = 0;
         expBar.SetMaxExp(level, maxExpValue);
+        countSys.SetCoinCount(0);
+        countSys.SetKillCount(0);
+        overCoin.SetCoinGain(0);
+
+        statShow.SetHealth(maxHealth);
+        statShow.SetAttack(characterStats.strenght);
+        statShow.SetSpeed(characterStats.speed);
+        statShow.SetCrit(characterStats.crit);
     }
 
     // Update is called once per frame
@@ -58,34 +101,85 @@ public class CharacterInfo_1 : MonoBehaviour
             TakeDamage(2);
         }
 
+        elapsedTime += Time.deltaTime;
     }
 
     public void KilledMonster()
     {
         ++numberMonsterKilled;
+        countSys.SetKillCount(numberMonsterKilled);
     }
 
     public void GainCoin(int coinGain)
     {
         coins += coinGain;
+        countSys.SetCoinCount(coins);
     }
 
     public void GainExp(int exp)
     {
-        for (int i = 0; i < exp; i++)
+        currentExp += exp;
+
+        if(currentExp >= maxExpValue)
         {
-            currentExp += 1;
-            expBar.SetExp(currentExp);
+            LevelUp();
+        }
 
-            if (expSlider.value == expSlider.maxValue)
+        expBar.SetExp(currentExp);
+    }
+
+    public void LevelUp()
+    {
+        upgradeDatas = levelUpSelectBuff.GetUpgrades(4);
+        menuManager.LevelUpScene(upgradeDatas);
+        currentExp -= maxExpValue;
+        level += 1;
+        maxExpValue += Mathf.FloorToInt((float)(maxExpValue * 0.1));
+        expBar.SetMaxExp(level, maxExpValue);
+    }
+
+    public void Upgrade(int id)
+    {
+        if (upgradeDatas[id].upgradeType.ToString() == "StatUpgrade")
+        {
+            if (upgradeDatas[id].buffName.Contains("ATK"))
             {
-                level++;
-                maxExpValue += maxExpValue % 10 + 5;
-
-                expBar.SetMaxExp(level, maxExpValue);
-                currentExp = 0;
+                attackPercent += (float)0.1;
+                characterStats.strenght = baseAttack + Mathf.FloorToInt((float)baseAttack * attackPercent);
+                statShow.SetAttack(characterStats.strenght);
+            }
+            if (upgradeDatas[id].buffName.Contains("CRT"))
+            {
+                critPercent += 2;
+                characterStats.crit = baseCrit + critPercent;
+                statShow.SetCrit(characterStats.crit);
+            }
+            if (upgradeDatas[id].buffName.Contains("HP"))
+            {
+                healthPercent += (float)0.1;
+                characterStats.maxHealth = baseHealth + Mathf.FloorToInt((float)baseHealth * healthPercent);
+                maxHealth = characterStats.maxHealth;
+                statShow.SetHealth(characterStats.maxHealth);
+                healthBar.SetMaxHealth(characterStats.maxHealth);
+                healthBar.SetHealth(currentHealth);
+            }
+            if (upgradeDatas[id].buffName.Contains("SPD"))
+            {
+                speedPercent += (float)0.05;
+                characterStats.speed = baseSpeed + Mathf.FloorToInt((float)baseSpeed * speedPercent);
+                statShow.SetSpeed(characterStats.speed);
             }
         }
+
+        if (upgradeDatas[id].upgradeType.ToString() == "WeaponUnlock")
+        {
+            weaponSlotsManager.Add(upgradeDatas[id]);
+            upgradeDatas[id].acquired = true;
+            inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
+/*            weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
+*/        }
+
+        menuManager.LevelUpDone();
     }
 
     public void TakeDamage(int damage)
@@ -95,7 +189,9 @@ public class CharacterInfo_1 : MonoBehaviour
         healthBar.SetHealth(currentHealth);
         if(currentHealth <= 0)
         {
-            EditorApplication.isPaused = !EditorApplication.isPaused;
+            menuManager.GameOverScreen();
+            coins = CoinGainPercent(coins, Mathf.FloorToInt(elapsedTime % 60));
+            overCoin.SetCoinGain(coins);
             int coinLocal = PlayerPrefs.GetInt("Coins", 0);
             //Debug.Log(coinLocal +" local");
             PlayerPrefs.SetInt("Coins", coinLocal+coins);
@@ -122,6 +218,18 @@ public class CharacterInfo_1 : MonoBehaviour
             currentHealth = maxHealth;
         }
         healthBar.SetHealth(currentHealth);
+    }
+
+    public int CoinGainPercent(int coins, int timer)
+    {
+        if (timer <= 600)
+            return ((int)((float)(coins * 0.25)));
+        else if (timer <= 900)
+            return ((int)((float)(coins * 0.5)));
+        else if (timer <= 1200)
+            return ((int)((float)(coins * 0.75)));
+
+        return coins;
     }
 }
 

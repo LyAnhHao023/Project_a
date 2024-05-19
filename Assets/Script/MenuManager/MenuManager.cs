@@ -9,11 +9,18 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject _mainMenuCanvas;
     /*[SerializeField] private GameObject _settingsMenuCanvas;*/
     [SerializeField] private GameObject _gameOverUI;
+    [SerializeField] private GameObject _levelUpUI;
 
     /*[SerializeField] private GameObject _mainMenuFirst;*/
     /*[SerializeField] private GameObject _settingsMenuFirst;*/
 
+    [SerializeField] List<UpgradeButton> upgradeButtons;
+
     private bool isPaused;
+
+    private bool isGameOver;
+
+    private bool isLevelUp;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +28,7 @@ public class MenuManager : MonoBehaviour
         _mainMenuCanvas.SetActive(false);
         /*_settingsMenuCanvas.SetActive(false);*/
         _gameOverUI.SetActive(false);
+        _levelUpUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -32,7 +40,7 @@ public class MenuManager : MonoBehaviour
             {
                 Pause();
             }
-            else
+            else if(!isGameOver || !isLevelUp)
             {
                 Unpause();
             }
@@ -95,6 +103,29 @@ public class MenuManager : MonoBehaviour
     {
         _gameOverUI.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
-        Pause();
+        isPaused = true;
+        isGameOver = true;
+        Time.timeScale = 0f;
+    }
+
+    public void LevelUpScene(List<UpgradeData> upgradeDatas)
+    {
+        _levelUpUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        isPaused = true;
+        isLevelUp = true;
+        Time.timeScale = 0f;
+
+        for(int i = 0; i < upgradeDatas.Count; i++)
+        {
+            upgradeButtons[i].Set(upgradeDatas[i]);
+        }
+    }
+
+    public void LevelUpDone()
+    {
+        isLevelUp = false;
+        Unpause();
+        _levelUpUI.SetActive(false);
     }
 }

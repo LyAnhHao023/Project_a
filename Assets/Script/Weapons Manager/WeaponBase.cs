@@ -30,4 +30,9 @@ public abstract class WeaponBase : MonoBehaviour
     public abstract void Attack();
 
     public abstract void SetCharacterStats();
+
+    public virtual void PostDmg(int dmg, Vector3 TargetPosition, bool isCrit)
+    {
+        MessengerSystem.instance.DmgPopUp(dmg.ToString(), TargetPosition, isCrit);
+    }
 }

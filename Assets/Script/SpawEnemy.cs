@@ -7,24 +7,37 @@ using Random = UnityEngine.Random;
 
 public class SpawEnemy : MonoBehaviour
 {
-    [SerializeField] GameObject Zombie;
+    //Danh sach Prefab enemy
+    [SerializeField] 
+    EnemyData ZombiePrefab;
+    [SerializeField] 
+    EnemyData ZombieBossPrefab;
+
     [SerializeField] float spawTime;
     [SerializeField] Vector2 spawArea;
     [SerializeField] GameObject player;
     float timer;
     [SerializeField]
     GameObject ParentDropItem;
+
+
+    int i = 0;
     private void Update()
     {
         timer -= Time.deltaTime;
         if (timer < 0)
         {
             timer = spawTime;
-            CreateNewEnemy(Zombie);
+            CreateNewEnemy(ZombiePrefab);
+            i++;
+            if (i == 10)
+            {
+                CreateNewEnemy(ZombieBossPrefab);
+            }
         }
     }
 
-    private void CreateNewEnemy(GameObject enemy)
+    private void CreateNewEnemy(EnemyData enemy)
     {
         Vector3 position= CreateRandomPosition();
         position += player.transform.position;
@@ -33,11 +46,15 @@ public class SpawEnemy : MonoBehaviour
             position = CreateRandomPosition();
             position += player.transform.position;
         }
-        GameObject createEnemy=Instantiate(enemy);
+        GameObject createEnemy=Instantiate(enemy.EnemyBasePrefab);
+
+        createEnemy.GetComponent<EnemyBase>().SetData(enemy);
+
         createEnemy.transform.position = position;
-        createEnemy.GetComponent<ZombieScript>().SetTarget(player);
+
+        createEnemy.GetComponent<EnemyBase>().SetTarget(player);
         createEnemy.GetComponent<AIDestinationSetter>().SetTarget(player);
-        createEnemy.GetComponent<ZombieScript>().SetParentDropItem(ParentDropItem);
+        createEnemy.GetComponent<EnemyBase>().SetParentDropItem(ParentDropItem);
         createEnemy.transform.parent = transform;
     }
 

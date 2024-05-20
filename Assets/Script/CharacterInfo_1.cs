@@ -35,7 +35,7 @@ public class CharacterInfo_1 : MonoBehaviour
     List<UpgradeData> weaponSlotsManager = new List<UpgradeData>();
     List<UpgradeData> itemSlotsManager = new List<UpgradeData>();
 
-    /*WeaponsManager weaponsManager;*/
+    [SerializeField] WeaponsManager weaponsManager;
 
     int currentExp;
 
@@ -174,10 +174,9 @@ public class CharacterInfo_1 : MonoBehaviour
         if (upgradeDatas[id].upgradeType.ToString() == "WeaponUnlock")
         {
             weaponSlotsManager.Add(upgradeDatas[id]);
-            upgradeDatas[id].acquired = true;
             inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
-/*            weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
-*/        }
+            weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
+        }
 
         menuManager.LevelUpDone();
     }

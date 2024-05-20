@@ -21,7 +21,7 @@ public class LevelUpSelectBuff : MonoBehaviour
         do
         {
             randomUp = upgrades[Random.Range(0, upgrades.Count)];
-            if (!upgradeList.Contains(randomUp) && !randomUp.acquired)
+            if (!upgradeList.Contains(randomUp))
             {
                 upgradeList.Add(randomUp);
             }

@@ -29,7 +29,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public PlayerStatShow statShow;
 
-    public LevelUpSelectBuff levelUpSelectBuff;
+    [SerializeField] LevelUpSelectBuff levelUpSelectBuff;
 
     List<UpgradeData> upgradeDatas;
     List<UpgradeData> weaponSlotsManager = new List<UpgradeData>();
@@ -73,6 +73,10 @@ public class CharacterInfo_1 : MonoBehaviour
         maxHealth = characterStats.maxHealth;
         currentHealth = maxHealth + Mathf.FloorToInt(characterStats.maxHealth*healthPercent);
         healthBar.SetMaxHealth(maxHealth);
+
+        weaponSlotsManager.Add(characterStats.beginerWeapon);
+        weaponsManager.AddWeapon(characterStats.beginerWeapon.weaponData);
+        inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
 
         level = 1;
         maxExpValue = 10;
@@ -134,7 +138,7 @@ public class CharacterInfo_1 : MonoBehaviour
         menuManager.LevelUpScene(upgradeDatas);
         currentExp -= maxExpValue;
         level += 1;
-        maxExpValue += Mathf.FloorToInt((float)(maxExpValue * 0.1));
+        maxExpValue += Mathf.FloorToInt((float)(maxExpValue * 0.5));
         expBar.SetMaxExp(level, maxExpValue);
     }
 
@@ -173,9 +177,10 @@ public class CharacterInfo_1 : MonoBehaviour
 
         if (upgradeDatas[id].upgradeType.ToString() == "WeaponUnlock")
         {
-            weaponSlotsManager.Add(upgradeDatas[id]);
-            inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
+            weaponSlotsManager.Add(upgradeDatas[id]);            weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
             weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
+            inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
+            upgradeDatas[id].acquired = true;
         }
 
         menuManager.LevelUpDone();

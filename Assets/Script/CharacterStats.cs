@@ -11,5 +11,6 @@ public class CharacterStats : MonoBehaviour
     public int speed=5;
     public float crit=10;
     public float critDmg=1.5f;
+    public UpgradeData beginerWeapon;
     public List<CharacterStats> stats;
 }

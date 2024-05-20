@@ -33,17 +33,18 @@ public class WeaponsManager : MonoBehaviour
 
     int i = 0;
 
-    public void Start()
+    /*public void Start()
     {
         //AddWeapon(gunWeapon);
         //AddWeapon(axeWeapon);
         AddWeapon(bombWeapon);
-    }
+    }*/
 
     public void AddWeapon(WeaponData weaponData)
     {
         if (!weapons_lst.Any(w => w.weaponData == weaponData))
         {
+            weaponData.stats.level = 1;
             GameObject weaponObject = Instantiate(weaponData.weaponBasePrefab, weaponObjectTranform);
             weaponObject.GetComponent<WeaponBase>().SetData(weaponData);
             weaponEnquip newWeaponEnquip = new weaponEnquip(weaponData, weaponObject);

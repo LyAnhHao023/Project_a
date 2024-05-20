@@ -9,6 +9,17 @@ public class LevelUpSelectBuff : MonoBehaviour
 
     UpgradeData randomUp;
 
+    private void Awake()
+    {
+        foreach (var item in upgrades)
+        {
+            if(characterInfo.characterStats.beginerWeapon == item)
+                item.acquired = true;
+            else
+                item.acquired = false;
+        }
+    }
+
     public List<UpgradeData> GetUpgrades(int count)
     {
         List<UpgradeData> upgradeList = new List<UpgradeData>();
@@ -23,7 +34,8 @@ public class LevelUpSelectBuff : MonoBehaviour
             randomUp = upgrades[Random.Range(0, upgrades.Count)];
             if (!upgradeList.Contains(randomUp))
             {
-                upgradeList.Add(randomUp);
+                if(!randomUp.acquired)
+                    upgradeList.Add(randomUp);
             }
         } while (upgradeList.Count < count);
 

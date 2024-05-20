@@ -19,19 +19,25 @@ public class WeaponsManager : MonoBehaviour
 {
     [SerializeField]
     Transform weaponObjectTranform;
+
     //Danh sach vu khi
     [SerializeField]
     WeaponData gunWeapon;
     [SerializeField]
     WeaponData axeWeapon;
+    [SerializeField]
+    WeaponData bombWeapon;
+
+
     public List<weaponEnquip> weapons_lst=new List<weaponEnquip>(5);
 
     int i = 0;
 
     public void Start()
     {
-        AddWeapon(gunWeapon);
-        /*AddWeapon(axeWeapon);*/
+        //AddWeapon(gunWeapon);
+        //AddWeapon(axeWeapon);
+        AddWeapon(bombWeapon);
     }
 
     public void AddWeapon(WeaponData weaponData)

@@ -18,17 +18,18 @@ public class ChildrenBoom : MonoBehaviour
 
     private void Awake()
     {
+        transform.localScale =GameObject.Find("Weapons").transform.localScale;
         exploderPrefab.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
         timer = timeDisActive;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 direction = (mousePos - transform.position).normalized;
-        rb.AddForce(direction * 800f, (ForceMode2D)ForceMode.Force);
+        rb.AddForce(direction * 40f, (ForceMode2D)ForceMode.Impulse);
     }
 
     private void Update()
     {
-        Invoke("StopMove", 0.3f);
+        Invoke("StopMove", 0.2f);
         timer -= Time.deltaTime;
         if (timer < 0 )
         {
@@ -40,12 +41,14 @@ public class ChildrenBoom : MonoBehaviour
     public void StopMove()
     {
         rb.velocity = Vector3.zero;
+        rb.mass = 0;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        EnemyBase enemy=collision.GetComponent<EnemyBase>();
-        if(enemy != null)
+        EnemyBase enemy = collision.gameObject.GetComponent<EnemyBase>();
+        ChildrenBoom childrenBoom=collision.gameObject.GetComponent<ChildrenBoom>();
+        if (enemy != null)
         {
             imgBombPrefab.SetActive(false);
             exploderPrefab.SetActive(true);

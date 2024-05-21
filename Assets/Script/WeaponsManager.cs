@@ -27,18 +27,23 @@ public class WeaponsManager : MonoBehaviour
     WeaponData axeWeapon;
     [SerializeField]
     WeaponData bombWeapon;
+    [SerializeField]
+    WeaponData ToxinZonesWeapon;
 
 
     public List<weaponEnquip> weapons_lst=new List<weaponEnquip>(5);
 
     int i = 0;
+    float timer = 10;
 
-    /*public void Start()
+    private void Update()
     {
-        //AddWeapon(gunWeapon);
-        //AddWeapon(axeWeapon);
-        AddWeapon(bombWeapon);
-    }*/
+        timer -= Time.deltaTime;
+        if(timer < 0)
+        {
+            AddWeapon(ToxinZonesWeapon);
+        }
+    }
 
     public void AddWeapon(WeaponData weaponData)
     {

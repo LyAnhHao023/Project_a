@@ -20,6 +20,7 @@ public class BombScript : WeaponBase
         SetCharacterStats();
         ObjectDrops = GameObject.Find("===ObjectDrop===").transform;
         
+        
     }
     public override void Attack()
     {

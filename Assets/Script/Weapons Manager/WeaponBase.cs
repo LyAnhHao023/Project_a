@@ -8,7 +8,7 @@ public abstract class WeaponBase : MonoBehaviour
     public WeaponData weaponData;
 
     public WeaponStats weaponStats;
-    float timer=0;
+    public float timer=0;
 
 
 

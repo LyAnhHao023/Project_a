@@ -15,6 +15,7 @@ public class BombExploder : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<CharacterInfo_1>();
         characterStats = player.GetComponentInParent<CharacterInfo_1>().characterStats;
         wp = player.GetComponentInChildren<BombScript>().GetComponent<WeaponBase>();
+        bombPrefab.GetComponent<Rigidbody2D>().velocity= Vector3.zero;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

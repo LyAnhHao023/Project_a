@@ -177,7 +177,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
         if (upgradeDatas[id].upgradeType.ToString() == "WeaponUnlock")
         {
-            weaponSlotsManager.Add(upgradeDatas[id]);            weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
+            weaponSlotsManager.Add(upgradeDatas[id]);
             weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
             inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
             upgradeDatas[id].acquired = true;

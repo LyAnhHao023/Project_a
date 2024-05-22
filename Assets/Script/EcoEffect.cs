@@ -18,6 +18,7 @@ public class EcoEffect : MonoBehaviour
         {
             timer = timeSpaws;
             GameObject echoObject= Instantiate(echo,transform.position,Quaternion.Euler(0,0,Random.value*360));
+            echoObject.transform.parent = transform;
             Destroy(echoObject, timeLifeEcho);
         }
         else

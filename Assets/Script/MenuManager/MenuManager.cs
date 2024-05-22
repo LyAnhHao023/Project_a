@@ -29,6 +29,10 @@ public class MenuManager : MonoBehaviour
         /*_settingsMenuCanvas.SetActive(false);*/
         _gameOverUI.SetActive(false);
         _levelUpUI.SetActive(false);
+
+        isGameOver = false;
+        isLevelUp = false;
+        isPaused = false;
     }
 
     // Update is called once per frame
@@ -36,15 +40,19 @@ public class MenuManager : MonoBehaviour
     {
         if (InputManager.instance.MenuOpenCloseInput)
         {
-            if(!isPaused)
+            if (!isGameOver && !isLevelUp)
             {
-                Pause();
-            }
-            else if(!isGameOver || !isLevelUp)
-            {
-                Unpause();
+                if (!isPaused)
+                {
+                    Pause();
+                }
+                else
+                {
+                    Unpause();
+                }
             }
         }
+            
     }
 
     public void Pause()
@@ -101,31 +109,33 @@ public class MenuManager : MonoBehaviour
 
     public void GameOverScreen()
     {
-        _gameOverUI.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(null);
         isPaused = true;
         isGameOver = true;
         Time.timeScale = 0f;
+        _gameOverUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void LevelUpScene(List<UpgradeData> upgradeDatas)
     {
-        _levelUpUI.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(null);
-        isPaused = true;
         isLevelUp = true;
-        Time.timeScale = 0f;
+        isPaused = true;
 
-        for(int i = 0; i < upgradeDatas.Count; i++)
+        for (int i = 0; i < upgradeDatas.Count; i++)
         {
             upgradeButtons[i].Set(upgradeDatas[i]);
         }
+
+        Time.timeScale = 0f;
+        _levelUpUI.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void LevelUpDone()
     {
         isLevelUp = false;
-        Unpause();
         _levelUpUI.SetActive(false);
+        Unpause();
     }
 }

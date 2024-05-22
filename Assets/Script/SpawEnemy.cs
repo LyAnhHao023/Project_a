@@ -16,7 +16,7 @@ public class SpawEnemy : MonoBehaviour
     [SerializeField] float spawTime;
     [SerializeField] Vector2 spawArea;
     [SerializeField] GameObject player;
-    float timer;
+    public float timer;
     [SerializeField]
     GameObject ParentDropItem;
 

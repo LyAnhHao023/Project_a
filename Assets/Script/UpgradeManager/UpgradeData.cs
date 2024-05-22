@@ -4,12 +4,12 @@ using UnityEngine;
 
 public enum UpgradeType
 {
-    WeaponUpgrade,
-    ItemUpgrade,
-    WeaponUnlock,
-    ItemUnlock,
-    StatUpgrade,
-    GainCoin
+    WeaponUpgrade = 0,
+    ItemUpgrade = 1,
+    WeaponUnlock = 2,
+    ItemUnlock = 3,
+    StatUpgrade = 4,
+    GainCoin = 5
 }
 
 [CreateAssetMenu]

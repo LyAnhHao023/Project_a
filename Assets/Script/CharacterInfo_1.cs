@@ -144,43 +144,66 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void Upgrade(int id)
     {
-        if (upgradeDatas[id].upgradeType.ToString() == "StatUpgrade")
+        switch ((int)upgradeDatas[id].upgradeType)
         {
-            if (upgradeDatas[id].buffName.Contains("ATK"))
-            {
-                attackPercent += (float)0.1;
-                characterStats.strenght = baseAttack + Mathf.FloorToInt((float)baseAttack * attackPercent);
-                statShow.SetAttack(characterStats.strenght);
-            }
-            if (upgradeDatas[id].buffName.Contains("CRT"))
-            {
-                critPercent += 2;
-                characterStats.crit = baseCrit + critPercent;
-                statShow.SetCrit(characterStats.crit);
-            }
-            if (upgradeDatas[id].buffName.Contains("HP"))
-            {
-                healthPercent += (float)0.1;
-                characterStats.maxHealth = baseHealth + Mathf.FloorToInt((float)baseHealth * healthPercent);
-                maxHealth = characterStats.maxHealth;
-                statShow.SetHealth(characterStats.maxHealth);
-                healthBar.SetMaxHealth(characterStats.maxHealth);
-                healthBar.SetHealth(currentHealth);
-            }
-            if (upgradeDatas[id].buffName.Contains("SPD"))
-            {
-                speedPercent += (float)0.05;
-                characterStats.speed = baseSpeed + Mathf.FloorToInt((float)baseSpeed * speedPercent);
-                statShow.SetSpeed(characterStats.speed);
-            }
-        }
+            case 0: //WeaponUpgrade
+                {
 
-        if (upgradeDatas[id].upgradeType.ToString() == "WeaponUnlock")
-        {
-            weaponSlotsManager.Add(upgradeDatas[id]);
-            weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
-            inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
-            upgradeDatas[id].acquired = true;
+                }break;
+            case 1: //ItemUpgrade
+                {
+
+                }
+                break;
+            case 2: //WeaponUnlock
+                {
+                    weaponSlotsManager.Add(upgradeDatas[id]);
+                    weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
+                    inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
+                    upgradeDatas[id].acquired = true;
+                }
+                break;
+            case 3: //ItemUnlock
+                {
+
+                }
+                break;
+            case 4: //StatUpgrade
+                {
+                    if (upgradeDatas[id].buffName.Contains("ATK"))
+                    {
+                        attackPercent += (float)0.1;
+                        characterStats.strenght = baseAttack + Mathf.FloorToInt((float)baseAttack * attackPercent);
+                        statShow.SetAttack(characterStats.strenght);
+                    }
+                    if (upgradeDatas[id].buffName.Contains("CRT"))
+                    {
+                        critPercent += 2;
+                        characterStats.crit = baseCrit + critPercent;
+                        statShow.SetCrit(characterStats.crit);
+                    }
+                    if (upgradeDatas[id].buffName.Contains("HP"))
+                    {
+                        healthPercent += (float)0.1;
+                        characterStats.maxHealth = baseHealth + Mathf.FloorToInt((float)baseHealth * healthPercent);
+                        maxHealth = characterStats.maxHealth;
+                        statShow.SetHealth(characterStats.maxHealth);
+                        healthBar.SetMaxHealth(characterStats.maxHealth);
+                        healthBar.SetHealth(currentHealth);
+                    }
+                    if (upgradeDatas[id].buffName.Contains("SPD"))
+                    {
+                        speedPercent += (float)0.05;
+                        characterStats.speed = baseSpeed + Mathf.FloorToInt((float)baseSpeed * speedPercent);
+                        statShow.SetSpeed(characterStats.speed);
+                    }
+                }
+                break;
+            case 5: //GainCoin
+                {
+
+                }
+                break;
         }
 
         menuManager.LevelUpDone();

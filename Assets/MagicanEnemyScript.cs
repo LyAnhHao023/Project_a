@@ -1,29 +1,28 @@
 ﻿using Pathfinding;
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class BombBatScipt : EnemyBase
+public class MagicanEnemyScript : EnemyBase
 {
-
     [SerializeField]
     //Nhận biết tấn công player 
     public GameObject targetGameObject;
 
     [SerializeField]
-    GameObject warningZone;
+    Transform firePos;
     [SerializeField]
-    GameObject exploder;
+    GameObject SkillPrefab;
 
-    float timeAttack;
+    float timer;
 
     Animator animator;
 
     int rotasionChange = 0;
 
     [SerializeField]
-    Vector2 areaAttack=new Vector2(3,3);
+    Vector2 areaAttack = new Vector2(3, 3);
 
     [SerializeField]
     [Range(0f, 10f)] float chanceDropHeath = 1f;
@@ -64,39 +63,41 @@ public class BombBatScipt : EnemyBase
 
     private void Update()
     {
-        rotasionChange = transform.position.x > targetGameObject.transform.position.x ? 180 : 0;
+        rotasionChange = transform.position.x > targetGameObject.transform.position.x ? 0 : 180;
         animator.transform.rotation = Quaternion.Euler(0, rotasionChange, 0);
 
         Collider2D[] Collider2D = Physics2D.OverlapBoxAll(transform.position, areaAttack, 0f);
-        foreach (var item in Collider2D)
+        GameObject targetObject = Collider2D.Where(c => c.gameObject == targetGameObject).FirstOrDefault()?.gameObject;
+        if(targetObject != null)
         {
-            if(item.gameObject == targetGameObject)
+            GetComponent<AIPath>().canMove = false;
+
+            timer-=Time.deltaTime;
+            if(timer < 0)
             {
+                timer = enemyStats.timeAttack;
                 Attack();
             }
+
+        }
+        else
+        {
+            GetComponent<AIPath>().canMove = true;
+            animator.SetBool("isReady", false);
         }
 
     }
 
-    public void ApllyDmgToPlayer()
-    {
-        targetGameObject.GetComponent<CharacterInfo_1>().TakeDamage(enemyStats.dmg);
-    }
-
     private void Attack()
     {
-        GetComponent<Rigidbody2D>().mass = 500;
-        GetComponent<AIPath>().canMove = false;
-        warningZone.SetActive(true);
-        Invoke("Explosion",2f);
-        animator.SetBool("isReady", true);
-    }
+        animator.SetBool("isReady",true);
+        GameObject createSkill = Instantiate(SkillPrefab, firePos.position, Quaternion.identity);
+        createSkill.transform.parent = GameObject.Find("===ObjectDrop===").transform;
+        createSkill.GetComponent<MagicicanAttackScript>().SetDmg(enemyStats.dmg);
 
-    private void Explosion()
-    {
-        GetComponent<SpriteRenderer>().enabled=false;
-        warningZone.SetActive(false);
-        exploder.SetActive(true);
+        Rigidbody2D rb = createSkill.GetComponent<Rigidbody2D>();
+        Vector3 direction = (targetGameObject.transform.position - firePos.position).normalized;
+        rb.AddForce(direction * 10f, (ForceMode2D)ForceMode.Impulse);
     }
 
     public override bool EnemyTakeDmg(int dmg)
@@ -105,20 +106,14 @@ public class BombBatScipt : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
-            gameObject.GetComponent<AIPath>().canMove = false;
-            Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
-            rigidbody.simulated = false;
+            GetComponent<AIPath>().canMove = false;
+            GetComponent<Rigidbody2D>().simulated=false;
             animator.SetBool("Dead", true);
-            DestroyBombBat();
+            Destroy(gameObject,1f);
+            Invoke("Drop", 0.4f);
             return true;
         }
         return false;
-    }
-
-    public void DestroyBombBat()
-    {
-        Destroy(gameObject,0.4f);
-        Invoke("Drop", 0.4f);
     }
 
     private void Drop()

@@ -36,6 +36,7 @@ public class CharacterInfo_1 : MonoBehaviour
     List<UpgradeData> itemSlotsManager = new List<UpgradeData>();
 
     [SerializeField] WeaponsManager weaponsManager;
+    [SerializeField] PassiveItemsManager itemsManager;
 
     int currentExp;
 
@@ -165,7 +166,10 @@ public class CharacterInfo_1 : MonoBehaviour
                 break;
             case 3: //ItemUnlock
                 {
-
+                    itemSlotsManager.Add(upgradeDatas[id]);
+                    itemsManager.AddItem(upgradeDatas[id].itemsData);
+                    inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
+                    upgradeDatas[id].acquired = true;
                 }
                 break;
             case 4: //StatUpgrade

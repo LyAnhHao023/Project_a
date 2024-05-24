@@ -38,10 +38,10 @@ public class WeaponsManager : MonoBehaviour
     //int i = 0;
     //float timer = 10;
 
-    private void Awake()
+    /*private void Awake()
     {
         AddWeapon(ShurikenWeapon);
-    }
+    }*/
 
     public void AddWeapon(WeaponData weaponData)
     {

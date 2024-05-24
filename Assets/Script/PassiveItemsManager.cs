@@ -33,7 +33,7 @@ public class PassiveItemsManager : MonoBehaviour
 
     int i = 0;
 
-    private void Start()
+    /*private void Start()
     {
         AddItem(bloodSuckingPrefab);
     }
@@ -47,12 +47,13 @@ public class PassiveItemsManager : MonoBehaviour
             AddItem(bigWeapons);
             Debug.Log("trang bi thanh cong");
         }
-    }
+    }*/
 
     public void AddItem(ItemsData itemData)
     {
         if(!itemsEquip_lst.Any(i => i.itemData == itemData))
         {
+            itemData.level = 1;
             GameObject newItem=Instantiate(itemData.ItemBasePrefab, itemObjectTranform);
             ItemsEnquip newItemsEnquip = new ItemsEnquip(itemData,newItem);
             itemsEquip_lst.Add(newItemsEnquip);

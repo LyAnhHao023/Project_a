@@ -16,6 +16,10 @@ public class SpawEnemy : MonoBehaviour
     EnemyData BombBatPrefab;
     [SerializeField]
     EnemyData MagicicanPrefab;
+    [SerializeField]
+    EnemyData MagicicanBossPrefab;
+    [SerializeField]
+    EnemyData VanmpireGirlPrefab;
 
     [SerializeField] float spawTime;
     [SerializeField] Vector2 spawArea;
@@ -32,15 +36,15 @@ public class SpawEnemy : MonoBehaviour
         if (timer < 0)
         {
             timer = spawTime;
-            CreateNewEnemy(ZombiePrefab);
+            //CreateNewEnemy(VanoireGirlPrefab);
             i++;
             if(i%2==0)
             {
-                CreateNewEnemy(MagicicanPrefab);
+                //CreateNewEnemy(MagicicanPrefab);
             }
-            if (i == 10)
+            if (i == 2)
             {
-                CreateNewEnemy(ZombieBossPrefab);
+                CreateNewEnemy(MagicicanBossPrefab);
             }
         }
     }

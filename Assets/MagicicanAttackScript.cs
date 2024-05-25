@@ -23,6 +23,7 @@ public class MagicicanAttackScript : MonoBehaviour
         if (player != null)
         {
             player.TakeDamage(dmgSkill);
+            Destroy(gameObject);
         }
     }
 }

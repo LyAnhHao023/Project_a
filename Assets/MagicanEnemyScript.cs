@@ -110,7 +110,7 @@ public class MagicanEnemyScript : EnemyBase
             GetComponent<Rigidbody2D>().simulated=false;
             animator.SetBool("Dead", true);
             Destroy(gameObject,1f);
-            Invoke("Drop", 0.4f);
+            Drop();
             return true;
         }
         return false;

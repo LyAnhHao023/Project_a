@@ -71,8 +71,8 @@ public class MagicanEnemyScript : EnemyBase
         if(targetObject != null)
         {
             GetComponent<AIPath>().canMove = false;
-
-            timer-=Time.deltaTime;
+            animator.SetBool("isReady", true);
+            timer -=Time.deltaTime;
             if(timer < 0)
             {
                 timer = enemyStats.timeAttack;
@@ -90,7 +90,7 @@ public class MagicanEnemyScript : EnemyBase
 
     private void Attack()
     {
-        animator.SetBool("isReady",true);
+        
         GameObject createSkill = Instantiate(SkillPrefab, firePos.position, Quaternion.identity);
         createSkill.transform.parent = GameObject.Find("===ObjectDrop===").transform;
         createSkill.GetComponent<MagicicanAttackScript>().SetDmg(enemyStats.dmg);

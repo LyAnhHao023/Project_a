@@ -89,7 +89,7 @@ public class MagicicanBossScript : EnemyBase
             if (targetObject != null)
             {
                 GetComponent<AIPath>().canMove = false;
-
+                animator.SetBool("isReady", true);
                 timer -= Time.deltaTime;
                 if (timer < 0)
                 {
@@ -126,7 +126,7 @@ public class MagicicanBossScript : EnemyBase
 
     private void Attack()
     {
-        animator.SetBool("isReady", true);
+        
         GameObject createSkill = Instantiate(AttackPrefab, firePos.position, Quaternion.identity);
         createSkill.transform.parent = GameObject.Find("===ObjectDrop===").transform;
         createSkill.GetComponent<MagicicanAttackScript>().SetDmg(enemyStats.dmg);

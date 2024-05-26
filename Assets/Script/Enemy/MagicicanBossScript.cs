@@ -60,6 +60,7 @@ public class MagicicanBossScript : EnemyBase
         targetGameObject = GameObject;
         gameObject.GetComponent<AIPath>().maxSpeed = enemyStats.speed;
         SkillTelePrefab.GetComponent<MagicicanSkill>().SetDmg(enemyStats.dmg, targetGameObject);
+        GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
     }
 
     public override void SetParentDropItem(GameObject gameObject)

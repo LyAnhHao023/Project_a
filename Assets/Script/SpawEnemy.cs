@@ -20,6 +20,8 @@ public class SpawEnemy : MonoBehaviour
     EnemyData MagicicanBossPrefab;
     [SerializeField]
     EnemyData VanmpireGirlPrefab;
+    [SerializeField]
+    EnemyData GhostPrefab;
 
     [SerializeField] float spawTime;
     [SerializeField] Vector2 spawArea;
@@ -36,15 +38,15 @@ public class SpawEnemy : MonoBehaviour
         if (timer < 0)
         {
             timer = spawTime;
-            //CreateNewEnemy(VanoireGirlPrefab);
+            CreateNewEnemy(VanmpireGirlPrefab);
             i++;
             if(i%2==0)
             {
-                //CreateNewEnemy(MagicicanPrefab);
+                CreateNewEnemy(GhostPrefab);
             }
             if (i == 2)
             {
-                CreateNewEnemy(MagicicanBossPrefab);
+                //CreateNewEnemy(MagicicanBossPrefab);
             }
         }
     }
@@ -65,7 +67,6 @@ public class SpawEnemy : MonoBehaviour
         createEnemy.transform.position = position;
 
         createEnemy.GetComponent<EnemyBase>().SetTarget(player);
-        createEnemy.GetComponent<AIDestinationSetter>().SetTarget(player);
         createEnemy.GetComponent<EnemyBase>().SetParentDropItem(ParentDropItem);
         createEnemy.transform.parent = transform;
     }

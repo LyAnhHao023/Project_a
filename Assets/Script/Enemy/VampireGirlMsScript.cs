@@ -1,28 +1,17 @@
 ﻿using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class MagicanEnemyScript : EnemyBase
+public class VampireGirlMsScript : EnemyBase
 {
     [SerializeField]
     //Nhận biết tấn công player 
     public GameObject targetGameObject;
 
-    [SerializeField]
-    Transform firePos;
-    [SerializeField]
-    GameObject SkillPrefab;
-
-    float timer;
+    float timeAttack;
 
     Animator animator;
-
-    int rotasionChange = 0;
-
-    [SerializeField]
-    Vector2 areaAttack = new Vector2(3, 3);
 
     [SerializeField]
     [Range(0f, 10f)] float chanceDropHeath = 1f;
@@ -44,6 +33,9 @@ public class MagicanEnemyScript : EnemyBase
 
     GameObject ParentDropItem;
 
+    [SerializeField]
+    int HpRegeneration;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -54,6 +46,7 @@ public class MagicanEnemyScript : EnemyBase
     {
         targetGameObject = GameObject;
         gameObject.GetComponent<AIPath>().maxSpeed = enemyStats.speed;
+        GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
     }
 
     public override void SetParentDropItem(GameObject gameObject)
@@ -63,62 +56,36 @@ public class MagicanEnemyScript : EnemyBase
 
     private void Update()
     {
-        rotasionChange = transform.position.x > targetGameObject.transform.position.x ? 0 : 180;
-        animator.transform.rotation = Quaternion.Euler(0, rotasionChange, 0);
+        GetComponent<SpriteRenderer>().flipX = transform.position.x < targetGameObject.transform.position.x;
+    }
 
-        Collider2D[] Collider2D = Physics2D.OverlapBoxAll(transform.position, areaAttack, 0f);
-        GameObject targetObject = Collider2D.Where(c => c.gameObject == targetGameObject).FirstOrDefault()?.gameObject;
-        if(targetObject != null)
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        timeAttack -= Time.deltaTime;
+        if (collision.gameObject == targetGameObject && timeAttack <= 0)
         {
-            GetComponent<AIPath>().canMove = false;
-            animator.SetBool("isReady", true);
-            timer -=Time.deltaTime;
-            if(timer < 0)
-            {
-                timer = enemyStats.timeAttack;
-                Attack();
-            }
-
+            Attack();
         }
-        else
-        {
-            GetComponent<AIPath>().canMove = true;
-            animator.SetBool("isReady", false);
-        }
-
     }
 
     private void Attack()
     {
-        
-        GameObject createSkill = Instantiate(SkillPrefab, firePos.position, Quaternion.identity);
-        createSkill.transform.parent = GameObject.Find("===ObjectDrop===").transform;
-        createSkill.GetComponent<MagicicanAttackScript>().SetDmg(enemyStats.dmg);
-
-        Rigidbody2D rb = createSkill.GetComponent<Rigidbody2D>();
-        Vector3 direction = (targetGameObject.transform.position - firePos.position).normalized;
-        rb.AddForce(direction * 10f, (ForceMode2D)ForceMode.Impulse);
+        animator.SetTrigger("Attack");
+        timeAttack = enemyStats.timeAttack;
+        targetGameObject.GetComponent<CharacterInfo_1>().TakeDamage(enemyStats.dmg);
+        //Them messenger hoi mau
+        enemyStats.hp += HpRegeneration;
     }
 
-    public override bool EnemyTakeDmg(int dmg)
+    private void DestroyOb()
     {
-        enemyStats.hp -= dmg;
-        animator.SetTrigger("Hit");
-        if (enemyStats.hp <= 0)
-        {
-            GetComponent<AIPath>().canMove = false;
-            GetComponent<Rigidbody2D>().simulated=false;
-            animator.SetBool("Dead", true);
-            Destroy(gameObject,1f);
-            Drop();
-            return true;
-        }
-        return false;
+        Destroy(gameObject, 0.4f);
+        Drop();
     }
 
     private void Drop()
     {
-        if (UnityEngine.Random.value * 100 <= chanceDropHeath)
+        if (Random.value * 100 <= chanceDropHeath)
         {
             Transform health = Instantiate(HealthPrefab).transform;
             health.position = transform.position;
@@ -128,7 +95,7 @@ public class MagicanEnemyScript : EnemyBase
         //Transform chest = Instantiate(ChestPrefab).transform;
         //chest.position = transform.position;
 
-        if (UnityEngine.Random.value * 100 <= chanceDropExpRed)
+        if (Random.value * 100 <= chanceDropExpRed)
         {
             GameObject createExpRed = Instantiate(ExpRedPrefab);
             createExpRed.transform.position = transform.position;
@@ -143,12 +110,28 @@ public class MagicanEnemyScript : EnemyBase
             createGreen.transform.parent = ParentDropItem.transform;
         }
 
-        if (UnityEngine.Random.value * 100 <= chanceDropCoin)
+        if (Random.value * 100 <= chanceDropCoin)
         {
             GameObject createCoins = Instantiate(CoinPrefab);
             createCoins.transform.position = transform.position;
             createCoins.GetComponent<CoinScript>().SetPlayer(targetGameObject);
             createCoins.transform.parent = ParentDropItem.transform;
         }
+    }
+
+    public override bool EnemyTakeDmg(int dmg)
+    {
+        enemyStats.hp -= dmg;
+        animator.SetTrigger("Hit");
+        if (enemyStats.hp <= 0)
+        {
+            gameObject.GetComponent<AIPath>().canMove = false;
+            Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
+            rigidbody.simulated = false;
+            animator.SetBool("Dead", true);
+            DestroyOb();
+            return true;
+        }
+        return false;
     }
 }

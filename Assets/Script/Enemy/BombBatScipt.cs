@@ -55,6 +55,7 @@ public class BombBatScipt : EnemyBase
     {
         targetGameObject = GameObject;
         gameObject.GetComponent<AIPath>().maxSpeed = enemyStats.speed;
+        GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
     }
 
     public override void SetParentDropItem(GameObject gameObject)

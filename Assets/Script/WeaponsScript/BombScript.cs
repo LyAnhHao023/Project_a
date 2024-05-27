@@ -32,8 +32,6 @@ public class BombScript : WeaponBase
         }
     }
 
-    
-
     public override void SetCharacterStats()
     {
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;

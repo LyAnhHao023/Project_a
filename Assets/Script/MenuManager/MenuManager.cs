@@ -10,11 +10,20 @@ public class MenuManager : MonoBehaviour
     /*[SerializeField] private GameObject _settingsMenuCanvas;*/
     [SerializeField] private GameObject _gameOverUI;
     [SerializeField] private GameObject _levelUpUI;
+    [SerializeField] private GameObject statShow;
+    [SerializeField] private GameObject buffTable;
 
     /*[SerializeField] private GameObject _mainMenuFirst;*/
     /*[SerializeField] private GameObject _settingsMenuFirst;*/
 
     [SerializeField] List<UpgradeButton> upgradeButtons;
+
+    [SerializeField] Vector3 statShowStep;
+    [SerializeField] Vector3 buffTableStep;
+    [SerializeField] float tweenTime;
+    [SerializeField] LeanTweenType tweenType;
+
+
 
     private bool isPaused;
 
@@ -120,6 +129,9 @@ public class MenuManager : MonoBehaviour
     {
         isLevelUp = true;
         isPaused = true;
+
+        statShow.LeanMoveLocal(statShowStep, tweenTime).setEase(tweenType);
+        buffTable.LeanMoveLocal(buffTableStep, tweenTime).setEase(tweenType);
 
         for (int i = 0; i < upgradeDatas.Count; i++)
         {

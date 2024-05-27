@@ -30,21 +30,24 @@ public class ShurikenChildrenScript : MonoBehaviour
 
     void Update()
     {
-        radius += 0.005f;
-        angleRos += 5;
-        // Tính toán vị trí mới của vật thể dựa trên góc và bán kính xoáy ốc
-        float x = ShurikenParent.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
-        float y = ShurikenParent.position.y+ Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
-        transform.position = new Vector3(x, y, 0);
-        transform.rotation = Quaternion.Euler(0, 0, angleRos);
-
-        // Tăng góc để di chuyển vật thể
-        angle += speed * Time.deltaTime;
-
-        // Nếu khoảng cách vượt quá giá trị deactivateDistance, deactivate vật thể
-        if (radius >= deactivateDistance)
+        if(Time.deltaTime != 0f)
         {
-            gameObject.SetActive(false);
+            radius += 0.005f;
+            angleRos += 5;
+            // Tính toán vị trí mới của vật thể dựa trên góc và bán kính xoáy ốc
+            float x = ShurikenParent.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
+            float y = ShurikenParent.position.y + Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
+            transform.position = new Vector3(x, y, 0);
+            transform.rotation = Quaternion.Euler(0, 0, angleRos);
+
+            // Tăng góc để di chuyển vật thể
+            angle += speed * Time.deltaTime;
+
+            // Nếu khoảng cách vượt quá giá trị deactivateDistance, deactivate vật thể
+            if (radius >= deactivateDistance)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

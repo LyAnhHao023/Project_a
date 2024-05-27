@@ -19,11 +19,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] List<UpgradeButton> upgradeButtons;
 
     [SerializeField] Vector3 statShowStep;
+    [SerializeField] Vector3 startStatShowStep;
     [SerializeField] Vector3 buffTableStep;
+    [SerializeField] Vector3 startBuffTableStep;
     [SerializeField] float tweenTime;
     [SerializeField] LeanTweenType tweenType;
-
-
 
     private bool isPaused;
 
@@ -130,8 +130,8 @@ public class MenuManager : MonoBehaviour
         isLevelUp = true;
         isPaused = true;
 
-        statShow.LeanMoveLocal(statShowStep, tweenTime).setEase(tweenType);
-        buffTable.LeanMoveLocal(buffTableStep, tweenTime).setEase(tweenType);
+        statShow.LeanMoveLocal(statShowStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
+        buffTable.LeanMoveLocal(buffTableStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
 
         for (int i = 0; i < upgradeDatas.Count; i++)
         {
@@ -146,7 +146,11 @@ public class MenuManager : MonoBehaviour
 
     public void LevelUpDone()
     {
+        statShow.LeanMoveLocal(startStatShowStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
+        buffTable.LeanMoveLocal(startBuffTableStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
+
         isLevelUp = false;
+
         _levelUpUI.SetActive(false);
         Unpause();
     }

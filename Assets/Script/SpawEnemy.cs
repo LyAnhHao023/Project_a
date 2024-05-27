@@ -38,11 +38,11 @@ public class SpawEnemy : MonoBehaviour
         if (timer < 0)
         {
             timer = spawTime;
-            CreateNewEnemy(VanmpireGirlPrefab);
+            CreateNewEnemy(ZombiePrefab);
             i++;
             if(i%2==0)
             {
-                CreateNewEnemy(GhostPrefab);
+                CreateNewEnemy(BombBatPrefab);
             }
             if (i == 2)
             {

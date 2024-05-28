@@ -22,6 +22,8 @@ public class ShostEnemyScipt : EnemyBase
     GameObject ExpRedPrefab;
     [SerializeField]
     GameObject CoinPrefab;
+    [SerializeField]
+    GameObject WarningPointerPrefab;
 
     GameObject ParentDropItem;
 
@@ -34,7 +36,8 @@ public class ShostEnemyScipt : EnemyBase
     private void Awake()
     {
         animator=GetComponent<Animator>();
-        Destroy(gameObject, 8f);
+       
+        Destroy(gameObject, 11f);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -51,7 +54,6 @@ public class ShostEnemyScipt : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
-            gameObject.GetComponent<AIPath>().canMove = false;
             Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
             rigidbody.simulated = false;
             animator.SetBool("Dead", true);
@@ -108,6 +110,19 @@ public class ShostEnemyScipt : EnemyBase
     public override void SetTarget(GameObject GameObject)
     {
         targetGameObject = GameObject;
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+        GameObject warningPointer = Instantiate(WarningPointerPrefab);
+        warningPointer.transform.parent = transform;
+        warningPointer.GetComponent<WarningPointer>().SetTargetAndTimeLife(transform.position, 2.5f);
+        Invoke("Move", 3f);
+        
+    }
+
+    private void Move()
+    {
+        GetComponent<SpriteRenderer>().enabled = true;
+        GetComponent<Collider2D>().enabled = true;
 
         Vector2 lookDir = targetGameObject.transform.position - transform.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;

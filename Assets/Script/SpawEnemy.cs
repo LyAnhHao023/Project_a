@@ -23,7 +23,7 @@ public class SpawEnemy : MonoBehaviour
     [SerializeField]
     EnemyData GhostPrefab;
 
-    [SerializeField] float spawTime;
+    [SerializeField] public float spawTime;
     [SerializeField] Vector2 spawArea;
     [SerializeField] GameObject player;
     public float timer;
@@ -38,7 +38,7 @@ public class SpawEnemy : MonoBehaviour
         if (timer < 0)
         {
             timer = spawTime;
-            CreateNewEnemy(VanmpireGirlPrefab);
+            //CreateNewEnemy(VanmpireGirlPrefab);
             i++;
             if(i%2==0)
             {

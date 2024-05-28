@@ -14,10 +14,6 @@ public class WarningPointer : MonoBehaviour
     {
         targetPos = target;
         timeLife = time;
-    }
-
-    private void Awake()
-    {
         Destroy(gameObject, timeLife);
     }
 
@@ -36,6 +32,10 @@ public class WarningPointer : MonoBehaviour
 
             Vector3 pointerWorldPos = Camera.main.ScreenToWorldPoint(cappedTargetScreenPos);
             pointerGO.transform.position = pointerWorldPos;
+        }
+        else
+        {
+            pointerGO.transform.position = targetPos;
         }
 
     }

@@ -9,6 +9,8 @@ public class ShurikenChildrenScript : MonoBehaviour
     float speed = 10f; // Tốc độ xoáy ốc
     [SerializeField]
     float deactivateDistance = 8f; // Khoảng cách khi vật thể sẽ tự động tắt
+    [SerializeField]
+    int shurikenNum; // Khoảng cách khi vật thể sẽ tự động tắt
 
     private int angleRos = 0;
     private float angle = 0f;
@@ -32,21 +34,43 @@ public class ShurikenChildrenScript : MonoBehaviour
     {
         if(Time.deltaTime != 0f)
         {
-            radius += 0.005f;
-            angleRos += 5;
-            // Tính toán vị trí mới của vật thể dựa trên góc và bán kính xoáy ốc
-            float x = ShurikenParent.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
-            float y = ShurikenParent.position.y + Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
-            transform.position = new Vector3(x, y, 0);
-            transform.rotation = Quaternion.Euler(0, 0, angleRos);
-
-            // Tăng góc để di chuyển vật thể
-            angle += speed * Time.deltaTime;
-
-            // Nếu khoảng cách vượt quá giá trị deactivateDistance, deactivate vật thể
-            if (radius >= deactivateDistance)
+            if(shurikenNum == 0)
             {
-                gameObject.SetActive(false);
+                radius += 0.005f;
+                angleRos += 5;
+                // Tính toán vị trí mới của vật thể dựa trên góc và bán kính xoáy ốc
+                float x = ShurikenParent.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
+                float y = ShurikenParent.position.y + Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
+                transform.position = new Vector3(x, y, 0);
+                transform.rotation = Quaternion.Euler(0, 0, angleRos);
+
+                // Tăng góc để di chuyển vật thể
+                angle += speed * Time.deltaTime;
+
+                // Nếu khoảng cách vượt quá giá trị deactivateDistance, deactivate vật thể
+                if (radius >= deactivateDistance)
+                {
+                    gameObject.SetActive(false);
+                }
+            }
+            if (shurikenNum == 1)
+            {
+                radius += 0.005f;
+                angleRos += 5;
+                // Tính toán vị trí mới của vật thể dựa trên góc và bán kính xoáy ốc
+                float x = ShurikenParent.position.x - Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
+                float y = ShurikenParent.position.y - Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
+                transform.position = new Vector3(x, y, 0);
+                transform.rotation = Quaternion.Euler(0, 0, angleRos);
+
+                // Tăng góc để di chuyển vật thể
+                angle += speed * Time.deltaTime;
+
+                // Nếu khoảng cách vượt quá giá trị deactivateDistance, deactivate vật thể
+                if (radius >= deactivateDistance)
+                {
+                    gameObject.SetActive(false);
+                }
             }
         }
     }

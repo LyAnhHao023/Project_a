@@ -5,11 +5,15 @@ using UnityEngine;
 public class ShurikenScript : WeaponBase
 {
     [SerializeField]
-    GameObject ShurikenChildren;
+    List<GameObject> ShurikenChildrenLst;
+    [SerializeField]
+    List<GameObject> ShurikenChildrenLst1;
 
     CharacterStats characterStats;
 
-    
+    List<GameObject> ActiveShurikenChildrenLst = new List<GameObject>();
+
+
     private void Awake()
     {
         SetCharacterStats();
@@ -18,8 +22,35 @@ public class ShurikenScript : WeaponBase
 
     public override void Attack()
     {
-        ShurikenChildren.transform.position = transform.position;
-        ShurikenChildren.SetActive(true);
+        ActiveShurikenChildrenLst.Clear();
+
+        foreach(GameObject child in ShurikenChildrenLst)
+        {
+            if (!child.activeSelf)
+            {
+                ActiveShurikenChildrenLst.Add(child);
+                break;
+            }
+        }
+
+        if(weaponStats.level >= 4)
+        {
+            foreach (GameObject child in ShurikenChildrenLst1)
+            {
+                if (!child.activeSelf)
+                {
+                    ActiveShurikenChildrenLst.Add(child);
+                    break;
+                }
+            }
+        }
+
+
+        foreach (GameObject child in ActiveShurikenChildrenLst)
+        {
+            child.transform.position = transform.localPosition;
+            child.SetActive(true);
+        }
     }
 
     public void ApllyDmg(Collider2D collision)

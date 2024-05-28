@@ -176,36 +176,30 @@ public class CharacterInfo_1 : MonoBehaviour
                 {
                     if (upgradeDatas[id].buffName.Contains("ATK"))
                     {
-                        attackPercent += (float)0.1;
-                        characterStats.strenght = baseAttack + Mathf.FloorToInt((float)baseAttack * attackPercent);
-                        statShow.SetAttack(characterStats.strenght);
+                        attackPercent += 0.1f;
+                        statUpdate();
                     }
                     if (upgradeDatas[id].buffName.Contains("CRT"))
                     {
                         critPercent += 2;
-                        characterStats.crit = baseCrit + critPercent;
-                        statShow.SetCrit(characterStats.crit);
+                        statUpdate();
                     }
                     if (upgradeDatas[id].buffName.Contains("HP"))
                     {
-                        healthPercent += (float)0.1;
-                        characterStats.maxHealth = baseHealth + Mathf.FloorToInt((float)baseHealth * healthPercent);
-                        maxHealth = characterStats.maxHealth;
-                        statShow.SetHealth(characterStats.maxHealth);
-                        healthBar.SetMaxHealth(characterStats.maxHealth);
-                        healthBar.SetHealth(currentHealth);
+                        healthPercent += 0.1f;
+                        statUpdate();
                     }
                     if (upgradeDatas[id].buffName.Contains("SPD"))
                     {
-                        speedPercent += (float)0.05;
-                        characterStats.speed = baseSpeed + Mathf.FloorToInt((float)baseSpeed * speedPercent);
-                        statShow.SetSpeed(characterStats.speed);
+                        speedPercent += 0.05f;
+                        statUpdate();
                     }
                 }
                 break;
             case 5: //GainCoin
                 {
-
+                    coins += 50;
+                    countSys.SetCoinCount(coins);
                 }
                 break;
         }
@@ -261,6 +255,21 @@ public class CharacterInfo_1 : MonoBehaviour
             return ((int)((float)(coins * 0.75)));
 
         return coins;
+    }
+
+    public void statUpdate()
+    {
+        characterStats.strenght = baseAttack + Mathf.FloorToInt((float)baseAttack * attackPercent);
+        characterStats.crit = baseCrit + critPercent;
+        characterStats.maxHealth = baseHealth + Mathf.FloorToInt((float)baseHealth * healthPercent);
+        characterStats.speed = baseSpeed + Mathf.FloorToInt((float)baseSpeed * speedPercent);
+        statShow.SetAttack(characterStats.strenght);
+        statShow.SetCrit(characterStats.crit);
+        maxHealth = characterStats.maxHealth;
+        statShow.SetHealth(characterStats.maxHealth);
+        healthBar.SetMaxHealth(characterStats.maxHealth);
+        healthBar.SetHealth(currentHealth);
+        statShow.SetSpeed(characterStats.speed);
     }
 }
 

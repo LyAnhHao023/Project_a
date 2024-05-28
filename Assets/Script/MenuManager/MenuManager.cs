@@ -10,11 +10,20 @@ public class MenuManager : MonoBehaviour
     /*[SerializeField] private GameObject _settingsMenuCanvas;*/
     [SerializeField] private GameObject _gameOverUI;
     [SerializeField] private GameObject _levelUpUI;
+    [SerializeField] private GameObject statShow;
+    [SerializeField] private GameObject buffTable;
 
     /*[SerializeField] private GameObject _mainMenuFirst;*/
     /*[SerializeField] private GameObject _settingsMenuFirst;*/
 
     [SerializeField] List<UpgradeButton> upgradeButtons;
+
+    [SerializeField] Vector3 statShowStep;
+    [SerializeField] Vector3 startStatShowStep;
+    [SerializeField] Vector3 buffTableStep;
+    [SerializeField] Vector3 startBuffTableStep;
+    [SerializeField] float tweenTime;
+    [SerializeField] LeanTweenType tweenType;
 
     private bool isPaused;
 
@@ -121,6 +130,9 @@ public class MenuManager : MonoBehaviour
         isLevelUp = true;
         isPaused = true;
 
+        statShow.LeanMoveLocal(statShowStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
+        buffTable.LeanMoveLocal(buffTableStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
+
         for (int i = 0; i < upgradeDatas.Count; i++)
         {
             upgradeButtons[i].Set(upgradeDatas[i]);
@@ -134,7 +146,11 @@ public class MenuManager : MonoBehaviour
 
     public void LevelUpDone()
     {
+        statShow.LeanMoveLocal(startStatShowStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
+        buffTable.LeanMoveLocal(startBuffTableStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
+
         isLevelUp = false;
+
         _levelUpUI.SetActive(false);
         Unpause();
     }

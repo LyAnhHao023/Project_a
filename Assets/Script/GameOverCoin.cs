@@ -9,6 +9,7 @@ public class GameOverCoin : MonoBehaviour
 
     public void SetCoinGain(int coins)
     {
+        Debug.Log(coins);
         coinText.text = string.Format("+ {0}", coins);
     }
 }

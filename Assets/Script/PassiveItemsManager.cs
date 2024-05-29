@@ -28,6 +28,11 @@ public class PassiveItemsManager : MonoBehaviour
     ItemsData increaseHitSpeed;
     [SerializeField]
     ItemsData bigWeapons;
+    [SerializeField]
+    ItemsData TheMoreTheMerrier;
+    [SerializeField]
+    ItemsData TwoEdgedSword;
+
 
     public List<ItemsEnquip> itemsEquip_lst = new List<ItemsEnquip>(5);
 
@@ -36,18 +41,21 @@ public class PassiveItemsManager : MonoBehaviour
     /*private void Start()
     {
         AddItem(bloodSuckingPrefab);
-    }
+    }*/
 
     private void Update()
     {
         if (gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 5&&i==0)
         {
             i++;
-            AddItem(increaseHitSpeed);
-            AddItem(bigWeapons);
+            AddItem(TwoEdgedSword);
             Debug.Log("trang bi thanh cong");
+        }else if(gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 10 && i == 1)
+        {
+            i++;
+            AddItem(TheMoreTheMerrier);
         }
-    }*/
+    }
 
     public void AddItem(ItemsData itemData)
     {

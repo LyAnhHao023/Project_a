@@ -22,6 +22,8 @@ public class SpawEnemy : MonoBehaviour
     EnemyData VanmpireGirlPrefab;
     [SerializeField]
     EnemyData GhostPrefab;
+    [SerializeField]
+    EnemyData ZombieSurroundPrefab;
 
     [SerializeField] public float spawTime;
     [SerializeField] Vector2 spawArea;
@@ -42,11 +44,11 @@ public class SpawEnemy : MonoBehaviour
             i++;
             if(i%2==0)
             {
-                CreateNewEnemy(GhostPrefab);
+                
             }
             if (i == 2)
             {
-                //CreateNewEnemy(MagicicanBossPrefab);
+                CreateNewEnemy(ZombieSurroundPrefab);
             }
         }
     }

@@ -1,22 +1,13 @@
-﻿using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class ZombieScript : EnemyBase
+public class ZombieSurroundEnemy : EnemyBase
 {
-    //Nhận biết tấn công player 
     public GameObject targetGameObject;
 
-    float timeAttack;
-
-    Animator animator;
-
-    int rotasionChange=0;
-
     [SerializeField]
-    [Range(0f,10f)] float chanceDropHeath=1f;
+    [Range(0f, 10f)] float chanceDropHeath = 1f;
 
     [SerializeField]
     GameObject HealthPrefab;
@@ -29,23 +20,21 @@ public class ZombieScript : EnemyBase
     [SerializeField]
     GameObject CoinPrefab;
     [SerializeField]
-    [Range(0f, 10f)] float chanceDropExpRed=1f;
+    [Range(0f, 10f)] float chanceDropExpRed = 1f;
     [SerializeField]
     [Range(0f, 20f)] float chanceDropCoin = 1f;
 
     GameObject ParentDropItem;
+    public override bool EnemyTakeDmg(int dmg) => throw new System.NotImplementedException();
 
-    private void Awake()
+    public void DestroyParent()
     {
-        animator = GetComponent<Animator>();
-        
+        Destroy(gameObject, 1f);
     }
 
-    public override void SetTarget(GameObject GameObject)
+    public void Attack()
     {
-        targetGameObject = GameObject;
-        gameObject.GetComponent<AIPath>().maxSpeed = enemyStats.speed;
-        GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
+        targetGameObject.GetComponent<CharacterInfo_1>().TakeDamage(enemyStats.dmg);
     }
 
     public override void SetParentDropItem(GameObject gameObject)
@@ -53,31 +42,10 @@ public class ZombieScript : EnemyBase
         ParentDropItem = gameObject;
     }
 
-    private void Update()
+    public override void SetTarget(GameObject GameObject)
     {
-        rotasionChange = transform.position.x > targetGameObject.transform.position.x ? 180 : 0;
-        animator.transform.rotation = Quaternion.Euler(0, rotasionChange, 0);
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        timeAttack -= Time.deltaTime;
-        if (collision.gameObject == targetGameObject&& timeAttack <= 0)
-        {
-            Attack();
-        }
-    }
-
-    private void Attack()
-    {
-        timeAttack = enemyStats.timeAttack;
-        targetGameObject.GetComponent<CharacterInfo_1>().TakeDamage(enemyStats.dmg);
-    }
-
-    private void DestroyOb()
-    {
-        Destroy(gameObject,1f);
-        Drop();
+        targetGameObject = GameObject;
+        transform.position = targetGameObject.transform.position;
     }
 
     private void Drop()
@@ -92,7 +60,7 @@ public class ZombieScript : EnemyBase
         //Transform chest = Instantiate(ChestPrefab).transform;
         //chest.position = transform.position;
 
-        if(Random.value * 100 <= chanceDropExpRed)
+        if (Random.value * 100 <= chanceDropExpRed)
         {
             GameObject createExpRed = Instantiate(ExpRedPrefab);
             createExpRed.transform.position = transform.position;
@@ -114,21 +82,5 @@ public class ZombieScript : EnemyBase
             createCoins.GetComponent<CoinScript>().SetPlayer(targetGameObject);
             createCoins.transform.parent = ParentDropItem.transform;
         }
-    }
-
-    public override bool EnemyTakeDmg(int dmg)
-    {
-        enemyStats.hp -= dmg;
-        animator.SetTrigger("Hit");
-        if (enemyStats.hp <= 0)
-        {
-            gameObject.GetComponent<AIPath>().canMove = false;
-            Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
-            rigidbody.simulated = false;
-            animator.SetBool("Dead", true);
-            DestroyOb();
-            return true;
-        }
-        return false;
     }
 }

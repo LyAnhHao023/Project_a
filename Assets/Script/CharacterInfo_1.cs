@@ -57,8 +57,6 @@ public class CharacterInfo_1 : MonoBehaviour
     GameObject character;
     public CharacterStats characterStats;
 
-    int speed = 5;
-
     public int numberMonsterKilled=0;
 
     private void Awake()

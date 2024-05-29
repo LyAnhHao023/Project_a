@@ -17,7 +17,8 @@ public class TwoEdgedSwordItemPasive : ItemBase
     private void Awake()
     {
         player = GetComponentInParent<CharacterInfo_1>();
-        //player.
+        player.attackPercent += dmgBuff;
+        player.statUpdate();
     }
 
     private void Update()

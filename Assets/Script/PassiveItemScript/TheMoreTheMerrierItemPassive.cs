@@ -26,6 +26,7 @@ public class TheMoreTheMerrierItemPassive : ItemBase
        if (monterKilled < kill)
        {
             int coinAmout = kill - monterKilled;
+            monterKilled = kill;
             player.GainCoin(coinAmout);
        }
     }

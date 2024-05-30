@@ -24,6 +24,10 @@ public class SpawEnemy : MonoBehaviour
     EnemyData GhostPrefab;
     [SerializeField]
     EnemyData ZombieSurroundPrefab;
+    [SerializeField]
+    EnemyData DragonPrefab;
+    [SerializeField]
+    EnemyData ZicZigPrefab;
 
     [SerializeField] public float spawTime;
     [SerializeField] Vector2 spawArea;
@@ -46,9 +50,10 @@ public class SpawEnemy : MonoBehaviour
             {
                 
             }
-            if (i == 2)
+            if (i == 5)
             {
-                CreateNewEnemy(ZombieSurroundPrefab);
+                //CreateNewEnemy(ZombieSurroundPrefab);
+                CreateNewEnemy(ZicZigPrefab);
             }
         }
     }

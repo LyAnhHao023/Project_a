@@ -4,22 +4,32 @@ using UnityEngine;
 
 public class WarningPointer : MonoBehaviour
 {
-    private Vector3 targetPos;
+    [SerializeField]
+    Transform targetPos;
     [SerializeField]
     GameObject pointerGO;
     float borderSize = 30f;
-    float timeLife;
+    [SerializeField]
+    float timeLife=0;
+
+    private void Awake()
+    {
+        if (timeLife != 0)
+        {
+            Destroy(gameObject, timeLife);
+        }
+    }
 
     public void SetTargetAndTimeLife(Vector3 target,float time)
     {
-        targetPos = target;
+        targetPos.position = target;
         timeLife = time;
         Destroy(gameObject, timeLife);
     }
 
     private void Update()
     {
-        Vector3 targetPosScreenPoint = Camera.main.WorldToScreenPoint(targetPos);
+        Vector3 targetPosScreenPoint = Camera.main.WorldToScreenPoint(targetPos.position);
         bool isOffScreen = targetPosScreenPoint.x <= borderSize || targetPosScreenPoint.x >= Screen.width - borderSize || targetPosScreenPoint.y <= borderSize || targetPosScreenPoint.y >= Screen.height - borderSize;
 
         if (isOffScreen)
@@ -35,7 +45,7 @@ public class WarningPointer : MonoBehaviour
         }
         else
         {
-            pointerGO.transform.position = targetPos;
+            pointerGO.transform.position = targetPos.position;
         }
 
     }

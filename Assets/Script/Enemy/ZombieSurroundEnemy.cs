@@ -48,12 +48,12 @@ public class ZombieSurroundEnemy : EnemyBase
         transform.position = targetGameObject.transform.position;
     }
 
-    private void Drop()
+    public void Drop(Vector3 posDrop)
     {
         if (Random.value * 100 <= chanceDropHeath)
         {
             Transform health = Instantiate(HealthPrefab).transform;
-            health.position = transform.position;
+            health.position = posDrop;
             health.transform.parent = ParentDropItem.transform;
         }
 
@@ -63,14 +63,14 @@ public class ZombieSurroundEnemy : EnemyBase
         if (Random.value * 100 <= chanceDropExpRed)
         {
             GameObject createExpRed = Instantiate(ExpRedPrefab);
-            createExpRed.transform.position = transform.position;
+            createExpRed.transform.position = posDrop;
             createExpRed.GetComponent<CapsuleExp>().SetPlayer(targetGameObject);
             createExpRed.transform.parent = ParentDropItem.transform;
         }
         else
         {
             GameObject createGreen = Instantiate(ExpGreenPrefab);
-            createGreen.transform.position = transform.position;
+            createGreen.transform.position = posDrop;
             createGreen.GetComponent<CapsuleExp>().SetPlayer(targetGameObject);
             createGreen.transform.parent = ParentDropItem.transform;
         }
@@ -78,7 +78,7 @@ public class ZombieSurroundEnemy : EnemyBase
         if (Random.value * 100 <= chanceDropCoin)
         {
             GameObject createCoins = Instantiate(CoinPrefab);
-            createCoins.transform.position = transform.position;
+            createCoins.transform.position = posDrop;
             createCoins.GetComponent<CoinScript>().SetPlayer(targetGameObject);
             createCoins.transform.parent = ParentDropItem.transform;
         }

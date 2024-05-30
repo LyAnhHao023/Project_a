@@ -23,7 +23,7 @@ public class ChlldrenZombieSurround : EnemyBase
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         Vector3 direction = (target.position - transform.position).normalized;
-        rb.AddForce(direction*50f, (ForceMode2D)ForceMode.Force);
+        rb.AddForce(direction*30f, (ForceMode2D)ForceMode.Force);
         hp = parentPrefab.enemyStats.hp * 5 / 100;
     }
 
@@ -39,9 +39,7 @@ public class ChlldrenZombieSurround : EnemyBase
         // Kiểm tra nếu quái vật đã đến gần vị trí mục tiêu
         if (distance <= detectionRange)
         {
-            animator.SetBool("Dead", true);
-            rb.velocity = Vector3.zero;
-            gameObject.GetComponent<Collider2D>().enabled = false;
+            Dead();
             parentPrefab.DestroyParent();
         }
     }
@@ -70,13 +68,19 @@ public class ChlldrenZombieSurround : EnemyBase
         }
         else if(hp<=0)
         {
-            Destroy(gameObject, 1f);
-            gameObject.GetComponent<Collider2D>().enabled = false;
-            animator.SetBool("Dead", true);
-            rb.velocity = Vector3.zero;
+            Dead();
+            parentPrefab.Drop(transform.position);
             return true;
         }
         return false;
+    }
+
+    public void Dead()
+    {
+        Destroy(gameObject, 1f);
+        gameObject.GetComponent<Collider2D>().enabled = false;
+        animator.SetBool("Dead", true);
+        rb.velocity = Vector3.zero;
     }
 
     public override void SetTarget(GameObject GameObject)

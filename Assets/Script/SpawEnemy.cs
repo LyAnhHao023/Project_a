@@ -44,17 +44,17 @@ public class SpawEnemy : MonoBehaviour
         if (timer < 0)
         {
             timer = spawTime;
-            //CreateNewEnemy(VanmpireGirlPrefab);
-            i++;
-            if(i%2==0)
-            {
-                
-            }
-            if (i == 5)
-            {
-                //CreateNewEnemy(ZombieSurroundPrefab);
-                CreateNewEnemy(ZicZigPrefab);
-            }
+            CreateNewEnemy(VanmpireGirlPrefab);
+            //i++;
+            //if(i%2==0)
+            //{
+
+            //}
+            //if (i == 5)
+            //{
+            //    CreateNewEnemy(DragonPrefab);
+            //    CreateNewEnemy(ZicZigPrefab);
+            //}
         }
     }
 

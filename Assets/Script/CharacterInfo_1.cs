@@ -66,18 +66,14 @@ public class CharacterInfo_1 : MonoBehaviour
     GameObject character;
     public CharacterStats characterStats;
 
-    int speed = 5;
-
     public int numberMonsterKilled = 0;
 
     int slowHealthLevel = 1;
     bool slowHealthAcquired = true;
     float time;
 
-    int shieldItemLevel = 0;
-    bool shieldAcquired = false;
     int shieldMaxValue;
-    int shieldCurrentValue;
+    public int shieldCurrentValue;
 
     private void Awake()
     {
@@ -182,6 +178,33 @@ public class CharacterInfo_1 : MonoBehaviour
         }
     }
 
+    public void PlusMaxSheild(int shieldPlus)
+    {
+        if (shieldMaxValue == 0)
+        {
+            shield.SetActive(true);
+            shieldMaxValue += shieldPlus;
+            shieldCurrentValue = shieldMaxValue;
+
+            shieldBar.SetMaxShield(shieldMaxValue);
+            shieldBar.SetShield(shieldCurrentValue);
+        }
+        else
+        {
+            shieldMaxValue += shieldPlus;
+            shieldCurrentValue += shieldPlus;
+
+            shieldBar.SetMaxShield(shieldMaxValue);
+            shieldBar.SetShield(shieldCurrentValue);
+        }
+    }
+
+    public void ShieldRecovery(int shieldRecovery)
+    {
+        shieldCurrentValue = (shieldCurrentValue + shieldRecovery > shieldMaxValue) ? shieldMaxValue : shieldCurrentValue + shieldRecovery;
+        shieldBar.SetShield(shieldCurrentValue);
+    }
+
     public void KilledMonster()
     {
         ++numberMonsterKilled;
@@ -283,33 +306,51 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-
-        if (slowHealthAcquired)
+        if (shieldCurrentValue<=0)
         {
-            if (currentHealth < 1)
+            currentHealth -= damage;
+
+            if (slowHealthAcquired)
             {
-                currentHealth = 1;
+                if (currentHealth < 1)
+                {
+                    currentHealth = 1;
+                }
+
+                currentSlowhealth -= 1;
+
+                slowHealthBar.SetHealth(currentSlowhealth);
             }
 
-            currentSlowhealth -= 1;
+            if (currentHealth <= 0 || currentSlowhealth <= 0)
+            {
+                menuManager.GameOverScreen();
+                coins = CoinGainPercent(coins, Mathf.FloorToInt(elapsedTime % 60));
+                overCoin.SetCoinGain(coins);
+                int coinLocal = PlayerPrefs.GetInt("Coins", 0);
+                //Debug.Log(coinLocal +" local");
+                PlayerPrefs.SetInt("Coins", coinLocal + coins);
+                PlayerPrefs.Save();
+                //Debug.Log(PlayerPrefs.GetInt("Coins", 0));
+            }
 
-            slowHealthBar.SetHealth(currentSlowhealth);
+            healthBar.SetHealth(currentHealth);
         }
-
-        if (currentHealth <= 0 || currentSlowhealth <= 0)
+        else
         {
-            menuManager.GameOverScreen();
-            coins = CoinGainPercent(coins, Mathf.FloorToInt(elapsedTime % 60));
-            overCoin.SetCoinGain(coins);
-            int coinLocal = PlayerPrefs.GetInt("Coins", 0);
-            //Debug.Log(coinLocal +" local");
-            PlayerPrefs.SetInt("Coins", coinLocal + coins);
-            PlayerPrefs.Save();
-            //Debug.Log(PlayerPrefs.GetInt("Coins", 0));
+            if(shieldCurrentValue>damage)
+            {
+                shieldCurrentValue -= damage;
+                shieldBar.SetShield(shieldCurrentValue);
+            }
+            else
+            {
+                int dmg = damage - shieldCurrentValue;
+                shieldCurrentValue=0;
+                shieldBar.SetShield(shieldCurrentValue);
+                TakeDamage(dmg);
+            }
         }
-
-        healthBar.SetHealth(currentHealth);
     }
 
     public void HealthByPercent(int health)

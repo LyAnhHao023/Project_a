@@ -32,6 +32,8 @@ public class PassiveItemsManager : MonoBehaviour
     ItemsData TheMoreTheMerrier;
     [SerializeField]
     ItemsData TwoEdgedSword;
+    [SerializeField]
+    ItemsData EnergyShield;
 
 
     public List<ItemsEnquip> itemsEquip_lst = new List<ItemsEnquip>(5);
@@ -48,13 +50,14 @@ public class PassiveItemsManager : MonoBehaviour
         if (gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 5&&i==0)
         {
             i++;
-            AddItem(TwoEdgedSword);
+            AddItem(EnergyShield);
             Debug.Log("trang bi thanh cong");
-        }else if(gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 10 && i == 1)
-        {
-            i++;
-            AddItem(TheMoreTheMerrier);
         }
+        //else if(gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 10 && i == 1)
+        //{
+        //    i++;
+        //    AddItem(TheMoreTheMerrier);
+        //}
     }
 
     public void AddItem(ItemsData itemData)

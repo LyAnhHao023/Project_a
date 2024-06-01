@@ -34,6 +34,10 @@ public class PassiveItemsManager : MonoBehaviour
     ItemsData TwoEdgedSword;
     [SerializeField]
     ItemsData EnergyShield;
+    [SerializeField]
+    ItemsData PowerOfMoneyPrefab;
+    [SerializeField]
+    ItemsData GlassOfKnowladgePrefab;
 
 
     public List<ItemsEnquip> itemsEquip_lst = new List<ItemsEnquip>(5);
@@ -50,14 +54,14 @@ public class PassiveItemsManager : MonoBehaviour
         if (gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 5&&i==0)
         {
             i++;
-            AddItem(EnergyShield);
+            AddItem(PowerOfMoneyPrefab);
             Debug.Log("trang bi thanh cong");
         }
-        //else if(gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 10 && i == 1)
-        //{
-        //    i++;
-        //    AddItem(TheMoreTheMerrier);
-        //}
+        else if (gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 10 && i == 1)
+        {
+            i++;
+            AddItem(GlassOfKnowladgePrefab);
+        }
     }
 
     public void AddItem(ItemsData itemData)

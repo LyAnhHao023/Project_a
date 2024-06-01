@@ -10,14 +10,19 @@ public class EnenmyStats
     public int dmg;
     public int speed;
     public float timeAttack;
+    public float chanceDropCoin;
+    public float chanceDropHeath;
+    public float chanceDropExp;
 
-    public EnenmyStats(int hp, int dmg, int speed,float timeAttack)
+    public EnenmyStats(int hp, int dmg, int speed,float timeAttack, float chanceDropCoin, float chanceDropHeath, float chanceDropExp)
     {
         this.hp = hp;
         this.dmg = dmg;
         this.speed = speed;
         this.timeAttack = timeAttack;
-
+        this.chanceDropCoin = chanceDropCoin;
+        this.chanceDropHeath = chanceDropHeath;
+        this.chanceDropExp = chanceDropExp;
     }
 }
 

@@ -14,9 +14,6 @@ public class VampireGirlMsScript : EnemyBase
     Animator animator;
 
     [SerializeField]
-    [Range(0f, 10f)] float chanceDropHeath = 1f;
-
-    [SerializeField]
     GameObject HealthPrefab;
     [SerializeField]
     GameObject ChestPrefab;
@@ -26,10 +23,6 @@ public class VampireGirlMsScript : EnemyBase
     GameObject ExpRedPrefab;
     [SerializeField]
     GameObject CoinPrefab;
-    [SerializeField]
-    [Range(0f, 10f)] float chanceDropExpRed = 1f;
-    [SerializeField]
-    [Range(0f, 20f)] float chanceDropCoin = 1f;
 
     GameObject ParentDropItem;
 
@@ -85,7 +78,7 @@ public class VampireGirlMsScript : EnemyBase
 
     private void Drop()
     {
-        if (Random.value * 100 <= chanceDropHeath)
+        if (Random.value * 100 <= enemyStats.chanceDropHeath)
         {
             Transform health = Instantiate(HealthPrefab).transform;
             health.position = transform.position;
@@ -95,7 +88,7 @@ public class VampireGirlMsScript : EnemyBase
         //Transform chest = Instantiate(ChestPrefab).transform;
         //chest.position = transform.position;
 
-        if (Random.value * 100 <= chanceDropExpRed)
+        if (Random.value * 100 <= enemyStats.chanceDropExp)
         {
             GameObject createExpRed = Instantiate(ExpRedPrefab);
             createExpRed.transform.position = transform.position;
@@ -110,7 +103,7 @@ public class VampireGirlMsScript : EnemyBase
             createGreen.transform.parent = ParentDropItem.transform;
         }
 
-        if (Random.value * 100 <= chanceDropCoin)
+        if (Random.value * 100 <= enemyStats.chanceDropCoin)
         {
             GameObject createCoins = Instantiate(CoinPrefab);
             createCoins.transform.position = transform.position;

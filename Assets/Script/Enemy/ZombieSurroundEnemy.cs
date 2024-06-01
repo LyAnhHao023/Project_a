@@ -7,9 +7,6 @@ public class ZombieSurroundEnemy : EnemyBase
     public GameObject targetGameObject;
 
     [SerializeField]
-    [Range(0f, 10f)] float chanceDropHeath = 1f;
-
-    [SerializeField]
     GameObject HealthPrefab;
     [SerializeField]
     GameObject ChestPrefab;
@@ -19,10 +16,6 @@ public class ZombieSurroundEnemy : EnemyBase
     GameObject ExpRedPrefab;
     [SerializeField]
     GameObject CoinPrefab;
-    [SerializeField]
-    [Range(0f, 10f)] float chanceDropExpRed = 1f;
-    [SerializeField]
-    [Range(0f, 20f)] float chanceDropCoin = 1f;
 
     GameObject ParentDropItem;
     public override bool EnemyTakeDmg(int dmg) => throw new System.NotImplementedException();
@@ -50,7 +43,7 @@ public class ZombieSurroundEnemy : EnemyBase
 
     public void Drop(Vector3 posDrop)
     {
-        if (Random.value * 100 <= chanceDropHeath)
+        if (Random.value * 100 <= enemyStats.chanceDropHeath)
         {
             Transform health = Instantiate(HealthPrefab).transform;
             health.position = posDrop;
@@ -60,7 +53,7 @@ public class ZombieSurroundEnemy : EnemyBase
         //Transform chest = Instantiate(ChestPrefab).transform;
         //chest.position = transform.position;
 
-        if (Random.value * 100 <= chanceDropExpRed)
+        if (Random.value * 100 <= enemyStats.chanceDropExp)
         {
             GameObject createExpRed = Instantiate(ExpRedPrefab);
             createExpRed.transform.position = posDrop;
@@ -75,7 +68,7 @@ public class ZombieSurroundEnemy : EnemyBase
             createGreen.transform.parent = ParentDropItem.transform;
         }
 
-        if (Random.value * 100 <= chanceDropCoin)
+        if (Random.value * 100 <= enemyStats.chanceDropCoin)
         {
             GameObject createCoins = Instantiate(CoinPrefab);
             createCoins.transform.position = posDrop;

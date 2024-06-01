@@ -49,7 +49,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
     int currentExp;
 
-    private int coins = 0;
+    public int coins = 0;
 
     int maxHealth;
 
@@ -57,6 +57,7 @@ public class CharacterInfo_1 : MonoBehaviour
     public float attackPercent = 0;
     public float speedPercent = 0;
     public float critPercent = 0;
+    public float expPercent = 0;
 
     int baseHealth;
     int baseAttack;
@@ -219,7 +220,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void GainExp(int exp)
     {
-        currentExp += exp;
+        currentExp += exp+(int)(exp*expPercent);
 
         if (currentExp >= maxExpValue)
         {

@@ -13,7 +13,8 @@ public abstract class EnemyBase : MonoBehaviour
     public virtual void SetData(EnemyData enemy)
     {
         enemyData = enemy;
-        enemyStats = new EnenmyStats(enemy.stats.hp, enemy.stats.dmg, enemy.stats.speed, enemy.stats.timeAttack);
+        enemyStats = new EnenmyStats(enemy.stats.hp, enemy.stats.dmg, enemy.stats.speed, enemy.stats.timeAttack,
+                                     enemy.stats.chanceDropCoin,enemy.stats.chanceDropHeath,enemy.stats.chanceDropExp);
     }
 
     public abstract void SetTarget(GameObject GameObject);

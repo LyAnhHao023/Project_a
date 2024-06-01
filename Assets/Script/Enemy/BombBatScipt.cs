@@ -26,9 +26,6 @@ public class BombBatScipt : EnemyBase
     Vector2 areaAttack=new Vector2(3,3);
 
     [SerializeField]
-    [Range(0f, 10f)] float chanceDropHeath = 1f;
-
-    [SerializeField]
     GameObject HealthPrefab;
     [SerializeField]
     GameObject ChestPrefab;
@@ -38,10 +35,6 @@ public class BombBatScipt : EnemyBase
     GameObject ExpRedPrefab;
     [SerializeField]
     GameObject CoinPrefab;
-    [SerializeField]
-    [Range(0f, 10f)] float chanceDropExpRed = 1f;
-    [SerializeField]
-    [Range(0f, 20f)] float chanceDropCoin = 1f;
 
     GameObject ParentDropItem;
 
@@ -120,7 +113,7 @@ public class BombBatScipt : EnemyBase
 
     private void Drop()
     {
-        if (UnityEngine.Random.value * 100 <= chanceDropHeath)
+        if (UnityEngine.Random.value * 100 <= enemyStats.chanceDropHeath)
         {
             Transform health = Instantiate(HealthPrefab).transform;
             health.position = transform.position;
@@ -130,7 +123,7 @@ public class BombBatScipt : EnemyBase
         //Transform chest = Instantiate(ChestPrefab).transform;
         //chest.position = transform.position;
 
-        if (UnityEngine.Random.value * 100 <= chanceDropExpRed)
+        if (UnityEngine.Random.value * 100 <= enemyStats.chanceDropExp)
         {
             GameObject createExpRed = Instantiate(ExpRedPrefab);
             createExpRed.transform.position = transform.position;
@@ -145,7 +138,7 @@ public class BombBatScipt : EnemyBase
             createGreen.transform.parent = ParentDropItem.transform;
         }
 
-        if (UnityEngine.Random.value * 100 <= chanceDropCoin)
+        if (UnityEngine.Random.value * 100 <= enemyStats.chanceDropCoin)
         {
             GameObject createCoins = Instantiate(CoinPrefab);
             createCoins.transform.position = transform.position;

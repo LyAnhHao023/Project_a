@@ -36,8 +36,17 @@ public class SpawEnemy : MonoBehaviour
     [SerializeField]
     GameObject ParentDropItem;
 
+    List<EnemyData> lstEnemyPrefab;
+
 
     int i = 0;
+
+    private void Start()
+    {
+        lstEnemyPrefab = new List<EnemyData> { ZombiePrefab, ZombieBossPrefab, BombBatPrefab, MagicicanPrefab, 
+            MagicicanBossPrefab, VanmpireGirlPrefab, GhostPrefab,ZombieSurroundPrefab,DragonPrefab,ZicZigPrefab };
+    }
+
     private void Update()
     {
         timer -= Time.deltaTime;
@@ -55,6 +64,14 @@ public class SpawEnemy : MonoBehaviour
             //    CreateNewEnemy(DragonPrefab);
             //    CreateNewEnemy(ZicZigPrefab);
             //}
+        }
+    }
+
+    public void PlusOrMinusChanceCoinDropPersent(float persent)
+    {
+        foreach (var item in lstEnemyPrefab)
+        {
+            item.stats.chanceDropCoin += persent;
         }
     }
 

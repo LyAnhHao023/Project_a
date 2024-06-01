@@ -12,8 +12,6 @@ public class ShostEnemyScipt : EnemyBase
 
     Animator animator;
 
-    int rotasionChange = 0;
-
     [SerializeField]
     GameObject HealthPrefab;
     [SerializeField]

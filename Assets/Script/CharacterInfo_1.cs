@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 
@@ -64,7 +65,9 @@ public class CharacterInfo_1 : MonoBehaviour
     float baseCrit;
     int baseSpeed;
 
-    GameObject character;
+    [SerializeField]
+    CharacterData characterData;
+    public GameObject characterAnimate;
     public CharacterStats characterStats;
 
     public int numberMonsterKilled = 0;
@@ -78,8 +81,8 @@ public class CharacterInfo_1 : MonoBehaviour
 
     private void Awake()
     {
-        character = GameObject.Find("FistCharDev");
-        characterStats = character.GetComponent<CharacterStats>();
+        characterAnimate = Instantiate(characterData.animatorPrefab,transform);
+        characterStats = characterData.stats;
 
         baseAttack = characterStats.strenght;
         baseCrit = characterStats.crit;
@@ -95,9 +98,9 @@ public class CharacterInfo_1 : MonoBehaviour
         shieldMaxValue = 0;
         shieldCurrentValue = 0;
 
-        weaponSlotsManager.Add(characterStats.beginerWeapon);
-        weaponsManager.AddWeapon(characterStats.beginerWeapon.weaponData);
-        inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
+        //weaponSlotsManager.Add(characterData.beginerWeapon);
+        weaponsManager.AddWeapon(characterData.beginerWeapon);
+        //inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
 
         level = 1;
         maxExpValue = 10;

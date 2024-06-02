@@ -34,6 +34,8 @@ public class PassiveItemsManager : MonoBehaviour
     ItemsData TwoEdgedSword;
     [SerializeField]
     ItemsData EnergyShield;
+    [SerializeField]
+    ItemsData SlowHealth;
 
 
     public List<ItemsEnquip> itemsEquip_lst = new List<ItemsEnquip>(5);
@@ -47,12 +49,12 @@ public class PassiveItemsManager : MonoBehaviour
 
     private void Update()
     {
-        if (gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 5&&i==0)
+        /*if (gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 5&&i==0)
         {
             i++;
             AddItem(EnergyShield);
             Debug.Log("trang bi thanh cong");
-        }
+        }*/
         //else if(gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 10 && i == 1)
         //{
         //    i++;

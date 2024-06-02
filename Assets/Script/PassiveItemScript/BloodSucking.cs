@@ -6,8 +6,6 @@ public class BloodSucking : ItemBase
 {
     [SerializeField]
     int heath=5;
-    [SerializeField]
-    int level=1;
 
     int monsterKilled=0;
 

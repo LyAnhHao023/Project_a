@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OdleHeroSkill : MonoBehaviour
+public class OldeHeroSkill : MonoBehaviour
 {
     [SerializeField]
     int killToUseSkill = 10;

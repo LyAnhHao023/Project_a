@@ -7,8 +7,9 @@ public abstract class ItemBase : MonoBehaviour
     public ItemsData itemsData;
     public int level;
 
-    public void SetLevelBase(ItemBase itemBase)
+    public void SetLevelBase(ItemsData itemBase)
     {
+        itemsData = itemBase;
         level = itemBase.level;
     }
 

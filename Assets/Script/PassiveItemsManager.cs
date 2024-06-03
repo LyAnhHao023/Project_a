@@ -51,7 +51,7 @@ public class PassiveItemsManager : MonoBehaviour
 
     private void Update()
     {
-        if (gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 5&&i==0)
+        /*if (gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 5&&i==0)
         {
             i++;
             AddItem(PowerOfMoneyPrefab);
@@ -61,7 +61,7 @@ public class PassiveItemsManager : MonoBehaviour
         {
             i++;
             AddItem(GlassOfKnowladgePrefab);
-        }
+        }*/
     }
 
     public void AddItem(ItemsData itemData)
@@ -70,6 +70,7 @@ public class PassiveItemsManager : MonoBehaviour
         {
             itemData.level = 1;
             GameObject newItem=Instantiate(itemData.ItemBasePrefab, itemObjectTranform);
+            newItem.GetComponent<ItemBase>().SetLevelBase(itemData);
             ItemsEnquip newItemsEnquip = new ItemsEnquip(itemData,newItem);
             itemsEquip_lst.Add(newItemsEnquip);
         }

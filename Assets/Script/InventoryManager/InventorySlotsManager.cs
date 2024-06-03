@@ -11,7 +11,7 @@ public class InventorySlotsManager : MonoBehaviour
     {
         for (int i = 0; i < inventorySlots.Count; i++)
         {
-            weaponSlots[i].SetWeaponSlot(inventorySlots[i]);
+            weaponSlots[i].SetWeaponSlot(inventorySlots[i].weaponData, inventorySlots[i].icon);
         }
     }
 
@@ -19,7 +19,7 @@ public class InventorySlotsManager : MonoBehaviour
     {
         for (int i = 0; i < inventorySlots.Count; i++)
         {
-            itemSlots[i].SetItemSlot(inventorySlots[i]);
+            itemSlots[i].SetItemSlot(inventorySlots[i].itemsData, inventorySlots[i].icon);
         }
     }
 }

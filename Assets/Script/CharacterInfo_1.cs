@@ -19,7 +19,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public HealthBar healthBar;
 
-    [SerializeField] GameObject slowHealth;
+    [SerializeField] public GameObject slowHealth;
     public SlowHealthBar slowHealthBar;
 
     [SerializeField] GameObject shield;
@@ -66,14 +66,14 @@ public class CharacterInfo_1 : MonoBehaviour
     int baseSpeed;
 
     [SerializeField]
-    CharacterData characterData;
+    public CharacterData characterData;
     public GameObject characterAnimate;
     public CharacterStats characterStats;
 
     public int numberMonsterKilled = 0;
 
-    int slowHealthLevel = 1;
-    bool slowHealthAcquired = true;
+    ItemsData slowHealthItem;
+    bool slowHealthAcquired = false;
     float time;
 
     int shieldMaxValue;
@@ -81,7 +81,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
     private void Awake()
     {
-        characterAnimate = Instantiate(characterData.animatorPrefab,transform);
+        characterAnimate = Instantiate(characterData.animatorPrefab, transform);
         characterStats = characterData.stats;
 
         baseAttack = characterStats.strenght;
@@ -98,9 +98,17 @@ public class CharacterInfo_1 : MonoBehaviour
         shieldMaxValue = 0;
         shieldCurrentValue = 0;
 
-        //weaponSlotsManager.Add(characterData.beginerWeapon);
+        foreach (var item in levelUpSelectBuff.upgrades)
+        {
+            if (item.weaponData == characterData.beginerWeapon)
+            {
+                weaponSlotsManager.Add(item);
+                break;
+            }
+        }
+
         weaponsManager.AddWeapon(characterData.beginerWeapon);
-        //inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
+        inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
 
         level = 1;
         maxExpValue = 10;
@@ -131,54 +139,6 @@ public class CharacterInfo_1 : MonoBehaviour
                 slowHealthBar.SetMaxHealth(maxHealth);
                 slowHealthBar.SetHealth(currentSlowhealth);
             }
-
-            if (currentSlowhealth > currentHealth)
-            {
-                time += Time.deltaTime;
-
-                switch (slowHealthLevel)
-                {
-                    case 1:
-                        {
-                            if (time >= 0.5)
-                            {
-                                currentSlowhealth -= 1;
-                                time = 0;
-                            }
-                        }
-                        break;
-                    case 2:
-                        {
-                            if (time >= 0.7)
-                            {
-                                currentSlowhealth -= 1;
-                                time = 0;
-                            }
-                        }
-                        break;
-                    case 3:
-                        {
-                            if (time >= 1)
-                            {
-                                currentSlowhealth -= 1;
-                                time = 0;
-                            }
-                        }
-                        break;
-                    case 4:
-                        {
-                            if (time >= 1.5)
-                            {
-                                currentSlowhealth -= 1;
-                                time = 0;
-                            }
-                        }
-                        break;
-                }
-
-                slowHealthBar.SetHealth(currentSlowhealth);
-            }
-
         }
     }
 
@@ -223,7 +183,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void GainExp(int exp)
     {
-        currentExp += exp+(int)(exp*expPercent);
+        currentExp += exp + (int)(exp * expPercent);
 
         if (currentExp >= maxExpValue)
         {
@@ -271,6 +231,12 @@ public class CharacterInfo_1 : MonoBehaviour
                     itemsManager.AddItem(upgradeDatas[id].itemsData);
                     inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
                     upgradeDatas[id].acquired = true;
+
+                    if (upgradeDatas[id].itemsData.name == "SlowHealth")
+                    {
+                        slowHealthItem = upgradeDatas[id].itemsData;
+                        slowHealthAcquired = true;
+                    }
                 }
                 break;
             case 4: //StatUpgrade
@@ -310,7 +276,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (shieldCurrentValue<=0)
+        if (shieldCurrentValue <= 0)
         {
             currentHealth -= damage;
 
@@ -326,7 +292,7 @@ public class CharacterInfo_1 : MonoBehaviour
                 slowHealthBar.SetHealth(currentSlowhealth);
             }
 
-            if (currentHealth <= 0 || currentSlowhealth <= 0)
+            if (currentHealth <= 0 || (currentSlowhealth <= 0 && slowHealthAcquired))
             {
                 menuManager.GameOverScreen();
                 coins = CoinGainPercent(coins, Mathf.FloorToInt(elapsedTime % 60));
@@ -342,7 +308,7 @@ public class CharacterInfo_1 : MonoBehaviour
         }
         else
         {
-            if(shieldCurrentValue>damage)
+            if (shieldCurrentValue > damage)
             {
                 shieldCurrentValue -= damage;
                 shieldBar.SetShield(shieldCurrentValue);
@@ -350,7 +316,7 @@ public class CharacterInfo_1 : MonoBehaviour
             else
             {
                 int dmg = damage - shieldCurrentValue;
-                shieldCurrentValue=0;
+                shieldCurrentValue = 0;
                 shieldBar.SetShield(shieldCurrentValue);
                 TakeDamage(dmg);
             }
@@ -410,6 +376,16 @@ public class CharacterInfo_1 : MonoBehaviour
         {
             healthBar.SetMaxHealth(characterStats.maxHealth);
             healthBar.SetHealth(currentHealth);
+        }
+    }
+
+    public void SlowHealthDe(int dmg)
+    {
+        if (currentSlowhealth > currentHealth)
+        {
+            currentSlowhealth -= dmg;
+
+            slowHealthBar.SetHealth(currentSlowhealth);
         }
     }
 }

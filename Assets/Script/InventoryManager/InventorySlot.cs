@@ -9,17 +9,17 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] GameObject level;
     [SerializeField] Text levelText;
 
-    public void SetWeaponSlot(UpgradeData weaponData)
+    public void SetWeaponSlot(WeaponData weaponData, Sprite icon)
     {
-        icon.sprite = weaponData.icon;
+        this.icon.sprite = icon;
         level.SetActive(true);
-        levelText.text = string.Format("Lv. {0}", weaponData.weaponData.stats.level);
+        levelText.text = string.Format("Lv. {0}", weaponData.stats.level);
     }
 
-    public void SetItemSlot(UpgradeData itemData)
+    public void SetItemSlot(ItemsData itemData, Sprite icon)
     {
-        icon.sprite = itemData.icon;
+        this.icon.sprite = icon;
         level.SetActive(true);
-        levelText.text = string.Format("Lv. {0}", itemData.itemsData.level);
+        levelText.text = string.Format("Lv. {0}", itemData.level);
     }
 }

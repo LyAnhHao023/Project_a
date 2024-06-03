@@ -3,38 +3,57 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SlowHealthItem : ItemBase
-{   
-    [SerializeField] float time = 0;
+{
+    [SerializeField] float time;
+    [SerializeField] int healthDe;
+    CharacterInfo_1 player;
+
+    private void Start()
+    {
+        player = GetComponentInParent<CharacterInfo_1>();
+    }
 
     public override void ItemEffect()
     {
-        time = GetComponentInParent<CharacterInfo_1>().time;
+        player.SlowHealthDe(healthDe);
+    }
+
+    public override void Update()
+    {
+        time += Time.deltaTime;
+
         switch (level)
         {
             case 1:
                 {
-                    if (time >= 0.1)
+                    if (time >= 0.3)
                     {
-                        GetComponentInParent<CharacterInfo_1>().SlowHealthDe(1);
+                        healthDe = 1;
                         time = 0;
+
+                        ItemEffect();
                     }
                 }
                 break;
             case 2:
                 {
-                    if (time >= 0.2)
+                    if (time >= 0.4)
                     {
-                        GetComponentInParent<CharacterInfo_1>().SlowHealthDe(1);
+                        healthDe = 1;
                         time = 0;
+
+                        ItemEffect();
                     }
                 }
                 break;
             case 3:
                 {
-                    if (time >= 0.3)
+                    if (time >= 0.5)
                     {
-                        GetComponentInParent<CharacterInfo_1>().SlowHealthDe(1);
+                        healthDe = 2;
                         time = 0;
+
+                        ItemEffect();
                     }
                 }
                 break;
@@ -42,16 +61,13 @@ public class SlowHealthItem : ItemBase
                 {
                     if (time >= 0.5)
                     {
-                        GetComponentInParent<CharacterInfo_1>().SlowHealthDe(1);
+                        healthDe = 1;
                         time = 0;
+
+                        ItemEffect();
                     }
                 }
                 break;
         }
-    }
-
-    public override void Update()
-    {
-        ItemEffect();
     }
 }

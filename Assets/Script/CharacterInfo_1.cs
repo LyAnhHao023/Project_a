@@ -98,7 +98,7 @@ public class CharacterInfo_1 : MonoBehaviour
         shieldMaxValue = 0;
         shieldCurrentValue = 0;
 
-        foreach (var item in levelUpSelectBuff.upgrades)
+        foreach (var item in levelUpSelectBuff.weaponList)
         {
             if (item.weaponData == characterData.beginerWeapon)
             {
@@ -214,7 +214,7 @@ public class CharacterInfo_1 : MonoBehaviour
                 break;
             case 1: //ItemUpgrade
                 {
-
+                    
                 }
                 break;
             case 2: //WeaponUnlock

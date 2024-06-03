@@ -13,6 +13,8 @@ public class ShurikenScript : WeaponBase
 
     List<GameObject> ActiveShurikenChildrenLst = new List<GameObject>();
 
+    [SerializeField]
+    WeaponStats baseStat = new WeaponStats(5, 1, 7f);
 
     private void Awake()
     {
@@ -76,5 +78,10 @@ public class ShurikenScript : WeaponBase
     public override void SetCharacterStats()
     {
         characterStats=GetComponentInParent<CharacterInfo_1>().characterStats;
+    }
+
+    public override WeaponStats GetBaseStat()
+    {
+        return baseStat;
     }
 }

@@ -28,6 +28,7 @@ public class ZombieScript : EnemyBase
 
     GameObject ParentDropItem;
 
+
     private void Awake()
     {
         animator = GetComponent<Animator>();

@@ -84,6 +84,4 @@ public class ChildrenZicZagEnemy : EnemyBase
     {
         throw new System.NotImplementedException();
     }
-
-    
 }

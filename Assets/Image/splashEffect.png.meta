@@ -617,7 +617,7 @@ TextureImporter:
         x: 450
         y: 109
         width: 69
-        height: 27
+        height: 45
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -627,48 +627,6 @@ TextureImporter:
       bones: []
       spriteID: e17080d197eb69570800000000000000
       internalID: 8473169176331552542
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: splashEffect_19
-      rect:
-        serializedVersion: 2
-        x: 478
-        y: 132
-        width: 8
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ff4701f23985b1d70800000000000000
-      internalID: 9014896468285224191
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: splashEffect_20
-      rect:
-        serializedVersion: 2
-        x: 488
-        y: 136
-        width: 29
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6cde2cf828f331ea0800000000000000
-      internalID: -5903304856562373178
       vertices: []
       indices: 
       edges: []

@@ -13,6 +13,8 @@ public class ToxinZonesScript : WeaponBase
 
     Vector3 WeaponLocalScale;
 
+    [SerializeField]
+    WeaponStats baseStat = new WeaponStats(1, 1, 1f);
 
     private void Awake()
     {
@@ -101,5 +103,10 @@ public class ToxinZonesScript : WeaponBase
     public override void SetCharacterStats()
     {
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
+    }
+
+    public override WeaponStats GetBaseStat()
+    {
+        return baseStat;
     }
 }

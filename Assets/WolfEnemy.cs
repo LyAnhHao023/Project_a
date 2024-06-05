@@ -46,7 +46,7 @@ public class WolfEnemy : EnemyBase
         ParentDropItem = gameObject;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         rotasionChange = transform.position.x > targetGameObject.transform.position.x ? 180 : 0;
         animator.transform.rotation = Quaternion.Euler(0, rotasionChange, 0);

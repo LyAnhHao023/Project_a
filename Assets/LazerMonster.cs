@@ -2,25 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class ZombieScript : EnemyBase
+public class LazerMonster : EnemyBase
 {
-    //Nhận biết tấn công player 
     public GameObject targetGameObject;
 
     float timeAttack;
 
     Animator animator;
 
-    int rotasionChange=0;
+    int rotasionChange = 0;
 
     [SerializeField]
     GameObject HealthPrefab;
     [SerializeField]
     GameObject ChestPrefab;
-    [SerializeField]
-    GameObject ExpGreenPrefab;
     [SerializeField]
     GameObject ExpRedPrefab;
     [SerializeField]
@@ -28,11 +24,21 @@ public class ZombieScript : EnemyBase
 
     GameObject ParentDropItem;
 
+    [SerializeField]
+    int numberDropCoins = 10;
+    [SerializeField]
+    int numberDropExp = 5;
+
+    [SerializeField]
+    GameObject LazerSkillPrefab;
+
+    float timerSkillLazer;
+
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        
+
     }
 
     public override void SetTarget(GameObject GameObject)
@@ -51,12 +57,19 @@ public class ZombieScript : EnemyBase
     {
         rotasionChange = transform.position.x > targetGameObject.transform.position.x ? 180 : 0;
         animator.transform.rotation = Quaternion.Euler(0, rotasionChange, 0);
+
+        timerSkillLazer-= Time.deltaTime;
+        if(timerSkillLazer < 0)
+        {
+            timerSkillLazer = 4f;
+            LazerSkillPrefab.SetActive(true);
+        }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         timeAttack -= Time.deltaTime;
-        if (collision.gameObject == targetGameObject&& timeAttack <= 0)
+        if (collision.gameObject == targetGameObject && timeAttack <= 0)
         {
             Attack();
         }
@@ -70,44 +83,45 @@ public class ZombieScript : EnemyBase
 
     private void DestroyOb()
     {
-        Destroy(gameObject,1f);
-        Drop();
+        Destroy(gameObject, 1f);
+        ChanceDrop();
     }
 
-    private void Drop()
+    private void ChanceDrop()
     {
-        if (Random.value * 100 <= enemyStats.chanceDropHeath)
-        {
-            Transform health = Instantiate(HealthPrefab).transform;
-            health.position = transform.position;
-            health.transform.parent = ParentDropItem.transform;
-        }
 
-        //Transform chest = Instantiate(ChestPrefab).transform;
-        //chest.position = transform.position;
+        Transform health = Instantiate(HealthPrefab).transform;
+        health.position = RandomPositionDrops(transform.position);
+        health.transform.parent = ParentDropItem.transform;
 
-        if(Random.value * 100 <= enemyStats.chanceDropExp)
-        {
-            GameObject createExpRed = Instantiate(ExpRedPrefab);
-            createExpRed.transform.position = transform.position;
-            createExpRed.GetComponent<CapsuleExp>().SetPlayer(targetGameObject);
-            createExpRed.transform.parent = ParentDropItem.transform;
-        }
-        else
-        {
-            GameObject createGreen = Instantiate(ExpGreenPrefab);
-            createGreen.transform.position = transform.position;
-            createGreen.GetComponent<CapsuleExp>().SetPlayer(targetGameObject);
-            createGreen.transform.parent = ParentDropItem.transform;
-        }
+        Transform chest = Instantiate(ChestPrefab).transform;
+        chest.position = RandomPositionDrops(transform.position);
 
-        if (Random.value * 100 <= enemyStats.chanceDropCoin)
+        for (int i = 0; i <= numberDropCoins; i++)
         {
             GameObject createCoins = Instantiate(CoinPrefab);
-            createCoins.transform.position = transform.position;
+            createCoins.transform.position = RandomPositionDrops(transform.position);
             createCoins.GetComponent<CoinScript>().SetPlayer(targetGameObject);
             createCoins.transform.parent = ParentDropItem.transform;
         }
+        for (int i = 0; i <= numberDropExp; i++)
+        {
+            GameObject createExpRed = Instantiate(ExpRedPrefab);
+            createExpRed.transform.position = RandomPositionDrops(transform.position);
+            createExpRed.GetComponent<CapsuleExp>().SetPlayer(targetGameObject);
+            createExpRed.transform.parent = ParentDropItem.transform;
+        }
+    }
+
+    public Vector3 RandomPositionDrops(Vector3 center)
+    {
+        float radius = 5f;
+        // Tạo một vector direction random
+        Vector3 randomDirection = Random.insideUnitSphere * radius;
+        // Thêm vector direction vào vị trí trung tâm
+        Vector3 randomPosition = center + randomDirection;
+
+        return randomPosition;
     }
 
     public override bool EnemyTakeDmg(int dmg)
@@ -117,8 +131,7 @@ public class ZombieScript : EnemyBase
         if (enemyStats.hp <= 0)
         {
             gameObject.GetComponent<AIPath>().canMove = false;
-            Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
-            rigidbody.simulated = false;
+            GetComponent<Rigidbody2D>().simulated = false;
             animator.SetBool("Dead", true);
             DestroyOb();
             return true;

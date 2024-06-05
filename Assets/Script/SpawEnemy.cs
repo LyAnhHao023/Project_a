@@ -30,6 +30,8 @@ public class SpawEnemy : MonoBehaviour
     EnemyData ZicZigPrefab;
     [SerializeField]
     EnemyData WolfPrefab;
+    [SerializeField]
+    EnemyData LazerMonsterBossPrefab;
 
     [SerializeField] public float spawTime;
     [SerializeField] Vector2 spawArea;
@@ -55,17 +57,16 @@ public class SpawEnemy : MonoBehaviour
         if (timer < 0)
         {
             timer = spawTime;
-            CreateNewEnemy(WolfPrefab);
-            //i++;
+            //CreateNewEnemy(WolfPrefab);
+            i++;
             //if(i%2==0)
             //{
 
             //}
-            //if (i == 5)
-            //{
-            //    CreateNewEnemy(DragonPrefab);
-            //    CreateNewEnemy(ZicZigPrefab);
-            //}
+            if (i == 1)
+            {
+                CreateNewEnemy(LazerMonsterBossPrefab);
+            }
         }
     }
 

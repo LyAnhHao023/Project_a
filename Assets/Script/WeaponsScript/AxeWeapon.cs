@@ -19,6 +19,7 @@ public class AxeWeapon : WeaponBase
 
     CharacterStats characterStats;
 
+    WeaponStats baseStat = new WeaponStats(2, 1, 1f);
 
     private void Awake()
     {
@@ -94,5 +95,10 @@ public class AxeWeapon : WeaponBase
     public override void SetCharacterStats()
     {
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
+    }
+
+    public override WeaponStats GetBaseStat()
+    {
+        return baseStat;
     }
 }

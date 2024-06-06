@@ -79,7 +79,7 @@ public class BombBatScipt : EnemyBase
 
     private void Attack()
     {
-        GetComponent<Rigidbody2D>().mass = 500;
+        GetComponent<Collider2D>().isTrigger = true;
         GetComponent<AIPath>().canMove = false;
         warningZone.SetActive(true);
         Invoke("Explosion",2f);

@@ -12,7 +12,7 @@ public class WarningPointer : MonoBehaviour
     [SerializeField]
     float timeLife=0;
 
-    private void Awake()
+    private void Start()
     {
         if (timeLife != 0)
         {
@@ -20,14 +20,14 @@ public class WarningPointer : MonoBehaviour
         }
     }
 
-    public void SetTargetAndTimeLife(Vector3 target,float time)
+    public void SetTargetAndTimeLife(Transform target,float time)
     {
-        targetPos.position = target;
+        targetPos = target;
         timeLife = time;
         Destroy(gameObject, timeLife);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Vector3 targetPosScreenPoint = Camera.main.WorldToScreenPoint(targetPos.position);
         bool isOffScreen = targetPosScreenPoint.x <= borderSize || targetPosScreenPoint.x >= Screen.width - borderSize || targetPosScreenPoint.y <= borderSize || targetPosScreenPoint.y >= Screen.height - borderSize;

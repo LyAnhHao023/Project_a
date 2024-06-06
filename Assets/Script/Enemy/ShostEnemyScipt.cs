@@ -111,8 +111,10 @@ public class ShostEnemyScipt : EnemyBase
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
         GameObject warningPointer = Instantiate(WarningPointerPrefab);
+
+        warningPointer.GetComponent<WarningPointer>().SetTargetAndTimeLife(transform, 2.5f);
         warningPointer.transform.parent = transform;
-        warningPointer.GetComponent<WarningPointer>().SetTargetAndTimeLife(transform.position, 2.5f);
+
         Invoke("Move", 3f);
         
     }

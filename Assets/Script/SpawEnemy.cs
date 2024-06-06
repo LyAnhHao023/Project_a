@@ -5,80 +5,111 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
+public class EnemiesSpawGroup
+{
+    public EnemyData enemyData;
+    public int count;
+    public bool isBoss;
+
+    public float repeatedTimer;
+    public float timeBetweenRepeated;
+    public int repeatedCount;
+
+    public EnemiesSpawGroup(EnemyData enemyData, int count, bool isBoss)
+    {
+        this.enemyData = enemyData;
+        this.count = count;
+        this.isBoss = isBoss;
+    }
+
+    public void SetRepeatedSpaw(float timeBetweenRepeated,int repeatedCount)
+    {
+        this.timeBetweenRepeated = timeBetweenRepeated;
+        this.repeatedCount = repeatedCount;
+        repeatedTimer = timeBetweenRepeated;
+    }
+}
+
 public class SpawEnemy : MonoBehaviour
 {
-    //Danh sach Prefab enemy
-    [SerializeField] 
-    EnemyData ZombiePrefab;
-    [SerializeField] 
-    EnemyData ZombieBossPrefab;
-    [SerializeField]
-    EnemyData BombBatPrefab;
-    [SerializeField]
-    EnemyData MagicicanPrefab;
-    [SerializeField]
-    EnemyData MagicicanBossPrefab;
-    [SerializeField]
-    EnemyData VanmpireGirlPrefab;
-    [SerializeField]
-    EnemyData GhostPrefab;
-    [SerializeField]
-    EnemyData ZombieSurroundPrefab;
-    [SerializeField]
-    EnemyData DragonPrefab;
-    [SerializeField]
-    EnemyData ZicZigPrefab;
-    [SerializeField]
-    EnemyData WolfPrefab;
-    [SerializeField]
-    EnemyData LazerMonsterBossPrefab;
 
-    [SerializeField] public float spawTime;
     [SerializeField] Vector2 spawArea;
     [SerializeField] GameObject player;
-    public float timer;
     [SerializeField]
     GameObject ParentDropItem;
 
-    List<EnemyData> lstEnemyPrefab;
+    List<EnemiesSpawGroup> lst_EnemiesSpawGroups;
+    List<EnemiesSpawGroup> lst_ReSpawEnemy;
 
+    EnenmyStats enenmyStatsBuff;
 
-    int i = 0;
-
-    private void Start()
-    {
-        lstEnemyPrefab = new List<EnemyData> { ZombiePrefab, ZombieBossPrefab, BombBatPrefab, MagicicanPrefab, 
-            MagicicanBossPrefab, VanmpireGirlPrefab, GhostPrefab,ZombieSurroundPrefab,DragonPrefab,ZicZigPrefab };
-    }
+    public float reduceTimeSpaw=0;
 
     private void Update()
-    {
-        timer -= Time.deltaTime;
-        if (timer < 0)
-        {
-            timer = spawTime;
-            //CreateNewEnemy(WolfPrefab);
-            i++;
-            //if(i%2==0)
-            //{
+    {   
+        ProcessSpaw();
+        ProcessRepeatedSpawGroup();
+    }
 
-            //}
-            if (i == 1)
+    public void PlusOrMinusEnemyStats(int hp, int dmg, int speed, float timeAttack, float chanceDropCoin, float chanceDropHeath, float chanceDropExp)
+    {
+        if (enenmyStatsBuff == null) { enenmyStatsBuff=new EnenmyStats(hp, dmg, speed, timeAttack, chanceDropCoin, chanceDropHeath, chanceDropExp); return; }
+        enenmyStatsBuff.hp += hp;
+        enenmyStatsBuff.dmg += dmg;
+        enenmyStatsBuff.speed += speed;
+        enenmyStatsBuff.timeAttack += timeAttack;
+        enenmyStatsBuff.chanceDropHeath += chanceDropHeath;
+        enenmyStatsBuff.chanceDropCoin += chanceDropCoin;
+        enenmyStatsBuff.chanceDropExp += chanceDropExp;
+
+    }
+
+    private void ProcessRepeatedSpawGroup()
+    {
+        if (lst_ReSpawEnemy != null && lst_ReSpawEnemy.Count > 0)
+        {
+            for (int i = lst_ReSpawEnemy.Count - 1; i >= 0; i--)
             {
-                CreateNewEnemy(LazerMonsterBossPrefab);
+                lst_ReSpawEnemy[i].repeatedTimer -= Time.deltaTime + reduceTimeSpaw;
+                if (lst_ReSpawEnemy[i].repeatedTimer <= 0)
+                {
+                    lst_ReSpawEnemy[i].repeatedTimer = lst_ReSpawEnemy[i].timeBetweenRepeated;
+                    AddGroupToSpaw(lst_ReSpawEnemy[i].enemyData, lst_ReSpawEnemy[i].count, lst_ReSpawEnemy[i].isBoss);
+                    lst_ReSpawEnemy[i].repeatedCount--;
+                    if (lst_ReSpawEnemy[i].repeatedCount <= 0)
+                    {
+                        lst_ReSpawEnemy.RemoveAt(i);
+                    }
+                }
             }
         }
     }
 
-    public void PlusOrMinusChanceCoinDropPersent(float persent)
+    private void ProcessSpaw()
     {
-        foreach (var item in lstEnemyPrefab)
+        if (lst_EnemiesSpawGroups != null&& lst_EnemiesSpawGroups.Count > 0)
         {
-            item.stats.chanceDropCoin += persent;
+            CreateNewEnemy(lst_EnemiesSpawGroups[0].enemyData, lst_EnemiesSpawGroups[0].isBoss);
+            lst_EnemiesSpawGroups[0].count -= 1;
+            if (lst_EnemiesSpawGroups[0].count <= 0)
+            {
+                lst_EnemiesSpawGroups.RemoveAt(0);
+            }
         }
+
     }
 
-    private void CreateNewEnemy(EnemyData enemy)
+    public void AddGroupToSpaw(EnemyData enemyData, int count,bool isBoss)
+    {
+        EnemiesSpawGroup enemiesSpawGroup = new EnemiesSpawGroup(enemyData,count,isBoss);
+
+        if (lst_EnemiesSpawGroups == null) { lst_EnemiesSpawGroups=new List<EnemiesSpawGroup>(); }
+
+        lst_EnemiesSpawGroups.Add(enemiesSpawGroup);
+    }
+
+    public void CreateNewEnemy(EnemyData enemy, bool boss)
     {
         Vector3 position= CreateRandomPosition();
         position += player.transform.position;
@@ -89,12 +120,18 @@ public class SpawEnemy : MonoBehaviour
         }
         GameObject createEnemy=Instantiate(enemy.EnemyBasePrefab);
 
-        createEnemy.GetComponent<EnemyBase>().SetData(enemy);
+        //createEnemy.GetComponent<EnemyBase>().SetData(enemy);
+        //createEnemy.GetComponent<>
+        //createEnemy.GetComponent<EnemyBase>().SetTarget(player);
+        //createEnemy.GetComponent<EnemyBase>().SetParentDropItem(ParentDropItem);
+
+        EnemyBase newEnemyBase= createEnemy.GetComponent<EnemyBase>();
+        newEnemyBase.SetData(enemy);
+        newEnemyBase.SetTarget(player);
+        newEnemyBase.SetParentDropItem(ParentDropItem);
+        newEnemyBase.StatsPlus(enenmyStatsBuff);
 
         createEnemy.transform.position = position;
-
-        createEnemy.GetComponent<EnemyBase>().SetTarget(player);
-        createEnemy.GetComponent<EnemyBase>().SetParentDropItem(ParentDropItem);
         createEnemy.transform.parent = transform;
     }
 
@@ -129,5 +166,18 @@ public class SpawEnemy : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void AddRepeatedSpaw(StageEvent stageEvent)
+    {
+        EnemiesSpawGroup repeatedSpawGroup=new EnemiesSpawGroup(stageEvent.enemySpawData,stageEvent.countEnemy,stageEvent.isBoss);
+        repeatedSpawGroup.SetRepeatedSpaw(stageEvent.repeatedEverySeconds, stageEvent.countRepeated);
+
+        if (lst_ReSpawEnemy == null)
+        {
+            lst_ReSpawEnemy = new List<EnemiesSpawGroup>();
+        }
+
+        lst_ReSpawEnemy.Add(repeatedSpawGroup);
     }
 }

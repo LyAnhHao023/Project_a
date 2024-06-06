@@ -15,7 +15,7 @@ public class PowerOfMoneyItem : MonoBehaviour
     {
         player = GetComponentInParent<CharacterInfo_1>();
         coinCurrent = player.coins;
-        GameObject.Find("===SpawEnemy===").GetComponent<SpawEnemy>().PlusOrMinusChanceCoinDropPersent(persentDropCoinBuffInt);
+        GameObject.Find("===SpawEnemy===").GetComponent<SpawEnemy>().PlusOrMinusEnemyStats(0,0,0,0, persentDropCoinBuffInt, 0,0);
     }
 
     private void FixedUpdate()

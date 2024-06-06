@@ -22,6 +22,18 @@ public abstract class EnemyBase : MonoBehaviour
     public abstract void SetTarget(GameObject GameObject);
     public abstract void SetParentDropItem(GameObject gameObject);
 
+    public void StatsPlus(EnenmyStats enemyStats)
+    {
+        if (enemyStats == null) { return; }
+        this.enemyStats.hp += enemyStats.hp;
+        this.enemyStats.dmg += enemyStats.dmg;
+        this.enemyStats.speed += enemyStats.speed;
+        this.enemyStats.timeAttack += enemyStats.timeAttack;
+        this.enemyStats.chanceDropCoin += enemyStats.chanceDropCoin;
+        this.enemyStats.chanceDropExp += enemyStats.chanceDropExp;
+        this.enemyStats.chanceDropHeath += enemyStats.chanceDropHeath;
+    }
+
     public void IncreaseDecreaseSpeed(int speed)
     {
         enemyStats.speed += speed;

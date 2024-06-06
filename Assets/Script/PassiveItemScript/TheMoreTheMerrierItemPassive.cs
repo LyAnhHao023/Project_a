@@ -6,12 +6,14 @@ public class TheMoreTheMerrierItemPassive : ItemBase
 {
     [SerializeField]
     float timeSpawEnemyMinus=0.5f;
+    [SerializeField]
+    StageData StageData;
     int monterKilled;
 
     private void Awake()
     {
         monterKilled = GetComponentInParent<CharacterInfo_1>().numberMonsterKilled;
-        GameObject.Find("===SpawEnemy===").GetComponent<SpawEnemy>().spawTime -= timeSpawEnemyMinus;
+        GameObject.Find("===SpawEnemy===").GetComponent<SpawEnemy>().reduceTimeSpaw += timeSpawEnemyMinus;
     }
 
     public override void Update()

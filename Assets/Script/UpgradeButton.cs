@@ -24,14 +24,14 @@ public class UpgradeButton : MonoBehaviour
                 {
                     type.text = types[0];
                     newText.SetActive(false);
-                    buffName.text += string.Format(" Lv. {0}", upgradeData.weaponData.stats.level);
+                    buffName.text += string.Format(" Lv. {0}", upgradeData.weaponData.stats.level + 1);
                 }
                 break;
             case 1:
                 {
                     type.text = types[1];
                     newText.SetActive(false);
-                    buffName.text += string.Format(" Lv. {0}", upgradeData.itemsData.level);
+                    buffName.text += string.Format(" Lv. {0}", upgradeData.itemsData.level + 1);
                 }
                 break;
             case 2:

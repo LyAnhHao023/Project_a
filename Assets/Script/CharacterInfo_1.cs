@@ -209,9 +209,10 @@ public class CharacterInfo_1 : MonoBehaviour
         {
             case 0: //WeaponUpgrade
                 {
+                    upgradeDatas[id].acquired = true;
+                    levelUpSelectBuff.WeaponNextUpgradeInfo(upgradeDatas[id]);
                     weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
                     inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
-                    upgradeDatas[id].acquired = true;
                 }
                 break;
             case 1: //ItemUpgrade

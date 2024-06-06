@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.Analytics;
 
 [CreateAssetMenu]
-public class WeaponUpdateInfo : ScriptableObject
+public class UpdateInfo : ScriptableObject
 {
+    public int level;
     public string description;
     public WeaponStats stats;
 }

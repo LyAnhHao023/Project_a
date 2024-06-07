@@ -20,7 +20,6 @@ public class LevelUpSelectBuff : MonoBehaviour
 {
     [SerializeField] List<UpgradeData> upgradeList;
     [SerializeField] CharacterInfo_1 characterInfo;
-    [SerializeField] private AnimationCurve animationCurve;
 
     public List<UpgradeData> weaponList = new List<UpgradeData>();
     public List<UpgradeData> itemList = new List<UpgradeData>();
@@ -34,8 +33,8 @@ public class LevelUpSelectBuff : MonoBehaviour
 
     List<WeightedItem> items = new List<WeightedItem>
     {
-        new WeightedItem(0, 5), //GainCoin
-        new WeightedItem(1, 15), //Stat Upgrade
+        new WeightedItem(0, 2f), //GainCoin
+        new WeightedItem(1, 18f), //Stat Upgrade
         new WeightedItem(2, 30f), //Upgrade
         new WeightedItem(3, 50f) //Unlock
     };

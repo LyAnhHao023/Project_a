@@ -59,7 +59,9 @@ public class WeaponsManager : MonoBehaviour
             {
                 if(item.weaponData == weaponData)
                 {
-                    item.weaponObject.GetComponent<WeaponBase>().weaponStats = weaponData.stats;
+                    item.weaponObject.GetComponent<WeaponBase>().weaponStats.dmg = weaponData.stats.dmg;
+                    item.weaponObject.GetComponent<WeaponBase>().weaponStats.level = weaponData.stats.level;
+                    item.weaponObject.GetComponent<WeaponBase>().weaponStats.timeAttack = weaponData.stats.timeAttack;
                 }
             }
         }

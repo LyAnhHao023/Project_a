@@ -79,7 +79,7 @@ public class CharacterInfo_1 : MonoBehaviour
     int shieldMaxValue;
     public int shieldCurrentValue;
 
-    private void Awake()
+    private void Start()
     {
         characterAnimate = Instantiate(characterData.animatorPrefab, transform);
         characterStats = characterData.stats;
@@ -103,12 +103,12 @@ public class CharacterInfo_1 : MonoBehaviour
             if (item.weaponData == characterData.beginerWeapon)
             {
                 weaponSlotsManager.Add(item);
+                weaponsManager.AddWeapon(item.weaponData);
+                levelUpSelectBuff.WeaponAcquired(item);
+                inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
                 break;
             }
         }
-
-        weaponsManager.AddWeapon(characterData.beginerWeapon);
-        inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
 
         level = 1;
         maxExpValue = 10;
@@ -209,7 +209,10 @@ public class CharacterInfo_1 : MonoBehaviour
         {
             case 0: //WeaponUpgrade
                 {
-
+                    upgradeDatas[id].acquired = true;
+                    levelUpSelectBuff.WeaponNextUpgradeInfo(upgradeDatas[id]);
+                    weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
+                    inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
                 }
                 break;
             case 1: //ItemUpgrade
@@ -223,6 +226,8 @@ public class CharacterInfo_1 : MonoBehaviour
                     weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
                     inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
                     upgradeDatas[id].acquired = true;
+
+                    levelUpSelectBuff.WeaponAcquired(upgradeDatas[id]);
                 }
                 break;
             case 3: //ItemUnlock
@@ -231,6 +236,8 @@ public class CharacterInfo_1 : MonoBehaviour
                     itemsManager.AddItem(upgradeDatas[id].itemsData);
                     inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
                     upgradeDatas[id].acquired = true;
+
+                    levelUpSelectBuff.ItemAcquired(upgradeDatas[id]);
 
                     if (upgradeDatas[id].itemsData.name == "SlowHealth")
                     {

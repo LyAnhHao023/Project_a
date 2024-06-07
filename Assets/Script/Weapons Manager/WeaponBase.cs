@@ -8,6 +8,7 @@ public abstract class WeaponBase : MonoBehaviour
     public WeaponData weaponData;
 
     public WeaponStats weaponStats;
+
     public float timer=0;
 
     WeaponStats weaponBaseStats;
@@ -25,7 +26,7 @@ public abstract class WeaponBase : MonoBehaviour
     public virtual void SetData(WeaponData wd)
     {
         weaponData = wd;
-        weaponStats = new WeaponStats(wd.stats.dmg,wd.stats.level,wd.stats.timeAttack);
+        weaponStats = wd.stats;
     }
     public virtual void SetBaseStat(WeaponData wd)
     {

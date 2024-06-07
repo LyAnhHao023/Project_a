@@ -55,6 +55,13 @@ public class WeaponsManager : MonoBehaviour
         else
         {
             //Do update weapon
+            foreach(var item in  weapons_lst)
+            {
+                if(item.weaponData == weaponData)
+                {
+                    item.weaponObject.GetComponent<WeaponBase>().weaponStats = weaponData.stats;
+                }
+            }
         }
     }
 }

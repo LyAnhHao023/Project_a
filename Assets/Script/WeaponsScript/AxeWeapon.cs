@@ -27,28 +27,6 @@ public class AxeWeapon : WeaponBase
         SetCharacterStats();
     }
 
-    //private void ApllyDmg(Collider2D[] colliders)
-    //{
-    //    for(int i = 0; i < colliders.Length; i++)
-    //    {
-    //        ZombieScript z = colliders[i].GetComponent<ZombieScript>();
-    //        if(z != null)
-    //        {
-    //            bool isCrit = UnityEngine.Random.value * 100 < characterStats.crit;
-    //            float dmg = isCrit ?
-    //                (weaponStats.dmg + characterStats.strenght) * characterStats.critDmg : (weaponStats.dmg + characterStats.strenght);
-
-    //            PostDmg((int)dmg, z.transform.position, isCrit);
-
-    //            bool isDead=z.ZombieTakeDmg((int)dmg);
-    //            if(isDead)
-    //            {
-    //                GetComponentInParent<CharacterInfo_1>().KilledMonster();
-    //            }
-
-    //        }
-    //    }
-    //}
 
     public void ApllyDmg(Collider2D collision)
     {

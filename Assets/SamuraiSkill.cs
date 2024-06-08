@@ -16,6 +16,8 @@ public class SamuraiSkill : MonoBehaviour
     int energy = 0;
     CharacterStats characterStats;
 
+    [SerializeField] float timeToDeActiveSkill = 5f;
+
 
     // Update is called once per frame
     void Update()
@@ -37,7 +39,7 @@ public class SamuraiSkill : MonoBehaviour
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
         effectSkillPrefab.GetComponent<effectSkillOdleHero>().SetDmg(characterStats, dmgSkill, transform.position);
         effectSkillPrefab.SetActive(true);
-        Invoke("DeActiveSkil", 2f);
+        Invoke("DeActiveSkil", timeToDeActiveSkill);
 
     }
 

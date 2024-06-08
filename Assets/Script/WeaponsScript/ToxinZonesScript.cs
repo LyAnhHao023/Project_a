@@ -92,7 +92,7 @@ public class ToxinZonesScript : WeaponBase
     {
         ParticleSystem ps = GetComponent<ParticleSystem>();
         ParticleSystem.ShapeModule shape = ps.shape;
-        shape.radius = x*3;//3 la radius mac dinh cua effect
+        shape.radius = x*3.5f;//3 la radius mac dinh cua effect
     }
 
     public override void Attack()

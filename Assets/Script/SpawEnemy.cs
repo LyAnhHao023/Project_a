@@ -39,6 +39,10 @@ public class SpawEnemy : MonoBehaviour
     [SerializeField]
     GameObject ParentDropItem;
 
+    [SerializeField] float timeToBuffEnemy = 30f;
+    float timer;
+    float statsBuffByTime=1;
+
     List<EnemiesSpawGroup> lst_EnemiesSpawGroups;
     List<EnemiesSpawGroup> lst_ReSpawEnemy;
 
@@ -46,8 +50,19 @@ public class SpawEnemy : MonoBehaviour
 
     public float reduceTimeSpaw=0;
 
+    private void Start()
+    {
+        timer = timeToBuffEnemy;
+    }
+
     private void Update()
-    {   
+    {
+        timer -= Time.deltaTime;
+        if (timer < 0)
+        {
+            statsBuffByTime += 0.1f;
+        }
+
         ProcessSpaw();
         ProcessRepeatedSpawGroup();
     }
@@ -118,21 +133,16 @@ public class SpawEnemy : MonoBehaviour
             position = CreateRandomPosition();
             position += player.transform.position;
         }
-        GameObject createEnemy=Instantiate(enemy.EnemyBasePrefab);
-
-        //createEnemy.GetComponent<EnemyBase>().SetData(enemy);
-        //createEnemy.GetComponent<>
-        //createEnemy.GetComponent<EnemyBase>().SetTarget(player);
-        //createEnemy.GetComponent<EnemyBase>().SetParentDropItem(ParentDropItem);
+        GameObject createEnemy=Instantiate(enemy.EnemyBasePrefab, transform);
 
         EnemyBase newEnemyBase= createEnemy.GetComponent<EnemyBase>();
         newEnemyBase.SetData(enemy);
         newEnemyBase.SetTarget(player);
         newEnemyBase.SetParentDropItem(ParentDropItem);
         newEnemyBase.StatsPlus(enenmyStatsBuff);
+        newEnemyBase.StatsBuffByTime(statsBuffByTime);
 
         createEnemy.transform.position = position;
-        createEnemy.transform.parent = transform;
     }
 
     //Tạo vị trí ngẫu nhiên

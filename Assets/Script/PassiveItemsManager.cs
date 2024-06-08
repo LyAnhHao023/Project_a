@@ -38,31 +38,19 @@ public class PassiveItemsManager : MonoBehaviour
     ItemsData PowerOfMoneyPrefab;
     [SerializeField]
     ItemsData GlassOfKnowladgePrefab;
+    [SerializeField]
+    ItemsData BurningAuraPrefab;
 
 
     public List<ItemsEnquip> itemsEquip_lst = new List<ItemsEnquip>(5);
 
     int i = 0;
 
-    /*private void Start()
+    private void Start()
     {
-        AddItem(bloodSuckingPrefab);
-    }*/
-
-    private void Update()
-    {
-        /*if (gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 5&&i==0)
-        {
-            i++;
-            AddItem(PowerOfMoneyPrefab);
-            Debug.Log("trang bi thanh cong");
-        }
-        else if (gameObject.GetComponentInParent<CharacterInfo_1>().numberMonsterKilled == 10 && i == 1)
-        {
-            i++;
-            AddItem(GlassOfKnowladgePrefab);
-        }*/
+        AddItem(BurningAuraPrefab);
     }
+
 
     public void AddItem(ItemsData itemData)
     {

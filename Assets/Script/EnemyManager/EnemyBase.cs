@@ -34,6 +34,14 @@ public abstract class EnemyBase : MonoBehaviour
         this.enemyStats.chanceDropHeath += enemyStats.chanceDropHeath;
     }
 
+    public void StatsBuffByTime(float persentBuff)
+    {
+        this.enemyStats.hp =(int)(this.enemyStats.hp* persentBuff);
+        this.enemyStats.dmg = (int)(this.enemyStats.dmg * persentBuff);
+        this.enemyStats.speed = (int)(this.enemyStats.speed * persentBuff);
+        this.enemyStats.timeAttack = (this.enemyStats.timeAttack * persentBuff);
+    }
+
     public void IncreaseDecreaseSpeed(int speed)
     {
         enemyStats.speed += speed;

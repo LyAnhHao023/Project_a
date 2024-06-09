@@ -9,7 +9,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     public EnenmyStats enemyStats;
 
-    bool isKnockback=false;
+    public bool isKnockback=false;
     private Rigidbody2D rb;
     public virtual void SetData(EnemyData enemy)
     {

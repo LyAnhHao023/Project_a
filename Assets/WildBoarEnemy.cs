@@ -1,19 +1,20 @@
 ﻿using Pathfinding;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class ZombieScript : EnemyBase
+public class WildBoarEnemy : EnemyBase
 {
-    //Nhận biết tấn công player 
     public GameObject targetGameObject;
 
     float timeAttack;
+    float timeApllyDmg;
 
     Animator animator;
 
-    int rotasionChange=0;
+    int rotasionChange = 0;
 
     [SerializeField]
     GameObject HealthPrefab;
@@ -25,12 +26,15 @@ public class ZombieScript : EnemyBase
     GameObject CoinPrefab;
 
     GameObject ParentDropItem;
+    Rigidbody2D rb;
+
+    bool isUseSkill=false;
 
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
     public override void SetTarget(GameObject GameObject)
@@ -47,16 +51,71 @@ public class ZombieScript : EnemyBase
 
     private void FixedUpdate()
     {
+        timeApllyDmg -= Time.deltaTime;
+        if (!isUseSkill)
+        {
+            rotasionChange = transform.position.x > targetGameObject.transform.position.x ? 180 : 0;
+            animator.transform.rotation = Quaternion.Euler(0, rotasionChange, 0);
+        }
+
         timeAttack -= Time.deltaTime;
-        rotasionChange = transform.position.x > targetGameObject.transform.position.x ? 180 : 0;
-        animator.transform.rotation = Quaternion.Euler(0, rotasionChange, 0);
+        Collider2D[] collider = Physics2D.OverlapBoxAll(transform.position, new Vector2(18, 18), 0f);
+        foreach (var item in collider)
+        {
+            if (item.gameObject == targetGameObject && timeAttack<0)
+            {
+                timeAttack = enemyStats.timeAttack;
+                ReadyRush();
+                return;
+            }
+        }
 
+    }
 
+    private void ReadyRush()
+    {
+        isUseSkill = true;
+        GetComponent<AIPath>().canMove = false;
+        GetComponent<Collider2D>().isTrigger = true;
+        animator.SetBool("Skill", true);
+        StartCoroutine(DelayedAction(0.9f, Rush));
+    }
+
+    private void Rush()
+    {
+        isKnockback = true;
+        Vector2 dic=targetGameObject.transform.position-transform.position;
+        rb.AddForce(dic*50,ForceMode2D.Force);
+        StartCoroutine(DelayedAction(2f, StopRush));
+    }
+
+    private void StopRush()
+    {
+        isUseSkill = false;
+        isKnockback = false;
+        GetComponent<AIPath>().canMove = true;
+        GetComponent<Collider2D>().isTrigger = false;
+        animator.SetBool("Skill", false);
+        rb.velocity = Vector2.zero;
+    }
+
+    IEnumerator DelayedAction(float timeDelay, Action function)
+    {
+        yield return new WaitForSeconds(timeDelay);
+        function();
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject == targetGameObject&& timeAttack <= 0)
+        if (collision.gameObject == targetGameObject && timeApllyDmg <= 0)
+        {
+            Attack();
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject == targetGameObject && timeApllyDmg <= 0)
         {
             Attack();
         }
@@ -64,19 +123,20 @@ public class ZombieScript : EnemyBase
 
     private void Attack()
     {
-        timeAttack = enemyStats.timeAttack;
+        StopRush();
+        timeApllyDmg = 1f;  
         targetGameObject.GetComponent<CharacterInfo_1>().TakeDamage(enemyStats.dmg);
     }
 
     private void DestroyOb()
     {
-        Destroy(gameObject,1f);
+        Destroy(gameObject, 1f);
         Drop();
     }
 
     private void Drop()
     {
-        if (Random.value * 100 <= enemyStats.chanceDropHeath)
+        if (UnityEngine.Random.value * 100 <= enemyStats.chanceDropHeath)
         {
             Transform health = Instantiate(HealthPrefab).transform;
             health.position = transform.position;
@@ -86,7 +146,7 @@ public class ZombieScript : EnemyBase
         //Transform chest = Instantiate(ChestPrefab).transform;
         //chest.position = transform.position;
 
-        if(Random.value * 100 <= enemyStats.chanceDropExp)
+        if (UnityEngine.Random.value * 100 <= enemyStats.chanceDropExp)
         {
             GameObject createExpRed = Instantiate(ExpRedPrefab);
             createExpRed.transform.position = transform.position;
@@ -101,7 +161,7 @@ public class ZombieScript : EnemyBase
             createGreen.transform.parent = ParentDropItem.transform;
         }
 
-        if (Random.value * 100 <= enemyStats.chanceDropCoin)
+        if (UnityEngine.Random.value * 100 <= enemyStats.chanceDropCoin)
         {
             GameObject createCoins = Instantiate(CoinPrefab);
             createCoins.transform.position = transform.position;

@@ -11,6 +11,7 @@ public class BloodSucking : ItemBase
 
     private void Start()
     {
+        level = 1;
         SetItemStat();
     }
 

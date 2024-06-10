@@ -16,9 +16,9 @@ public class TwoEdgedSwordItemPasive : ItemBase
 
     private void Awake()
     {
+        level = 1;
+        SetItemStat();
         player = GetComponentInParent<CharacterInfo_1>();
-        player.attackPercent += dmgBuff;
-        player.statUpdate();
     }
 
     public override void Update()
@@ -43,37 +43,40 @@ public class TwoEdgedSwordItemPasive : ItemBase
                 {
                     dmgBuff = 0.2f;
                     HpMinusPersecons = 2;
-                    timeMinusHp = 2;
+                    timeMinusHp = 3f;
                 }
                 break;
             case 2:
                 {
-                    dmgBuff += 0.3f;
+                    dmgBuff = 0.3f; // total 0.5f
                     HpMinusPersecons = 3;
-                    timeMinusHp = 2;
+                    timeMinusHp = 3f;
                 }
                 break;
             case 3:
                 {
-                    dmgBuff += 0.2f;
+                    dmgBuff = 0.2f; //total 0.7f
                     HpMinusPersecons = 3;
-                    timeMinusHp = 2.5f;
+                    timeMinusHp = 3f;
                 }
                 break;
             case 4:
                 {
-                    dmgBuff += 0.1f;
-                    HpMinusPersecons = 2;
-                    timeMinusHp = 3f;
+                    dmgBuff = 0.1f; //total 0.8f
+                    HpMinusPersecons = 3;
+                    timeMinusHp = 2f;
                 }
                 break;
             case 5:
                 {
-                    dmgBuff += 0.2f;
+                    dmgBuff = 0.2f; //total 1f
                     HpMinusPersecons = 2;
-                    timeMinusHp = 4f;
+                    timeMinusHp = 2f;
                 }
                 break;
         }
+
+        player.attackPercent += dmgBuff;
+        player.statUpdate();
     }
 }

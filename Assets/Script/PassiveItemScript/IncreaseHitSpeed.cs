@@ -7,15 +7,18 @@ public class IncreaseHitSpeed : ItemBase
 {
     [SerializeField]
     int persentSpeedIncrease;
+    [SerializeField]
+    int totalPersentSpeedIncrease;
     List<weaponEnquip> weaponEnquips_lst;
 
     bool isJustEnquip=true;
 
     private void Start()
     {
+        level = 1;
         SetItemStat();
-        ItemEffect();
     }
+
     public override void ItemEffect()
     {
         // get list weapon enquiped and buff attack speed
@@ -38,7 +41,7 @@ public class IncreaseHitSpeed : ItemBase
             if (weaponEnquips_lst.Count < GetComponentInParent<WeaponsManager>().weapons_lst.Count)
             {
                 float curentTimeAttack = weaponEnquips_lst.Last().weaponObject.GetComponent<WeaponBase>().weaponStats.timeAttack;
-                weaponEnquips_lst.Last().weaponObject.GetComponent<WeaponBase>().weaponStats.timeAttack -= curentTimeAttack * persentSpeedIncrease / 100;
+                weaponEnquips_lst.Last().weaponObject.GetComponent<WeaponBase>().weaponStats.timeAttack -= curentTimeAttack * totalPersentSpeedIncrease / 100;
             }
         }
         
@@ -51,28 +54,33 @@ public class IncreaseHitSpeed : ItemBase
             case 1:
                 {
                     persentSpeedIncrease = 10;
+                    totalPersentSpeedIncrease = persentSpeedIncrease; // totalPersentSpeedIncrease = 10
                 }
                 break;
             case 2:
                 {
-                    persentSpeedIncrease = 25;
+                    totalPersentSpeedIncrease += persentSpeedIncrease; // totalPersentSpeedIncrease = 20
                 }
                 break;
             case 3:
                 {
-                    persentSpeedIncrease = 30;
+                    totalPersentSpeedIncrease += persentSpeedIncrease; // totalPersentSpeedIncrease = 30
                 }
                 break;
             case 4:
                 {
-                    persentSpeedIncrease = 40;
+                    persentSpeedIncrease = 20;
+                    totalPersentSpeedIncrease += persentSpeedIncrease; // totalPersentSpeedIncrease = 50
                 }
                 break;
             case 5:
                 {
-                    persentSpeedIncrease = 50;
+                    persentSpeedIncrease = 25;
+                    totalPersentSpeedIncrease += persentSpeedIncrease; // totalPersentSpeedIncrease = 75
                 }
                 break;
         }
+
+        ItemEffect();
     }
 }

@@ -71,10 +71,10 @@ public class SpawEnemy : MonoBehaviour
         {
             for (int i = lst_ReSpawEnemy.Count - 1; i >= 0; i--)
             {
-                lst_ReSpawEnemy[i].repeatedTimer -= Time.deltaTime + reduceTimeSpaw;
+                lst_ReSpawEnemy[i].repeatedTimer -= Time.deltaTime;
                 if (lst_ReSpawEnemy[i].repeatedTimer <= 0)
                 {
-                    lst_ReSpawEnemy[i].repeatedTimer = lst_ReSpawEnemy[i].timeBetweenRepeated;
+                    lst_ReSpawEnemy[i].repeatedTimer = lst_ReSpawEnemy[i].timeBetweenRepeated - reduceTimeSpaw;
                     AddGroupToSpaw(lst_ReSpawEnemy[i].enemyData, lst_ReSpawEnemy[i].count, lst_ReSpawEnemy[i].isBoss);
                     lst_ReSpawEnemy[i].repeatedCount--;
                     if (lst_ReSpawEnemy[i].repeatedCount <= 0)

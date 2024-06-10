@@ -13,6 +13,7 @@ public class PowerOfMoneyItem : ItemBase
     int coinCurrent;
     private void Start()
     {
+        level = 1;
         SetItemStat();
         player = GetComponentInParent<CharacterInfo_1>();
         coinCurrent = player.coins;

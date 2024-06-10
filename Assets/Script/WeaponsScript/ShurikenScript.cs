@@ -13,7 +13,6 @@ public class ShurikenScript : WeaponBase
 
     List<GameObject> ActiveShurikenChildrenLst = new List<GameObject>();
 
-    [SerializeField]
     WeaponStats baseStat = new WeaponStats(5, 1, 10f);
 
     private void Awake()

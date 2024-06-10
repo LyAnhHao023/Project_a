@@ -14,6 +14,7 @@ public class EnergyShieldItem : ItemBase
 
     private void Start()
     {
+        level = 1;
         SetItemStat();
         animator = GetComponent<Animator>();
         player = GetComponentInParent<CharacterInfo_1>();

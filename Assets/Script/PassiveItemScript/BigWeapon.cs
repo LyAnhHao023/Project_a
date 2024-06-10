@@ -9,6 +9,7 @@ public class BigWeapon : ItemBase
 
     private void Awake()
     {
+        level = 1;
         SetItemStat();
     }
     public override void ItemEffect()
@@ -28,17 +29,17 @@ public class BigWeapon : ItemBase
                 break;
             case 2:
                 {
-                    persentBuffBigWeapons = 1.3f;
+                    persentBuffBigWeapons = 1.4f;
                 }
                 break;
             case 3:
                 {
-                    persentBuffBigWeapons = 1.4f;
+                    persentBuffBigWeapons = 1.6f;
                 }
                 break;
             case 4:
                 {
-                    persentBuffBigWeapons = 1.5f;
+                    persentBuffBigWeapons = 1.8f;
                 }
                 break;
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,14 @@ public enum UpgradeType
     GainCoin = 5
 }
 
+[Serializable]
+public class UpgradeInfo
+{
+    public int level;
+    public string description;
+    public WeaponStats stats;
+}
+
 [CreateAssetMenu]
 public class UpgradeData : ScriptableObject
 {
@@ -22,6 +31,8 @@ public class UpgradeData : ScriptableObject
     public WeaponData weaponData;
     public ItemsData itemsData;
     public bool acquired = false;
+
+    public List<UpgradeInfo> UpgradeInfos;
 
     public void Awake()
     {

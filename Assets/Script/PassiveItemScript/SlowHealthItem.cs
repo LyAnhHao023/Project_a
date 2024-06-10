@@ -12,6 +12,7 @@ public class SlowHealthItem : ItemBase
 
     private void Start()
     {
+        level = 1;
         SetItemStat();
         player = GetComponentInParent<CharacterInfo_1>();
     }
@@ -38,26 +39,26 @@ public class SlowHealthItem : ItemBase
         {
             case 1:
                 {
-                    healthDe = 2;
-                    timeDe = 0.3f;
+                    healthDe = 3;
+                    timeDe = 0.2f;
                 }
                 break;
             case 2:
                 {
                     healthDe = 2;
-                    timeDe = 0.4f;
+                    timeDe = 0.3f;
                 }
                 break;
             case 3:
                 {
                     healthDe = 2;
-                    timeDe = 0.5f;
+                    timeDe = 0.4f;
                 }
                 break;
             case 4:
                 {
                     healthDe = 1;
-                    timeDe = 0.5f;
+                    timeDe = 0.4f;
                 }
                 break;
         }

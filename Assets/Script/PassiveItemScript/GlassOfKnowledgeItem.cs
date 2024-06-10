@@ -16,6 +16,7 @@ public class GlassOfKnowledgeItem : ItemBase
     // Start is called before the first frame update
     void Start()
     {
+        level = 1;
         SetItemStat();
         player =GetComponentInParent<CharacterInfo_1>();
         ItemEffect();
@@ -32,27 +33,27 @@ public class GlassOfKnowledgeItem : ItemBase
                 break;
             case 2:
                 {
-                    expPersent += 0.2f;
+                    player.expPercent += 0.2f;
                 }
                 break;
             case 3:
                 {
-                    expPersent += 0.3f;
+                    player.expPercent += 0.3f;
                 }
                 break;
             case 4:
                 {
-                    expPersent += 0.3f;
+                    player.expPercent += 0.3f;
                 }
                 break;
             case 5:
                 {
-                    expPersent += 0.5f;
+                    player.expPercent += 0.5f;
                 }
                 break;
             case 6:
                 {
-                    expPersent += 0.5f;
+                    player.expPercent += 0.5f;
                 }
                 break;
         }

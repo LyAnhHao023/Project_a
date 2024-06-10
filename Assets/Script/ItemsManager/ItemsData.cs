@@ -8,5 +8,4 @@ public class ItemsData : ScriptableObject
     public string name;
     public int level;
     public GameObject ItemBasePrefab;
-    public List<UpgradeInfo> itemUpgradeInfos;
 }

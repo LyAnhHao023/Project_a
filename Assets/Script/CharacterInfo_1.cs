@@ -217,7 +217,10 @@ public class CharacterInfo_1 : MonoBehaviour
                 break;
             case 1: //ItemUpgrade
                 {
-                    
+                    upgradeDatas[id].acquired = true;
+                    levelUpSelectBuff.ItemNextUpgradeInfo(upgradeDatas[id]);
+                    itemsManager.AddItem(upgradeDatas[id].itemsData);
+                    inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
                 }
                 break;
             case 2: //WeaponUnlock

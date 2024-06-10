@@ -2,6 +2,7 @@ using NUnit.Framework.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class ItemsEnquip
@@ -65,6 +66,15 @@ public class PassiveItemsManager : MonoBehaviour
         else
         {
             //do update
+            foreach (var item in itemsEquip_lst)
+            {
+                if (item.itemData == itemData)
+                {
+                    item.itemObject.GetComponent<ItemBase>().level = itemData.level;
+                    item.itemObject.GetComponent<ItemBase>().SetItemStat();
+                    break;
+                }
+            }
         }
     }
 

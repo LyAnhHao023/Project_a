@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class SlowHealthItem : ItemBase
 {
-    [SerializeField] float time;
+    [SerializeField] float timeDe;
     [SerializeField] int healthDe;
     CharacterInfo_1 player;
 
+    float time;
+
     private void Start()
     {
+        level = 1;
+        SetItemStat();
         player = GetComponentInParent<CharacterInfo_1>();
     }
 
@@ -22,50 +26,39 @@ public class SlowHealthItem : ItemBase
     {
         time += Time.deltaTime;
 
-        switch (level)
+        if (time >= timeDe)
+        {
+            ItemEffect();
+            time = 0;
+        }
+    }
+
+    public override void SetItemStat()
+    {
+        switch(level)
         {
             case 1:
                 {
-                    if (time >= 0.3)
-                    {
-                        healthDe = 1;
-                        time = 0;
-
-                        ItemEffect();
-                    }
+                    healthDe = 3;
+                    timeDe = 0.2f;
                 }
                 break;
             case 2:
                 {
-                    if (time >= 0.4)
-                    {
-                        healthDe = 1;
-                        time = 0;
-
-                        ItemEffect();
-                    }
+                    healthDe = 2;
+                    timeDe = 0.3f;
                 }
                 break;
             case 3:
                 {
-                    if (time >= 0.5)
-                    {
-                        healthDe = 2;
-                        time = 0;
-
-                        ItemEffect();
-                    }
+                    healthDe = 2;
+                    timeDe = 0.4f;
                 }
                 break;
             case 4:
                 {
-                    if (time >= 0.5)
-                    {
-                        healthDe = 1;
-                        time = 0;
-
-                        ItemEffect();
-                    }
+                    healthDe = 1;
+                    timeDe = 0.4f;
                 }
                 break;
         }

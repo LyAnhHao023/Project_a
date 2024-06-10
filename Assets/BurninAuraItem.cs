@@ -39,4 +39,9 @@ public class BurninAuraItem : ItemBase
             
         }
     }
+
+    public override void SetItemStat()
+    {
+
+    }
 }

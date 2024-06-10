@@ -10,8 +10,9 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void StartGame()
+    public void StartGame(int id)
     {
+        StaticData.LevelType = id;
         SceneManager.LoadScene("SampleScene");
     }
 }

@@ -72,15 +72,16 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public int numberMonsterKilled = 0;
 
-    ItemsData slowHealthItem;
     bool slowHealthAcquired = false;
-    float time;
 
     int shieldMaxValue;
     public int shieldCurrentValue;
 
     private void Start()
     {
+        if(StaticData.SelectedCharacter != null)
+            characterData = StaticData.SelectedCharacter;
+
         characterAnimate = Instantiate(characterData.animatorPrefab, transform);
         characterStats = characterData.stats;
 
@@ -244,7 +245,6 @@ public class CharacterInfo_1 : MonoBehaviour
 
                     if (upgradeDatas[id].itemsData.name == "SlowHealth")
                     {
-                        slowHealthItem = upgradeDatas[id].itemsData;
                         slowHealthAcquired = true;
                     }
                 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
 {
-    [SerializeField] List<CharacterData> characterDatas = new List<CharacterData>();
+    [SerializeField] public List<CharacterData> characterDatas = new List<CharacterData>();
 
     private void Start()
     {

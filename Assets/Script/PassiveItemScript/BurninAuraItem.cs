@@ -22,7 +22,8 @@ public class BurninAuraItem : ItemBase
     // Start is called before the first frame update
     void Start()
     {
-        player=GetComponentInParent<CharacterInfo_1>();
+        SetItemStat();
+        player =GetComponentInParent<CharacterInfo_1>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,6 +43,26 @@ public class BurninAuraItem : ItemBase
 
     public override void SetItemStat()
     {
-
+        switch (level)
+        {
+            case 1:
+                {
+                    dmgBurn = 2;
+                    timeToBurn = 2;
+                }
+                break;
+            case 2:
+                {
+                    dmgBurn = 4;
+                    timeToBurn = 3;
+                }
+                break;
+            case 3:
+                {
+                    dmgBurn = 5;
+                    timeToBurn = 3;
+                }
+                break;
+        }
     }
 }

@@ -47,10 +47,10 @@ public class PassiveItemsManager : MonoBehaviour
 
     int i = 0;
 
-    private void Start()
+    /*private void Start()
     {
         AddItem(BurningAuraPrefab);
-    }
+    }*/
 
 
     public void AddItem(ItemsData itemData)

@@ -18,6 +18,7 @@ public class CharacterStats
 public class CharacterData : ScriptableObject
 {
     public string name;
+    public Sprite image;
     public CharacterStats stats;
     public GameObject animatorPrefab;
     public WeaponData beginerWeapon;

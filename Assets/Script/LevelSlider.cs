@@ -14,8 +14,11 @@ public class LevelSlider : MonoBehaviour
     [SerializeField] float tweenTime;
     [SerializeField] LeanTweenType tweenType;
 
+    [SerializeField] List<GameObject> pageList;
+
     private void Awake()
     {
+        maxPage = pageList.Count;
         currentPage = 1;
         targetPos = levelPageRect.localPosition;
     }

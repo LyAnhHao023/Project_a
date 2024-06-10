@@ -13,6 +13,7 @@ public class IncreaseHitSpeed : ItemBase
 
     private void Start()
     {
+        SetItemStat();
         ItemEffect();
     }
     public override void ItemEffect()
@@ -43,4 +44,35 @@ public class IncreaseHitSpeed : ItemBase
         
     }
 
+    public override void SetItemStat()
+    {
+        switch (level)
+        {
+            case 1:
+                {
+                    persentSpeedIncrease = 10;
+                }
+                break;
+            case 2:
+                {
+                    persentSpeedIncrease = 25;
+                }
+                break;
+            case 3:
+                {
+                    persentSpeedIncrease = 30;
+                }
+                break;
+            case 4:
+                {
+                    persentSpeedIncrease = 40;
+                }
+                break;
+            case 5:
+                {
+                    persentSpeedIncrease = 50;
+                }
+                break;
+        }
+    }
 }

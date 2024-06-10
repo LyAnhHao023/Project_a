@@ -158,17 +158,32 @@ public class LevelUpSelectBuff : MonoBehaviour
                     {
                         int randomUpType = -1;
 
-                        if(weaponAcquiredList.Count<UpgradeData>(item => item.weaponData.stats.level < 7) != 0)
-                        {
-                            randomUpType = 0;
-                        }
+                        int weaponNum = weaponAcquiredList.Count<UpgradeData>(item => item.weaponData.stats.level == 7); //so luong vu khi chua dat level toi da (max = 5)
 
-                        if (weaponAcquiredList.Count<UpgradeData>(item => item.weaponData.stats.level == 7) == 5)
+                        int itemNum = itemAcquiredList.Count<UpgradeData>(item => item.itemsData.level == item.itemsData.itemUpgradeInfos.Count - 1); //so luong trang bi chua dat level toi da (max = 5)
+
+                        if ((weaponNum == weaponAcquiredList.Count && itemNum == itemAcquiredList.Count) || (weaponNum == weaponAcquiredList.Count && itemNum == 0  ))
                         {
                             UpdateRate(type);
                             break;
                         }
-                        //randomUpType = Random.Range(0, 2);
+
+                        if (weaponNum != weaponAcquiredList.Count && itemNum != itemAcquiredList.Count)
+                        {
+                            randomUpType = Random.Range(0, 2);
+                        }
+                        else
+                        {
+                            if(weaponNum == weaponAcquiredList.Count)
+                            {
+                                randomUpType = 1;
+                            }
+
+                            if (itemNum == itemAcquiredList.Count)
+                            {
+                                randomUpType = 0;
+                            }
+                        }
 
                         switch (randomUpType)
                         {
@@ -180,17 +195,33 @@ public class LevelUpSelectBuff : MonoBehaviour
 
                                         foreach (var item in weaponUpgradeList)
                                         {
-                                            if(item.weaponData.name == randomUpdate.weaponData.name)
+                                            if (item.weaponData.name == randomUpdate.weaponData.name && item.weaponData.stats.level < 7)
                                             {
                                                 randomUp = item;
                                             }
+                                            else if (item.weaponData.name == randomUpdate.weaponData.name && item.weaponData.stats.level == 7)
+                                                break;
                                         }
                                     }
                                     while (randomUp == null);
                                 }break;
                             case 1: //Item
                                 {
+                                    do
+                                    {
+                                        UpgradeData randomUpdate = itemAcquiredList[Random.Range(0, itemAcquiredList.Count)];
 
+                                        foreach (var item in weaponUpgradeList)
+                                        {
+                                            if (item.itemsData.name == randomUpdate.itemsData.name && item.itemsData.level < item.itemsData.itemUpgradeInfos.Count - 1)
+                                            {
+                                                randomUp = item;
+                                            }
+                                            else if (item.itemsData.name == randomUpdate.itemsData.name && item.itemsData.level == item.itemsData.itemUpgradeInfos.Count - 1)
+                                                break;
+                                        }
+                                    }
+                                    while (randomUp == null);
                                 }
                                 break;
                         }
@@ -278,5 +309,17 @@ public class LevelUpSelectBuff : MonoBehaviour
         itemAcquiredList.Add(itemA);
         itemA.acquired = true;
         itemList.Remove(itemA);
+    }
+
+    public void ItemNextUpgradeInfo(UpgradeData itemA)
+    {
+        if (itemA.itemsData.level < itemA.itemsData.itemUpgradeInfos.Count - 1)
+        {
+            itemA.acquired = false;
+            itemA.itemsData.level = itemA.itemsData.itemUpgradeInfos[itemA.itemsData.level].level;
+            if (itemA.weaponData.stats.level == itemA.itemsData.itemUpgradeInfos.Count - 1)
+                return;
+            itemA.description = itemA.itemsData.itemUpgradeInfos[itemA.itemsData.level].description;
+        }
     }
 }

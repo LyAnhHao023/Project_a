@@ -7,7 +7,7 @@ public class TwoEdgedSwordItemPasive : ItemBase
     [SerializeField]
     int HpMinusPersecons=2;
     [SerializeField]
-    float dmgBuff=2;
+    float dmgBuff=0.2f;
     [SerializeField]
     float timeMinusHp=2;
     float timer;
@@ -21,7 +21,7 @@ public class TwoEdgedSwordItemPasive : ItemBase
         player.statUpdate();
     }
 
-    private void Update()
+    public override void Update()
     {
         timer -= Time.deltaTime;
         if (timer <= 0)
@@ -33,5 +33,47 @@ public class TwoEdgedSwordItemPasive : ItemBase
     public override void ItemEffect()
     {
         player.TakeDamage(HpMinusPersecons);
+    }
+
+    public override void SetItemStat()
+    {
+        switch (level)
+        {
+            case 1:
+                {
+                    dmgBuff = 0.2f;
+                    HpMinusPersecons = 2;
+                    timeMinusHp = 2;
+                }
+                break;
+            case 2:
+                {
+                    dmgBuff += 0.3f;
+                    HpMinusPersecons = 3;
+                    timeMinusHp = 2;
+                }
+                break;
+            case 3:
+                {
+                    dmgBuff += 0.2f;
+                    HpMinusPersecons = 3;
+                    timeMinusHp = 2.5f;
+                }
+                break;
+            case 4:
+                {
+                    dmgBuff += 0.1f;
+                    HpMinusPersecons = 2;
+                    timeMinusHp = 3f;
+                }
+                break;
+            case 5:
+                {
+                    dmgBuff += 0.2f;
+                    HpMinusPersecons = 2;
+                    timeMinusHp = 4f;
+                }
+                break;
+        }
     }
 }

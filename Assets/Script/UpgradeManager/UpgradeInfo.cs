@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Analytics;
 
 [CreateAssetMenu]
-public class UpdateInfo : ScriptableObject
+public class UpgradeInfo : ScriptableObject
 {
     public int level;
     public string description;

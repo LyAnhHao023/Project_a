@@ -16,5 +16,8 @@ public abstract class ItemBase : MonoBehaviour
     public virtual void Update()
     {
     }
+
+    public abstract void SetItemStat();
+
     public abstract void ItemEffect();
 }

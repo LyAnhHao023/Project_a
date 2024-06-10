@@ -5,7 +5,7 @@ using UnityEngine;
 public class TheMoreTheMerrierItemPassive : ItemBase
 {
     [SerializeField]
-    float timeSpawEnemyMinus=0.5f;
+    float timeSpawEnemyMinus=0.2f;
     [SerializeField]
     StageData StageData;
     int monterKilled;
@@ -31,5 +31,42 @@ public class TheMoreTheMerrierItemPassive : ItemBase
             monterKilled = kill;
             player.GainCoin(coinAmout);
        }
+    }
+
+    public override void SetItemStat()
+    {
+        switch (level)
+        {
+            case 1:
+                {
+                    timeSpawEnemyMinus = 0.2f;
+                }
+                break;
+            case 2:
+                {
+                    timeSpawEnemyMinus = 0.4f;
+                }
+                break;
+            case 3:
+                {
+                    timeSpawEnemyMinus = 0.6f;
+                }
+                break;
+            case 4:
+                {
+                    timeSpawEnemyMinus = 0.8f;
+                }
+                break;
+            case 5:
+                {
+                    timeSpawEnemyMinus = 1f;
+                }
+                break;
+            case 6:
+                {
+                    timeSpawEnemyMinus = 1.5f;
+                }
+                break;
+        }
     }
 }

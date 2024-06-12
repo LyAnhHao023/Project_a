@@ -67,6 +67,8 @@ public class CharacterInfo_1 : MonoBehaviour
 
     [SerializeField]
     public CharacterData characterData;
+    [SerializeField]
+    GameObject CharacterAnimateTranform;
     public GameObject characterAnimate;
     public CharacterStats characterStats;
 
@@ -82,7 +84,7 @@ public class CharacterInfo_1 : MonoBehaviour
         if(StaticData.SelectedCharacter != null)
             characterData = StaticData.SelectedCharacter;
 
-        characterAnimate = Instantiate(characterData.animatorPrefab, transform);
+        characterAnimate = Instantiate(characterData.animatorPrefab, CharacterAnimateTranform.transform);
         characterStats = characterData.stats;
 
         baseAttack = characterStats.strenght;

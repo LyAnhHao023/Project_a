@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class StaticData : MonoBehaviour
 {
-    public static CharacterData SelectedCharacter;
-    public static int LevelType;
+    public static CharacterData SelectedCharacter = null;
+    public static int LevelType = -1;
 }

@@ -14,7 +14,7 @@ public class CharacterManager : MonoBehaviour
             {
                 characterData.stats.maxHealth = 100;
                 characterData.stats.strenght = 10;
-                characterData.stats.speed = 3;
+                characterData.stats.speed = 5;
                 characterData.stats.crit = 10;
                 characterData.stats.critDmg = 1.5f;
             }
@@ -22,7 +22,7 @@ public class CharacterManager : MonoBehaviour
             {
                 characterData.stats.maxHealth = 120;
                 characterData.stats.strenght = 3;
-                characterData.stats.speed = 2;
+                characterData.stats.speed = 5;
                 characterData.stats.crit = 10;
                 characterData.stats.critDmg = 1.5f;
             }
@@ -30,7 +30,7 @@ public class CharacterManager : MonoBehaviour
             {
                 characterData.stats.maxHealth = 120;
                 characterData.stats.strenght = 6;
-                characterData.stats.speed = 3;
+                characterData.stats.speed = 4;
                 characterData.stats.crit = 10;
                 characterData.stats.critDmg = 1.5f;
             }
@@ -38,7 +38,7 @@ public class CharacterManager : MonoBehaviour
             {
                 characterData.stats.maxHealth = 80;
                 characterData.stats.strenght = 4;
-                characterData.stats.speed = 4;
+                characterData.stats.speed = 6;
                 characterData.stats.crit = 20;
                 characterData.stats.critDmg = 1.6f;
             }

@@ -8,7 +8,7 @@ public class CharacterStats
 {
     public int maxHealth;
     public int strenght;
-    public int speed;
+    public float speed;
     public float crit;
     public float critDmg;
 }

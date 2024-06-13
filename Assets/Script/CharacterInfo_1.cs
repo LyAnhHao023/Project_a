@@ -63,7 +63,7 @@ public class CharacterInfo_1 : MonoBehaviour
     int baseHealth;
     int baseAttack;
     float baseCrit;
-    int baseSpeed;
+    float baseSpeed;
 
     [SerializeField]
     public CharacterData characterData;
@@ -121,7 +121,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
         statShow.SetHealth(maxHealth);
         statShow.SetAttack(characterStats.strenght);
-        statShow.SetSpeed(characterStats.speed);
+        statShow.SetSpeed(Mathf.FloorToInt(characterStats.speed));
         statShow.SetCrit(characterStats.crit);
     }
 
@@ -375,7 +375,7 @@ public class CharacterInfo_1 : MonoBehaviour
         statShow.SetCrit(characterStats.crit);
         maxHealth = characterStats.maxHealth;
         statShow.SetHealth(characterStats.maxHealth);
-        statShow.SetSpeed(characterStats.speed);
+        statShow.SetSpeed(Mathf.FloorToInt(characterStats.speed));
 
         if (slowHealthAcquired)
         {

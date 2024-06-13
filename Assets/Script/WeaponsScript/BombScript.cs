@@ -22,11 +22,28 @@ public class BombScript : WeaponBase
     {
         SetCharacterStats();
         ObjectDrops = GameObject.Find("===ObjectDrop===").transform;
-        
-        
     }
     public override void Attack()
     {
+        switch (weaponStats.level)
+        {
+            case 1:
+                {
+                    numberBombDrop = 1;
+                }
+                break;
+            case 4:
+                {
+                    numberBombDrop = 2;
+                }
+                break;
+            case 7:
+                {
+                    numberBombDrop = 3;
+                }
+                break;
+        }
+
         for(int i = 0; i < numberBombDrop; i++)
         {
             GameObject newBomb=Instantiate(BombChildrenPrefab, transform.position,Quaternion.identity);

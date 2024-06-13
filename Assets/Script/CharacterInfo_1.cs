@@ -295,11 +295,10 @@ public class CharacterInfo_1 : MonoBehaviour
             if (slowHealthAcquired)
             {
                 if (currentHealth < 1)
-                {
                     currentHealth = 1;
-                }
 
-                currentSlowhealth -= 1;
+                if(currentSlowhealth == 1)
+                    currentSlowhealth -= 1;
 
                 slowHealthBar.SetHealth(currentSlowhealth);
             }

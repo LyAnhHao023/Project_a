@@ -15,9 +15,10 @@ public class HealthBar : MonoBehaviour
         healthText.text = string.Format("{0}/{1}", slider.value, slider.maxValue);
     }
 
-    public void SetHealth(int health)
+    public void SetHealth(int health, bool isSlow = false)
     {
         slider.value = health;
-        healthText.text = string.Format("{0}/{1}", slider.value, slider.maxValue);
+        if(!isSlow)
+            healthText.text = string.Format("{0}/{1}", slider.value, slider.maxValue);
     }
 }

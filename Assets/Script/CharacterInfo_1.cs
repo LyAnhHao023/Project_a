@@ -304,6 +304,8 @@ public class CharacterInfo_1 : MonoBehaviour
                 slowHealthBar.SetHealth(currentSlowhealth);
             }
 
+            healthBar.SetHealth(currentHealth, slowHealthAcquired);
+
             if (currentHealth <= 0 || (currentSlowhealth <= 0 && slowHealthAcquired))
             {
                 menuManager.GameOverScreen();
@@ -315,8 +317,6 @@ public class CharacterInfo_1 : MonoBehaviour
                 PlayerPrefs.Save();
                 //Debug.Log(PlayerPrefs.GetInt("Coins", 0));
             }
-
-            healthBar.SetHealth(currentHealth);
         }
         else
         {

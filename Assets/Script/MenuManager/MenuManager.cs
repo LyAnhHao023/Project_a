@@ -144,14 +144,14 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 0f;
         _levelUpUI.SetActive(true);
 
-        _levelUpEffect.Play();
+        //_levelUpEffect.Play();
 
         EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void LevelUpDone()
     {
-        _levelUpEffect.Stop();
+        //_levelUpEffect.Stop();
 
         statShow.LeanMoveLocal(startStatShowStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
         buffTable.LeanMoveLocal(startBuffTableStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);

@@ -16,9 +16,9 @@ public class TwoEdgedSwordItemPasive : ItemBase
 
     private void Awake()
     {
+        player = GetComponentInParent<CharacterInfo_1>();
         level = 1;
         SetItemStat();
-        player = GetComponentInParent<CharacterInfo_1>();
     }
 
     public override void Update()

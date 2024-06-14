@@ -22,5 +22,6 @@ public class CharacterData : ScriptableObject
     public CharacterStats stats;
     public GameObject animatorPrefab;
     public WeaponData beginerWeapon;
+    public bool acquired = false;
 
 }

@@ -25,8 +25,6 @@ public class MagicicanBossScript : EnemyBase
 
     Animator animator;
 
-    int rotasionChange = 0;
-
     [SerializeField]
     Vector2 areaAttack = new Vector2(3, 3);
 

@@ -45,8 +45,6 @@ public class PassiveItemsManager : MonoBehaviour
 
     public List<ItemsEnquip> itemsEquip_lst = new List<ItemsEnquip>(5);
 
-    int i = 0;
-
     /*private void Start()
     {
         AddItem(BurningAuraPrefab);

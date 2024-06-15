@@ -1,5 +1,7 @@
+﻿using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class MoveTileMap : MonoBehaviour
@@ -11,10 +13,9 @@ public class MoveTileMap : MonoBehaviour
 
     [SerializeField] Transform player;
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private  void FixedUpdate()
     {
-        if(player.position.y>tileMapMid.position.y+18) 
+        if(player.position.y>tileMapMid.position.y+19) 
         {
             Transform flag = tileMapMid;
             tileMapDown.position=new Vector3(0, tileMapTop.position.y+37,0);
@@ -23,7 +24,7 @@ public class MoveTileMap : MonoBehaviour
             tileMapDown = flag;
 
         }
-        else if(player.position.y < tileMapMid.position.y - 18)
+        else if(player.position.y < tileMapMid.position.y - 19)
         {
             Transform flag = tileMapMid;
             tileMapTop.position = new Vector3(0, tileMapDown.position.y - 37, 0);

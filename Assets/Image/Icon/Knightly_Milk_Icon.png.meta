@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d75b462a740a1ba43ac35a5bf8a4c10e
+guid: c3619f602d4918a438a39fcdd8f17ebf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1850564475705678807
-    second: SamuraiIcon_0
+      213: -3661891243056290609
+    second: Knightly_Milk_Icon_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -98,13 +98,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SamuraiIcon_0
+      name: Knightly_Milk_Icon_0
       rect:
         serializedVersion: 2
-        x: 4
+        x: 44
         y: 0
-        width: 93
-        height: 97
+        width: 168
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,8 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7dbd46006968ea910800000000000000
-      internalID: 1850564475705678807
+      spriteID: fc42483e0595e2dc0800000000000000
+      internalID: -3661891243056290609
       vertices: []
       indices: 
       edges: []
@@ -128,8 +128,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      SamuraiIcon_0: 1850564475705678807
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -224,7 +224,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      teleport_512_0: -2259324651072834574
+      teleport_512_1: -2375183115751526005
+      teleport_512_2: -9037990475574537516
+      teleport_512_3: -7661891491594875053
+      teleport_512_4: -3962304262177353366
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

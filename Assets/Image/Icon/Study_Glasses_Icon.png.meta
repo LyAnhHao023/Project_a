@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d75b462a740a1ba43ac35a5bf8a4c10e
+guid: fa30c661164f5e141804df04729f8881
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1850564475705678807
-    second: SamuraiIcon_0
+      213: -4089610355314630097
+    second: Study_Glasses_Icon_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -98,13 +98,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SamuraiIcon_0
+      name: Study_Glasses_Icon_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 0
-        width: 93
-        height: 97
+        x: 0
+        y: 53
+        width: 256
+        height: 151
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,8 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7dbd46006968ea910800000000000000
-      internalID: 1850564475705678807
+      spriteID: f2266bdac09ce37c0800000000000000
+      internalID: -4089610355314630097
       vertices: []
       indices: 
       edges: []
@@ -128,8 +128,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      SamuraiIcon_0: 1850564475705678807
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

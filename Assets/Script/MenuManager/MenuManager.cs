@@ -18,6 +18,7 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] List<UpgradeButton> upgradeButtons;
 
+    [SerializeField] private GameObject levelUpEffect;
     [SerializeField] private ParticleSystem _levelUpEffect;
 
     [SerializeField] Vector3 statShowStep;
@@ -40,6 +41,7 @@ public class MenuManager : MonoBehaviour
         /*_settingsMenuCanvas.SetActive(false);*/
         _gameOverUI.SetActive(false);
         _levelUpUI.SetActive(false);
+        levelUpEffect.SetActive(false);
 
         isGameOver = false;
         isLevelUp = false;
@@ -143,15 +145,16 @@ public class MenuManager : MonoBehaviour
 
         Time.timeScale = 0f;
         _levelUpUI.SetActive(true);
+        levelUpEffect.SetActive(true);
 
-        //_levelUpEffect.Play();
+        _levelUpEffect.Play();
 
         EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void LevelUpDone()
     {
-        //_levelUpEffect.Stop();
+        _levelUpEffect.Stop();
 
         statShow.LeanMoveLocal(startStatShowStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
         buffTable.LeanMoveLocal(startBuffTableStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
@@ -159,6 +162,7 @@ public class MenuManager : MonoBehaviour
         isLevelUp = false;
 
         _levelUpUI.SetActive(false);
+        levelUpEffect.SetActive(false);
         Unpause();
     }
 }

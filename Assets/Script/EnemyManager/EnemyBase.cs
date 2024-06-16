@@ -45,7 +45,11 @@ public abstract class EnemyBase : MonoBehaviour
     public void IncreaseDecreaseSpeed(int speed)
     {
         enemyStats.speed += speed;
-        gameObject.GetComponent<AIPath>().maxSpeed = enemyStats.speed;
+        AIPath aIPath = gameObject.GetComponent<AIPath>();
+        if (aIPath != null)
+        {
+            aIPath.maxSpeed += speed;
+        }
     }
     public abstract bool EnemyTakeDmg(int dmg);
 

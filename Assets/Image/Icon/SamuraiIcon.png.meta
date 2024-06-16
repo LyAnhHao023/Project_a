@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SamuraiIcon_0: 1850564475705678807
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

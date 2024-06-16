@@ -109,7 +109,7 @@ public class SpawEnemy : MonoBehaviour
                     lst_ReSpawEnemy[i].repeatedTimer = lst_ReSpawEnemy[i].timeBetweenRepeated - reduceTimeSpaw;
                     AddGroupToSpaw(lst_ReSpawEnemy[i].enemyData, lst_ReSpawEnemy[i].count, lst_ReSpawEnemy[i].isBoss);
                     lst_ReSpawEnemy[i].repeatedCount--;
-                    if (lst_ReSpawEnemy[i].repeatedCount <= 0 /*&& (lst_ReSpawEnemy[i].timeStop <= stageTime.elapsedTime || lst_ReSpawEnemy[i].timeStop == 0)*/)
+                    if (lst_ReSpawEnemy[i].repeatedCount <= 0 && (lst_ReSpawEnemy[i].timeStop <= stageTime.elapsedTime || lst_ReSpawEnemy[i].timeStop == 0))
                     {
                         lst_ReSpawEnemy.RemoveAt(i);
                     }

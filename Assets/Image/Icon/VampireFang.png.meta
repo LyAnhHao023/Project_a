@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      VampireFang_0: -137427462530860311
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

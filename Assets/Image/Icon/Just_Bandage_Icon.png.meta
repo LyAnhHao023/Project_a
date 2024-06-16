@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Just_Bandage_Icon_0: 4889063676283661089
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

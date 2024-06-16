@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Study_Glasses_Icon_0: -4089610355314630097
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

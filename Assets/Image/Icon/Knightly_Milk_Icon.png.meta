@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Knightly_Milk_Icon_0: -3661891243056290609
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

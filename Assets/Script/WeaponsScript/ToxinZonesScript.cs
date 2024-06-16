@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class ToxinZonesScript : WeaponBase
 {
     CharacterStats characterStats;
-    Dictionary<EnemyBase, bool> slowedEnemies = new Dictionary<EnemyBase, bool>();
+    List<EnemyBase> slowedEnemies = new List<EnemyBase>();
 
     [SerializeField]
     int speedSlow=1;
@@ -27,17 +28,14 @@ public class ToxinZonesScript : WeaponBase
     private void OnTriggerEnter2D(Collider2D collision)
     {
         EnemyBase enemy= collision.gameObject.GetComponent<EnemyBase>();
-        if (enemy!=null)
+        if (enemy!=null&& !slowedEnemies.Contains(enemy))
         {
-            if (!slowedEnemies.ContainsKey(enemy))
-            {
-                enemy.GetComponent<EnemyBase>().IncreaseDecreaseSpeed(-speedSlow);
-                slowedEnemies.Add(enemy, true);
-            }
+            enemy.GetComponent<EnemyBase>().IncreaseDecreaseSpeed(-speedSlow);
+            slowedEnemies.Add(enemy);
         }
     }
 
-    private void ApllyDmg(EnemyBase enemy)
+    private void ApplyDmg(EnemyBase enemy)
     {
         bool isCrit = UnityEngine.Random.value * 100 < characterStats.crit;
         float dmg = isCrit ?
@@ -55,13 +53,10 @@ public class ToxinZonesScript : WeaponBase
     private void OnTriggerExit2D(Collider2D collision)
     {
         EnemyBase enemy = collision.gameObject.GetComponent<EnemyBase>();
-        if (enemy!=null)
+        if (enemy!=null&& slowedEnemies.Contains(enemy))
         {
-            if (slowedEnemies.ContainsKey(enemy))
-            {
-                enemy.GetComponent<EnemyBase>().IncreaseDecreaseSpeed(speedSlow);
-                slowedEnemies.Remove(enemy);
-            }
+            enemy.GetComponent<EnemyBase>().IncreaseDecreaseSpeed(speedSlow);
+            slowedEnemies.Remove(enemy);
         }
     }
 
@@ -70,17 +65,19 @@ public class ToxinZonesScript : WeaponBase
         timer -= Time.deltaTime;
         Transform tr = GameObject.Find("Weapons").transform;
 
-        if(timer < 0)
+        if (timer < 0&&slowedEnemies.Count>0)
         {
             timer = weaponStats.timeAttack;
-            foreach (var item in slowedEnemies)
+            List<EnemyBase> tempEnemies = new List<EnemyBase>(slowedEnemies);
+            foreach (var item in tempEnemies)
             {
-                if (item.Value == true)
+                if (item != null)
                 {
-                    ApllyDmg(item.Key);
+                    ApplyDmg(item);
                 }
             }
         }
+
         if (tr.localScale != WeaponLocalScale)
         {
             WeaponLocalScale = tr.localScale;

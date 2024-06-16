@@ -152,6 +152,8 @@ public class SpawEnemy : MonoBehaviour
         }
         GameObject createEnemy=Instantiate(enemy.EnemyBasePrefab, transform);
 
+        createEnemy.transform.position = position;
+
         EnemyBase newEnemyBase= createEnemy.GetComponent<EnemyBase>();
         newEnemyBase.SetData(enemy);
         newEnemyBase.SetTarget(player);
@@ -159,8 +161,6 @@ public class SpawEnemy : MonoBehaviour
         newEnemyBase.StatsPlus(enenmyStatsBuff);
         if(!boss)
             newEnemyBase.StatsBuffByTime(statsBuffByTime);
-
-        createEnemy.transform.position = position;
     }
 
     //Tạo vị trí ngẫu nhiên

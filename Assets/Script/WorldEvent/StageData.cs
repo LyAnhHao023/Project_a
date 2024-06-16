@@ -14,6 +14,8 @@ public class StageEvent
     public bool isRepeatedEvent;
     public float repeatedEverySeconds;
     public int countRepeated;
+
+    public float StopTime = 0;
 }
 
 [CreateAssetMenu]

@@ -16,6 +16,8 @@ public class EnemiesSpawGroup
     public float timeBetweenRepeated;
     public int repeatedCount;
 
+    public float timeStop;
+
     public EnemiesSpawGroup(EnemyData enemyData, int count, bool isBoss)
     {
         this.enemyData = enemyData;
@@ -23,12 +25,20 @@ public class EnemiesSpawGroup
         this.isBoss = isBoss;
     }
 
-    public void SetRepeatedSpaw(float timeBetweenRepeated,int repeatedCount)
+    public void SetRepeatedSpaw(float timeBetweenRepeated,int repeatedCount, float timeStop)
     {
         this.timeBetweenRepeated = timeBetweenRepeated;
         this.repeatedCount = repeatedCount;
         repeatedTimer = timeBetweenRepeated;
+        this.timeStop = timeStop;
     }
+}
+
+[Serializable]
+public class TimeStamp
+{
+    public int state;
+    public float time;
 }
 
 public class SpawEnemy : MonoBehaviour
@@ -40,6 +50,12 @@ public class SpawEnemy : MonoBehaviour
     GameObject ParentDropItem;
 
     [SerializeField] float timeToBuffEnemy = 30f;
+    [SerializeField]
+    Timer stageTime;
+
+    [SerializeField]
+    public List<TimeStamp> timeStamp;
+
     float timer;
     float statsBuffByTime=1;
 
@@ -61,6 +77,7 @@ public class SpawEnemy : MonoBehaviour
         if (timer < 0)
         {
             statsBuffByTime += 0.1f;
+            timer = timeToBuffEnemy;
         }
 
         ProcessSpaw();
@@ -92,7 +109,7 @@ public class SpawEnemy : MonoBehaviour
                     lst_ReSpawEnemy[i].repeatedTimer = lst_ReSpawEnemy[i].timeBetweenRepeated - reduceTimeSpaw;
                     AddGroupToSpaw(lst_ReSpawEnemy[i].enemyData, lst_ReSpawEnemy[i].count, lst_ReSpawEnemy[i].isBoss);
                     lst_ReSpawEnemy[i].repeatedCount--;
-                    if (lst_ReSpawEnemy[i].repeatedCount <= 0)
+                    if (lst_ReSpawEnemy[i].repeatedCount <= 0 /*&& (lst_ReSpawEnemy[i].timeStop <= stageTime.elapsedTime || lst_ReSpawEnemy[i].timeStop == 0)*/)
                     {
                         lst_ReSpawEnemy.RemoveAt(i);
                     }
@@ -140,7 +157,8 @@ public class SpawEnemy : MonoBehaviour
         newEnemyBase.SetTarget(player);
         newEnemyBase.SetParentDropItem(ParentDropItem);
         newEnemyBase.StatsPlus(enenmyStatsBuff);
-        newEnemyBase.StatsBuffByTime(statsBuffByTime);
+        if(!boss)
+            newEnemyBase.StatsBuffByTime(statsBuffByTime);
 
         createEnemy.transform.position = position;
     }
@@ -181,7 +199,7 @@ public class SpawEnemy : MonoBehaviour
     public void AddRepeatedSpaw(StageEvent stageEvent)
     {
         EnemiesSpawGroup repeatedSpawGroup=new EnemiesSpawGroup(stageEvent.enemySpawData,stageEvent.countEnemy,stageEvent.isBoss);
-        repeatedSpawGroup.SetRepeatedSpaw(stageEvent.repeatedEverySeconds, stageEvent.countRepeated);
+        repeatedSpawGroup.SetRepeatedSpaw(stageEvent.repeatedEverySeconds, stageEvent.countRepeated, stageEvent.StopTime);
 
         if (lst_ReSpawEnemy == null)
         {

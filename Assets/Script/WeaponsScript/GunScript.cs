@@ -35,7 +35,8 @@ public class GunScript : WeaponBase
 
     public override void Update()
     {
-        RotationGun();
+        if(Time.deltaTime != 0)
+            RotationGun();
         base.Update();
     }
 

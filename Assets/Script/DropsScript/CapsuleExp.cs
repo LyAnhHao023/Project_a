@@ -9,7 +9,7 @@ public class CapsuleExp : MonoBehaviour
 
     GameObject player;
 
-    bool isNotFollow = false;
+    public bool isFollow = false;
 
     public void SetPlayer(GameObject gameObject)
     {
@@ -22,9 +22,9 @@ public class CapsuleExp : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!isNotFollow)
+        if (!isFollow)
         {
-            isNotFollow = Physics2D.OverlapCircle(transform.position, 5f, LayerMask.GetMask("Player"));
+            isFollow = Physics2D.OverlapCircle(transform.position, 1f, LayerMask.GetMask("Player"));
         }
         else
         {

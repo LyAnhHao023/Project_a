@@ -41,14 +41,16 @@ public class PassiveItemsManager : MonoBehaviour
     ItemsData GlassOfKnowladgePrefab;
     [SerializeField]
     ItemsData BurningAuraPrefab;
+    [SerializeField]
+    ItemsData BuffAreaGainExpPrefab;
 
 
     public List<ItemsEnquip> itemsEquip_lst = new List<ItemsEnquip>(5);
 
-    /*private void Start()
-    {
-        AddItem(BurningAuraPrefab);
-    }*/
+    //private void Start()
+    //{
+    //    AddItem(BuffAreaGainExpPrefab);
+    //}
 
 
     public void AddItem(ItemsData itemData)

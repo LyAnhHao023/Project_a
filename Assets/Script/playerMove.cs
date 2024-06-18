@@ -16,6 +16,7 @@ public class playerMove : MonoBehaviour
 
     CharacterInfo_1 player;
 
+    public bool isCanMove=true;
 
     private void Start()
     {
@@ -25,24 +26,27 @@ public class playerMove : MonoBehaviour
 
     private void Update()
     {
-        moveInput.x=Input.GetAxis("Horizontal");
-        moveInput.y = Input.GetAxis("Vertical");
-        transform.position += moveInput * player.characterStats.speed * Time.deltaTime;
-
-        animation.SetFloat("Speed", moveInput.sqrMagnitude);
-
-        if (moveInput.x != 0)
+        if(isCanMove)
         {
+            moveInput.x = Input.GetAxis("Horizontal");
+            moveInput.y = Input.GetAxis("Vertical");
+            transform.position += moveInput * player.characterStats.speed * Time.deltaTime;
 
-            if(moveInput.x > 0)
+            animation.SetFloat("Speed", moveInput.sqrMagnitude);
+
+            if (moveInput.x != 0)
             {
-                animation.transform.rotation = Quaternion.Euler(0, 0, 0);
-                scaleX = 1;
-            }
-            else
-            {
-                animation.transform.rotation = Quaternion.Euler(0, 180, 0);
-                scaleX = -1;
+
+                if (moveInput.x > 0)
+                {
+                    animation.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    scaleX = 1;
+                }
+                else
+                {
+                    animation.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    scaleX = -1;
+                }
             }
         }
     }

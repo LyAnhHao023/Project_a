@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
     /*[SerializeField] private GameObject _settingsMenuCanvas;*/
     [SerializeField] private GameObject _gameOverUI;
     [SerializeField] private GameObject _levelUpUI;
+    [SerializeField] private GameObject _OpenChestUI;
     [SerializeField] private GameObject statShow;
     [SerializeField] private GameObject buffTable;
 
@@ -25,6 +26,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Vector3 startStatShowStep;
     [SerializeField] Vector3 buffTableStep;
     [SerializeField] Vector3 startBuffTableStep;
+    [SerializeField] Vector3 openChestStep;
+    [SerializeField] Vector3 startOpenChestStep;
     [SerializeField] float tweenTime;
     [SerializeField] LeanTweenType tweenType;
 
@@ -32,7 +35,7 @@ public class MenuManager : MonoBehaviour
 
     private bool isGameOver;
 
-    private bool isLevelUp;
+    private bool isSelectBuff;
 
     // Start is called before the first frame update
     void Start()
@@ -41,10 +44,11 @@ public class MenuManager : MonoBehaviour
         /*_settingsMenuCanvas.SetActive(false);*/
         _gameOverUI.SetActive(false);
         _levelUpUI.SetActive(false);
+        _OpenChestUI.SetActive(false);
         levelUpEffect.SetActive(false);
 
         isGameOver = false;
-        isLevelUp = false;
+        isSelectBuff = false;
         isPaused = false;
     }
 
@@ -53,7 +57,7 @@ public class MenuManager : MonoBehaviour
     {
         if (InputManager.instance.MenuOpenCloseInput)
         {
-            if (!isGameOver && !isLevelUp)
+            if (!isGameOver && !isSelectBuff)
             {
                 if (!isPaused)
                 {
@@ -131,7 +135,7 @@ public class MenuManager : MonoBehaviour
 
     public void LevelUpScene(List<UpgradeData> upgradeDatas)
     {
-        isLevelUp = true;
+        isSelectBuff = true;
         isPaused = true;
 
 
@@ -156,13 +160,36 @@ public class MenuManager : MonoBehaviour
     {
         _levelUpEffect.Stop();
 
-        statShow.LeanMoveLocal(startStatShowStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
-        buffTable.LeanMoveLocal(startBuffTableStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
+        statShow.LeanMoveLocal(startStatShowStep, 0f).setEase(tweenType).setIgnoreTimeScale(true);
+        buffTable.LeanMoveLocal(startBuffTableStep, 0f).setEase(tweenType).setIgnoreTimeScale(true);
 
-        isLevelUp = false;
+        isSelectBuff = false;
 
         _levelUpUI.SetActive(false);
         levelUpEffect.SetActive(false);
+        Unpause();
+    }
+
+    public void OpenChestScene()
+    {
+        isSelectBuff = true;
+        isPaused = true;
+
+        _OpenChestUI.LeanMoveLocal(openChestStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
+
+        Time.timeScale = 0f;
+
+        _OpenChestUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    public void CloseChestScene()
+    {
+        _OpenChestUI.LeanMoveLocal(startOpenChestStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
+
+        isSelectBuff = false;
+
+        _OpenChestUI.SetActive(false);
         Unpause();
     }
 }

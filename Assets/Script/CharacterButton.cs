@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,41 +9,32 @@ public class CharacterButton : MonoBehaviour
     [SerializeField] Image CharacterImage;
     [SerializeField] GameObject CharacterOverlay;
     [SerializeField] GameObject CharButton;
-    [SerializeField] Text Name;
-    [SerializeField] SpriteToUIImage spriteToUIImage;
 
-    float timer = 5;
+    GameObject CharacterHolder;
+    SetCharacterShow setCharacterShow;
 
     private CharacterData CharData;
 
-    bool stand;
+    private void Awake()
+    {
+        CharacterHolder = GameObject.FindGameObjectWithTag("CharacterHolder");
+        setCharacterShow = CharacterHolder.GetComponent<SetCharacterShow>();
+    }
 
     public void Set(CharacterData characterData)
     {
+        //Name = GameObject.FindGameObjectWithTag("CharacterName").GetComponent<Text>();
+        //spriteToUIImage = GameObject.FindGameObjectWithTag("CharacterHolder").GetComponent<SpriteToUIImage>();
+
+        CharData = characterData;
         CharacterImage.sprite = characterData.image;
         CharacterOverlay.SetActive(!characterData.acquired);
         CharButton.GetComponent<Button>().enabled = characterData.acquired;
-        CharData = characterData;
     }
 
     public void SetCharacter()
     {
-        Name.text = CharData.name;
-        spriteToUIImage.SetCharacterAnimation(CharData.animatorPrefab.GetComponent<SpriteRenderer>());
-        stand = true;
-    }
-
-    private void Update()
-    {
-        if (CharData != null)
-        {
-            timer -= Time.deltaTime;
-            if(timer < 0)
-            {
-                timer = Random.Range(3, 6);
-                stand = !stand;
-                spriteToUIImage.SetAnimation(stand);
-            }
-        }
+        StaticData.SelectedCharacter = CharData;
+        setCharacterShow.GetComponentInParent<SetCharacterShow>().SetCharacter(CharData);
     }
 }

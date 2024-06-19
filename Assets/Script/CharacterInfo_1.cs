@@ -71,8 +71,6 @@ public class CharacterInfo_1 : MonoBehaviour
     GameObject CharacterAnimateTranform;
     public GameObject characterAnimate;
     public CharacterStats characterStats;
-    [SerializeField]
-    CharacterManager characterManager;
 
     public int numberMonsterKilled = 0;
 
@@ -86,10 +84,8 @@ public class CharacterInfo_1 : MonoBehaviour
         if (StaticData.SelectedCharacter != null)
             characterData = StaticData.SelectedCharacter;
 
-        characterManager.SetCharacterData();
-
         characterAnimate = Instantiate(characterData.animatorPrefab, CharacterAnimateTranform.transform);
-        characterStats = characterData.stats;
+        characterStats.SetStats(characterData.stats);
 
         baseAttack = characterStats.strenght;
         baseCrit = characterStats.crit;

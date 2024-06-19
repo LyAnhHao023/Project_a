@@ -11,6 +11,15 @@ public class CharacterStats
     public float speed;
     public float crit;
     public float critDmg;
+
+    public void SetStats(CharacterStats stats)
+    {
+        this.maxHealth = stats.maxHealth;
+        this.strenght = stats.strenght;
+        this.speed = stats.speed;
+        this.crit = stats.crit;
+        this.critDmg = stats.critDmg;
+    }
 }
 
 [Serializable]

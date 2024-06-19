@@ -16,7 +16,7 @@ public class Chest : MonoBehaviour
     GameObject PointerOJ;
 
 
-    private void Awake()
+    private void Start()
     {
         PointerOJ=Instantiate(PointerPrefab);
         PointerOJ.transform.parent = PointerPos.transform;

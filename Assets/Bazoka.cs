@@ -9,26 +9,29 @@ public class Bazoka : WeaponBase
 
     [SerializeField]
     Transform firePos;
+    [SerializeField]
+    GameObject fireEffect;
 
     [SerializeField]
     float bulletForce = 1;
 
-    [SerializeField]
-    GameObject imgFire;
-    [SerializeField]
-    GameObject fireEffect;
-
     CharacterStats characterStats;
 
+    [SerializeField]
     Transform bulletsObject;
 
     [SerializeField]
     WeaponStats baseStat = new WeaponStats(1, 1, 1f);
 
-    private void Awake()
+    Vector3 weaponSize=Vector3.one;
+
+    SpriteRenderer spriteRenderer;
+
+    private void Start()
     {
         SetCharacterStats();
         bulletsObject = GameObject.Find("BulletsObject").transform;
+        spriteRenderer=GetComponent<SpriteRenderer>();
     }
 
     public override void Update()
@@ -48,11 +51,13 @@ public class Bazoka : WeaponBase
         transform.rotation = rotation;
         if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
         {
-            transform.localScale = new Vector3(1, -1, 1);
+            spriteRenderer.flipY = true;
+            firePos.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            spriteRenderer.flipY = false;
+            firePos.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
     }
@@ -60,20 +65,21 @@ public class Bazoka : WeaponBase
     public override void Attack()
     {
 
-        GameObject createBullet = Instantiate(BulletBazoka, firePos.position, Quaternion.identity);
+        GameObject createBullet = Instantiate(BulletBazoka, firePos.position, transform.rotation);
+        createBullet.transform.localScale = (createBullet.transform.localScale + weaponSize) - Vector3.one;
         createBullet.transform.parent = bulletsObject.transform;
         //Set dmg
         bool isCrit = UnityEngine.Random.value * 100 < characterStats.crit;
 
         float dmg = isCrit ?
                     (weaponStats.dmg + characterStats.strenght) * characterStats.critDmg : (weaponStats.dmg + characterStats.strenght);
-        createBullet.GetComponent<BulletScript>().SetDmg((int)dmg, isCrit);
+        createBullet.GetComponent<BazokaBullet>().SetDmg((int)dmg, isCrit);
         Rigidbody2D rigidbody2D = createBullet.GetComponent<Rigidbody2D>();
         rigidbody2D.AddForce(transform.right * bulletForce, ForceMode2D.Impulse);
 
         //effect gun fire
-        Instantiate(imgFire, firePos.position, transform.rotation, transform);
-        Instantiate(fireEffect, firePos.position, transform.rotation, transform);
+
+        fireEffect.SetActive(true);
     }
 
     public override void SetCharacterStats()

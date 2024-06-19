@@ -24,13 +24,15 @@ public class WildBoarEnemy : EnemyBase
     GameObject ExpRedPrefab;
     [SerializeField]
     GameObject CoinPrefab;
+    [SerializeField]
+    GameObject ChestPrefab;
 
     GameObject ParentDropItem;
     Rigidbody2D rb;
 
     bool isUseSkill=false;
 
-
+    [SerializeField] bool isBoss=false;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -143,8 +145,11 @@ public class WildBoarEnemy : EnemyBase
             health.transform.parent = ParentDropItem.transform;
         }
 
-        //Transform chest = Instantiate(ChestPrefab).transform;
-        //chest.position = transform.position;
+        if (isBoss)
+        {
+            Transform chest = Instantiate(ChestPrefab).transform;
+            chest.position = transform.position;
+        }
 
         if (UnityEngine.Random.value * 100 <= enemyStats.chanceDropExp)
         {

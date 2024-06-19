@@ -27,6 +27,7 @@ public class WolfEnemy : EnemyBase
 
     GameObject ParentDropItem;
 
+    [SerializeField] bool isBoss=false;
 
     private void Awake()
     {
@@ -82,8 +83,11 @@ public class WolfEnemy : EnemyBase
             health.transform.parent = ParentDropItem.transform;
         }
 
-        //Transform chest = Instantiate(ChestPrefab).transform;
-        //chest.position = transform.position;
+        if (isBoss)
+        {
+            Transform chest = Instantiate(ChestPrefab).transform;
+            chest.position = transform.position;
+        }
 
         if (Random.value * 100 <= enemyStats.chanceDropExp)
         {

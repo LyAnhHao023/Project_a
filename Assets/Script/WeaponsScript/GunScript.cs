@@ -51,10 +51,12 @@ public class GunScript : WeaponBase
         if(transform.eulerAngles.z>90&& transform.eulerAngles.z < 270)
         {
             transform.localScale=new Vector3(1, -1,1);
+            fireEffect.transform.rotation = Quaternion.Euler( 0, 180, 0);
         }
         else
         {
             transform.localScale = new Vector3(1, 1, 1);
+            fireEffect.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
     }
@@ -74,8 +76,8 @@ public class GunScript : WeaponBase
         rigidbody2D.AddForce(transform.right * bulletForce, ForceMode2D.Impulse);
 
         //effect gun fire
-        Instantiate(imgFire, firePos.position, transform.rotation, transform);
-        Instantiate(fireEffect, firePos.position, transform.rotation, transform);
+        imgFire.SetActive(true);
+        fireEffect.SetActive(true);
     }
 
     public override void SetCharacterStats()

@@ -17,5 +17,15 @@ public class SpriteToUIImage : MonoBehaviour
 
         uiAnimator.runtimeAnimatorController = spriteAnimator.runtimeAnimatorController;
     }
+
+    public void SetAnimation(bool stand)
+    {
+        uiAnimator = uiImage.GetComponent<Animator>();
+
+        if (stand)
+            uiAnimator.SetFloat("Speed", 0);
+        else
+            uiAnimator.SetFloat("Speed", 1);
+    }
 }
 

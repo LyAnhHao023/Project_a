@@ -8,13 +8,11 @@ public class WeightedItem
 {
     public int type;
     public float weight;
-    public bool active;
 
-    public WeightedItem(int type, float weight, bool active = true)
+    public WeightedItem(int type, float weight)
     {
         this.type = type;
         this.weight = weight;
-        this.active = active;
     }
 }
 
@@ -45,26 +43,15 @@ public class LevelUpSelectBuff : MonoBehaviour
 
     int upgradeCount;
 
-    float totalWeight;
-
     public int GetRandomType(List<WeightedItem> items)
     {
-        totalWeight = 0;
-
-        foreach (var item in items)
-        {
-            if (item.active)
-                totalWeight += item.weight;
-        }
-
+        float totalWeight = items.Sum<WeightedItem>(item => item.weight);
         float randomValue = Random.Range(0, totalWeight);
 
         float weights = 0f;
         foreach (var item in items)
         {
-            if (item.active)
-                weights += item.weight;
-
+            weights += item.weight;
             if (randomValue <= weights)
             {
                 return item.type;
@@ -82,12 +69,12 @@ public class LevelUpSelectBuff : MonoBehaviour
             {
                 case 2: //Upgrade
                     {
-                        item.active = reset;
+                        item.weight = reset ? 35f : 0f;
                     }
                     break;
                 case 3: //Unlock
                     {
-                        item.active = reset;
+                        item.weight = reset ? 50f : 0f;
                     }
                     break;
             }

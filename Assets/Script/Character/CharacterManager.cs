@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
 {
-    [SerializeField] public List<CharacterData> characterDatas;
+    [SerializeField] public List<CharacterData> characterDatas = new List<CharacterData>();
 
     private void Start()
     {
-        SetCharacterData();
-    }
-
-    public void SetCharacterData()
-    {
         foreach (var characterData in characterDatas)
         {
-            if (characterData.name == "FirstCharDev")
+            if(characterData.name == "FirstCharDev")
             {
                 characterData.stats.maxHealth = 100;
                 characterData.stats.strenght = 10;

@@ -85,7 +85,7 @@ public class CharacterInfo_1 : MonoBehaviour
             characterData = StaticData.SelectedCharacter;
 
         characterAnimate = Instantiate(characterData.animatorPrefab, CharacterAnimateTranform.transform);
-        characterStats = characterData.stats;
+        characterStats.SetStats(characterData.stats);
 
         baseAttack = characterStats.strenght;
         baseCrit = characterStats.crit;

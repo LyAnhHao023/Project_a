@@ -107,6 +107,11 @@ public class SpawEnemy : MonoBehaviour
                 if (lst_ReSpawEnemy[i].repeatedTimer <= 0)
                 {
                     lst_ReSpawEnemy[i].repeatedTimer = lst_ReSpawEnemy[i].timeBetweenRepeated - reduceTimeSpaw;
+                    if(lst_ReSpawEnemy[i].repeatedTimer <= 1)
+                    {
+                        lst_ReSpawEnemy[i].repeatedTimer = 1;
+                        lst_ReSpawEnemy[i].count += Random.Range(0,3);
+                    }
                     AddGroupToSpaw(lst_ReSpawEnemy[i].enemyData, lst_ReSpawEnemy[i].count, lst_ReSpawEnemy[i].isBoss);
                     lst_ReSpawEnemy[i].repeatedCount--;
                     if (lst_ReSpawEnemy[i].repeatedCount <= 0 && (lst_ReSpawEnemy[i].timeStop <= stageTime.elapsedTime || lst_ReSpawEnemy[i].timeStop == 0))
@@ -159,8 +164,7 @@ public class SpawEnemy : MonoBehaviour
         newEnemyBase.SetTarget(player);
         newEnemyBase.SetParentDropItem(ParentDropItem);
         newEnemyBase.StatsPlus(enenmyStatsBuff);
-        if(!boss)
-            newEnemyBase.StatsBuffByTime(statsBuffByTime);
+        newEnemyBase.StatsBuffByTime(statsBuffByTime);
     }
 
     //Tạo vị trí ngẫu nhiên

@@ -41,7 +41,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
     [SerializeField] LevelUpSelectBuff levelUpSelectBuff;
 
-    List<UpgradeData> upgradeDatas;
+    public List<UpgradeData> upgradeDatas;
     List<UpgradeData> weaponSlotsManager = new List<UpgradeData>();
     List<UpgradeData> itemSlotsManager = new List<UpgradeData>();
 
@@ -71,6 +71,8 @@ public class CharacterInfo_1 : MonoBehaviour
     GameObject CharacterAnimateTranform;
     public GameObject characterAnimate;
     public CharacterStats characterStats;
+    [SerializeField]
+    CharacterManager characterManager;
 
     public int numberMonsterKilled = 0;
 
@@ -81,8 +83,10 @@ public class CharacterInfo_1 : MonoBehaviour
 
     private void Start()
     {
-        if(StaticData.SelectedCharacter != null)
+        if (StaticData.SelectedCharacter != null)
             characterData = StaticData.SelectedCharacter;
+
+        characterManager.SetCharacterData();
 
         characterAnimate = Instantiate(characterData.animatorPrefab, CharacterAnimateTranform.transform);
         characterStats.SetStats(characterData.stats);
@@ -202,7 +206,7 @@ public class CharacterInfo_1 : MonoBehaviour
         menuManager.LevelUpScene(upgradeDatas);
         currentExp -= maxExpValue;
         level += 1;
-        maxExpValue += Mathf.FloorToInt((float)(maxExpValue * 0.5));
+        maxExpValue += Mathf.FloorToInt((float)(maxExpValue * 0.1));
         expBar.SetMaxExp(level, maxExpValue);
     }
 

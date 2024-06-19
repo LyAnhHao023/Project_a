@@ -22,6 +22,14 @@ public class CharacterStats
     }
 }
 
+[Serializable]
+public class SkillInfo
+{
+    public Sprite Icon;
+    public string name;
+    public string decription;
+    public int strenght;
+}
 
 [CreateAssetMenu]
 public class CharacterData : ScriptableObject
@@ -32,5 +40,6 @@ public class CharacterData : ScriptableObject
     public GameObject animatorPrefab;
     public WeaponData beginerWeapon;
     public bool acquired = false;
-
+    public string Story;
+    public SkillInfo skillInfo;
 }

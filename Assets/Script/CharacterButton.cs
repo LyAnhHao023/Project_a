@@ -11,7 +11,11 @@ public class CharacterButton : MonoBehaviour
     [SerializeField] Text Name;
     [SerializeField] SpriteToUIImage spriteToUIImage;
 
+    float timer = 5;
+
     private CharacterData CharData;
+
+    bool stand;
 
     public void Set(CharacterData characterData)
     {
@@ -25,5 +29,20 @@ public class CharacterButton : MonoBehaviour
     {
         Name.text = CharData.name;
         spriteToUIImage.SetCharacterAnimation(CharData.animatorPrefab.GetComponent<SpriteRenderer>());
+        stand = true;
+    }
+
+    private void Update()
+    {
+        if (CharData != null)
+        {
+            timer -= Time.deltaTime;
+            if(timer < 0)
+            {
+                timer = Random.Range(3, 6);
+                stand = !stand;
+                spriteToUIImage.SetAnimation(stand);
+            }
+        }
     }
 }

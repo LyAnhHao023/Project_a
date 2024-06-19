@@ -6,13 +6,16 @@ public class SelectCharManager : MonoBehaviour
 {
     [SerializeField] List<CharacterData> characterDatas;
 
-    [SerializeField] List<CharacterButton> characterButtons;
+    public GameObject characterHolderPrefab;
+    public GameObject characterTranform;
+    GameObject characterButton;
 
     private void Start()
     {
         for (int i = 0; i < characterDatas.Count; i++)
         {
-            characterButtons[i].Set(characterDatas[i]);
+            characterButton = Instantiate(characterHolderPrefab, characterTranform.transform);
+            characterButton.GetComponent<CharacterButton>().Set(characterDatas[i]);
         }
     }
 

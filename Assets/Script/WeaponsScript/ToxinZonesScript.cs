@@ -12,17 +12,15 @@ public class ToxinZonesScript : WeaponBase
     [SerializeField]
     int speedSlow=1;
 
-    Vector3 WeaponLocalScale;
-
     [SerializeField]
     WeaponStats baseStat = new WeaponStats(1, 1, 1f);
 
-    private void Awake()
+    private void Start()
     {
         SetCharacterStats();
-        Vector3 vt = GameObject.Find("Weapons").transform.localScale;
-        WeaponLocalScale = vt;
-        SetRadiusEffect(WeaponLocalScale.x);
+        BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
+        ////SetRadiusEffect(transform.localScale.x);
+        //currentSizeWeapon=transform.localScale.x;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -63,7 +61,6 @@ public class ToxinZonesScript : WeaponBase
     public override void Update()
     {
         timer -= Time.deltaTime;
-        Transform tr = GameObject.Find("Weapons").transform;
 
         if (timer < 0&&slowedEnemies.Count>0)
         {
@@ -78,19 +75,19 @@ public class ToxinZonesScript : WeaponBase
             }
         }
 
-        if (tr.localScale != WeaponLocalScale)
-        {
-            WeaponLocalScale = tr.localScale;
-            SetRadiusEffect(WeaponLocalScale.x);
-        }
+        //if (transform.localScale.x != currentSizeWeapon)
+        //{
+        //    currentSizeWeapon = transform.localScale.x;
+        //    SetRadiusEffect(currentSizeWeapon);
+        //}
     }
 
-    private void SetRadiusEffect(float x)
-    {
-        ParticleSystem ps = GetComponent<ParticleSystem>();
-        ParticleSystem.ShapeModule shape = ps.shape;
-        shape.radius = x*3.5f;//3 la radius mac dinh cua effect
-    }
+    //private void SetRadiusEffect(float x)
+    //{
+    //    ParticleSystem ps = GetComponent<ParticleSystem>();
+    //    ParticleSystem.ShapeModule shape = ps.shape;
+    //    shape.radius = x*3.5f;//3 la radius mac dinh cua effect
+    //}
 
     public override void Attack()
     {

@@ -18,7 +18,7 @@ public class ShurikenScript : WeaponBase
     private void Awake()
     {
         SetCharacterStats();
-        transform.localScale=GameObject.Find("Weapons").transform.localScale;
+        BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
     }
 
     public override void Attack()

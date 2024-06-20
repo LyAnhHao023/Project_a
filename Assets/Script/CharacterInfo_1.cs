@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEditor;
@@ -81,7 +82,11 @@ public class CharacterInfo_1 : MonoBehaviour
     public int shieldCurrentValue;
 
     //kiểm tra bất tử
+    [HideInInspector]
     public bool isInvincible=false;
+    [HideInInspector]
+    //phần trăm buff độ lớn của vk
+    public float weaponSize = 1f;
 
     private void Start()
     {

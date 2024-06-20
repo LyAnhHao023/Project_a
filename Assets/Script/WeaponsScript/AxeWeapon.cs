@@ -12,19 +12,17 @@ public class AxeWeapon : WeaponBase
     [SerializeField] GameObject rightAxe;
     [SerializeField] GameObject leftAxe;
 
-    [SerializeField]
-    private Vector2 AxeAttackSize=new Vector2(4f,3f);
-
     playerMove playerMove;
 
     CharacterStats characterStats;
 
     WeaponStats baseStat = new WeaponStats(2, 1, 1f);
 
-    private void Awake()
+    private void Start()
     {
         playerMove = GetComponentInParent<playerMove>();
         SetCharacterStats();
+        BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
     }
 
 

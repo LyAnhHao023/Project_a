@@ -47,10 +47,17 @@ public class PassiveItemsManager : MonoBehaviour
 
     public List<ItemsEnquip> itemsEquip_lst = new List<ItemsEnquip>(5);
 
-    //private void Start()
-    //{
-    //    AddItem(BuffAreaGainExpPrefab);
-    //}
+    float timer = 5;
+
+    private void Update()
+    {
+        timer-=Time.deltaTime;
+        if (timer < 0)
+        {
+            timer = 1000;
+            AddItem(bigWeapons);
+        }
+    }
 
 
     public void AddItem(ItemsData itemData)

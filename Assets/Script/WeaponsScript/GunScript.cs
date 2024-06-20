@@ -27,10 +27,17 @@ public class GunScript : WeaponBase
     [SerializeField]
     WeaponStats baseStat = new WeaponStats(1,1,1f);
 
-    private void Awake()
+    CharacterInfo_1 characterInfo_1;
+
+    //dung cho viec nang cap
+    private float buffSizeBullet = 1;
+
+    private void Start()
     {
         SetCharacterStats();
         bulletsObject = GameObject.Find("BulletsObject").transform;
+        characterInfo_1=GetComponentInParent<CharacterInfo_1>();
+        BuffWeaponSizeByPersent(characterInfo_1.weaponSize);
     }
 
     public override void Update()
@@ -63,8 +70,9 @@ public class GunScript : WeaponBase
 
     public override void Attack()
     {
-
         GameObject createBullet = Instantiate(Bullet, firePos.position, Quaternion.identity);
+        createBullet.transform.localScale=new Vector3(createBullet.transform.localScale.x * characterInfo_1.weaponSize * buffSizeBullet, createBullet.transform.localScale.y * characterInfo_1.weaponSize * buffSizeBullet,
+                                              createBullet.transform.localScale.z * characterInfo_1.weaponSize * buffSizeBullet);
         createBullet.transform.parent = bulletsObject.transform;
         //Set dmg
         bool isCrit = UnityEngine.Random.value * 100 < characterStats.crit;

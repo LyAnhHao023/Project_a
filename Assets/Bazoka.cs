@@ -27,11 +27,17 @@ public class Bazoka : WeaponBase
 
     SpriteRenderer spriteRenderer;
 
+    CharacterInfo_1 characterInfo_1;
+
+    private float buffSizeBullet=1f;
+
     private void Start()
     {
         SetCharacterStats();
         bulletsObject = GameObject.Find("BulletsObject").transform;
         spriteRenderer=GetComponent<SpriteRenderer>();
+        characterInfo_1=GetComponentInParent<CharacterInfo_1>();
+        BuffWeaponSizeByPersent(characterInfo_1.weaponSize);
     }
 
     public override void Update()
@@ -66,7 +72,8 @@ public class Bazoka : WeaponBase
     {
 
         GameObject createBullet = Instantiate(BulletBazoka, firePos.position, transform.rotation);
-        createBullet.transform.localScale = (createBullet.transform.localScale + weaponSize) - Vector3.one;
+        createBullet.transform.localScale = new Vector3(createBullet.transform.localScale.x * characterInfo_1.weaponSize * buffSizeBullet, createBullet.transform.localScale.y * characterInfo_1.weaponSize * buffSizeBullet,
+                                              createBullet.transform.localScale.z * characterInfo_1.weaponSize * buffSizeBullet);
         createBullet.transform.parent = bulletsObject.transform;
         //Set dmg
         bool isCrit = UnityEngine.Random.value * 100 < characterStats.crit;

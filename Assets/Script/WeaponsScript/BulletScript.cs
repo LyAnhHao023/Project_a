@@ -18,7 +18,6 @@ public class BulletScript : MonoBehaviour
 
     private void Awake()
     {
-        transform.localScale = GameObject.Find("Weapons").transform.localScale;
         Destroy(gameObject, timeAutoDestroy);
     }
 

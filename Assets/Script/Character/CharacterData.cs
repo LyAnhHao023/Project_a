@@ -29,6 +29,16 @@ public class SkillInfo
     public string name;
     public string decription;
     public int strenght;
+    public float cdSkill;
+
+    public void SetData(SkillInfo data)
+    {
+        this.Icon = null;
+        this.name = data.name;
+        this.decription = data.decription;
+        this.strenght=data.strenght;
+        this.cdSkill = data.cdSkill;
+    }
 }
 
 [CreateAssetMenu]

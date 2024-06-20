@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEditor;
@@ -71,6 +71,7 @@ public class CharacterInfo_1 : MonoBehaviour
     GameObject CharacterAnimateTranform;
     public GameObject characterAnimate;
     public CharacterStats characterStats;
+    public SkillInfo skillInfor;
 
     public int numberMonsterKilled = 0;
 
@@ -79,6 +80,9 @@ public class CharacterInfo_1 : MonoBehaviour
     int shieldMaxValue;
     public int shieldCurrentValue;
 
+    //kiểm tra bất tử
+    public bool isInvincible=false;
+
     private void Start()
     {
         if (StaticData.SelectedCharacter != null)
@@ -86,6 +90,8 @@ public class CharacterInfo_1 : MonoBehaviour
 
         characterAnimate = Instantiate(characterData.animatorPrefab, CharacterAnimateTranform.transform);
         characterStats.SetStats(characterData.stats);
+        skillInfor.SetData(characterData.skillInfo);
+
 
         baseAttack = characterStats.strenght;
         baseCrit = characterStats.crit;
@@ -130,6 +136,7 @@ public class CharacterInfo_1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         elapsedTime += Time.deltaTime;
 
         if (slowHealthAcquired)
@@ -288,48 +295,51 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (shieldCurrentValue <= 0)
+        if(!isInvincible)
         {
-            currentHealth -= damage;
-
-            if (slowHealthAcquired)
+            if (shieldCurrentValue <= 0)
             {
-                if (currentHealth < 1)
-                    currentHealth = 1;
+                currentHealth -= damage;
 
-                if(currentSlowhealth == 1)
-                    currentSlowhealth -= 1;
+                if (slowHealthAcquired)
+                {
+                    if (currentHealth < 1)
+                        currentHealth = 1;
 
-                slowHealthBar.SetHealth(currentSlowhealth);
-            }
+                    if (currentSlowhealth == 1)
+                        currentSlowhealth -= 1;
 
-            healthBar.SetHealth(currentHealth, slowHealthAcquired);
+                    slowHealthBar.SetHealth(currentSlowhealth);
+                }
 
-            if (currentHealth <= 0 || (currentSlowhealth <= 0 && slowHealthAcquired))
-            {
-                menuManager.GameOverScreen();
-                coins = CoinGainPercent(coins, Mathf.FloorToInt(elapsedTime % 60));
-                overCoin.SetCoinGain(coins);
-                int coinLocal = PlayerPrefs.GetInt("Coins", 0);
-                //Debug.Log(coinLocal +" local");
-                PlayerPrefs.SetInt("Coins", coinLocal + coins);
-                PlayerPrefs.Save();
-                //Debug.Log(PlayerPrefs.GetInt("Coins", 0));
-            }
-        }
-        else
-        {
-            if (shieldCurrentValue > damage)
-            {
-                shieldCurrentValue -= damage;
-                shieldBar.SetShield(shieldCurrentValue);
+                healthBar.SetHealth(currentHealth, slowHealthAcquired);
+
+                if (currentHealth <= 0 || (currentSlowhealth <= 0 && slowHealthAcquired))
+                {
+                    menuManager.GameOverScreen();
+                    coins = CoinGainPercent(coins, Mathf.FloorToInt(elapsedTime % 60));
+                    overCoin.SetCoinGain(coins);
+                    int coinLocal = PlayerPrefs.GetInt("Coins", 0);
+                    //Debug.Log(coinLocal +" local");
+                    PlayerPrefs.SetInt("Coins", coinLocal + coins);
+                    PlayerPrefs.Save();
+                    //Debug.Log(PlayerPrefs.GetInt("Coins", 0));
+                }
             }
             else
             {
-                int dmg = damage - shieldCurrentValue;
-                shieldCurrentValue = 0;
-                shieldBar.SetShield(shieldCurrentValue);
-                TakeDamage(dmg);
+                if (shieldCurrentValue > damage)
+                {
+                    shieldCurrentValue -= damage;
+                    shieldBar.SetShield(shieldCurrentValue);
+                }
+                else
+                {
+                    int dmg = damage - shieldCurrentValue;
+                    shieldCurrentValue = 0;
+                    shieldBar.SetShield(shieldCurrentValue);
+                    TakeDamage(dmg);
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,13 +15,36 @@ public class LevelSlider : MonoBehaviour
     [SerializeField] float tweenTime;
     [SerializeField] LeanTweenType tweenType;
 
-    [SerializeField] List<GameObject> pageList;
+    public GameObject MapButton;
+    public FindAllChildren findAllChildren;
+
+    List<GameObject> MapButtonList;
 
     private void Awake()
     {
-        maxPage = pageList.Count;
+        findAllChildren = MapButton.GetComponent<FindAllChildren>();
+
+        MapButtonList = findAllChildren.characterHolder();
+
         currentPage = 1;
         targetPos = levelPageRect.localPosition;
+    }
+
+    private void Start()
+    {
+        maxPage = MapButtonList.Count;
+        SetButton();
+    }
+
+    public void SetButton()
+    {
+        for (int i = 0; i < MapButtonList.Count; i++)
+        {
+            if (currentPage - 1 == i)
+                MapButtonList[i].GetComponentInParent<Button>().enabled = true;
+            else
+                MapButtonList[i].GetComponentInParent<Button>().enabled = false;
+        }
     }
 
     public void Next()
@@ -44,6 +68,7 @@ public class LevelSlider : MonoBehaviour
 
     void MovePage()
     {
+        SetButton();
         levelPageRect.LeanMoveLocal(targetPos, tweenTime).setEase(tweenType);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LevelSlider : MonoBehaviour
 {
-    [SerializeField] int maxPage;
+    public int maxPage;
     int currentPage;
     Vector3 targetPos;
     [SerializeField] Vector3 pageStep;
@@ -15,24 +15,29 @@ public class LevelSlider : MonoBehaviour
     [SerializeField] float tweenTime;
     [SerializeField] LeanTweenType tweenType;
 
-    public GameObject MapButton;
     public FindAllChildren findAllChildren;
 
     List<GameObject> MapButtonList;
 
     private void Awake()
     {
-        findAllChildren = MapButton.GetComponent<FindAllChildren>();
-
         MapButtonList = findAllChildren.characterHolder();
 
         currentPage = 1;
         targetPos = levelPageRect.localPosition;
     }
 
+    private void Update()
+    {
+        if(MapButtonList.Count != maxPage)
+        {
+            maxPage = MapButtonList.Count;
+            SetButton();
+        }
+    }
+
     private void Start()
     {
-        maxPage = MapButtonList.Count;
         SetButton();
     }
 

@@ -8,6 +8,7 @@ public class SetMapHolder : MonoBehaviour
 {
     [SerializeField] Button MapHolder;
     [SerializeField] Text Name;
+    [SerializeField] GameObject lockHolder;
 
     MainMenu menu;
 
@@ -15,7 +16,7 @@ public class SetMapHolder : MonoBehaviour
     private GameObject LevelSelect;
     private GameObject SelectCharacter;
 
-    SceneAsset asset;
+    MapData mapData;
 
     private void Awake()
     {
@@ -32,13 +33,15 @@ public class SetMapHolder : MonoBehaviour
     {
         MapHolder.image.sprite = data.Icon;
         Name.text = data.Name.ToUpper();
-        asset = data.Map;
+        mapData = data;
+        lockHolder.SetActive(!data.unlocked);
+        MapHolder.enabled = data.unlocked;
     }
 
     void Onclick()
     {
         LevelSelect.SetActive(false);
         SelectCharacter.SetActive(true);
-        menu.sceneAsset(asset);
+        menu.SetMapData(mapData);
     }
 }

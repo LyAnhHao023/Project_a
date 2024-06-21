@@ -6,11 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    private SceneAsset scene;
+    private MapData mapData;
 
-    public void sceneAsset(SceneAsset asset)
+    public void SetMapData(MapData data)
     {
-        scene = asset;
+        mapData = data;
+    }
+
+    public MapData GetMapData()
+    { 
+        return mapData;
     }
 
     public void ExitButton()
@@ -21,6 +26,6 @@ public class MainMenu : MonoBehaviour
     public void StartGame(int id)
     {
         StaticData.LevelType = id;
-        SceneManager.LoadScene(scene.name);
+        SceneManager.LoadScene(mapData.Map.name);
     }
 }

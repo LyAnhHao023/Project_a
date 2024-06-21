@@ -10,4 +10,5 @@ public class MapData : ScriptableObject
     public string Name;
     public Sprite Icon;
     public bool storyCleared = false;
+    public bool unlocked = false;
 }

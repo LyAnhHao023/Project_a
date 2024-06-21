@@ -7,14 +7,23 @@ public class BazokaBullet : MonoBehaviour
     [SerializeField]
     float timeAutoDestroy = 10f;
     [SerializeField] GameObject ExplodePrefab;
+    private Vector3 baseSizeBullet;
     public void SetDmg(int dmg, bool isCrit)
     {
         ExplodePrefab.GetComponent<BazokaBulletExplode>().SetDmg(dmg, isCrit);
     }
 
-    private void Start()
+    public void BuffSizeBulletByPersent(float persent)
     {
-        Destroy(gameObject, timeAutoDestroy);    }
+        transform.localScale += new Vector3(baseSizeBullet.x * persent, baseSizeBullet.y * persent, baseSizeBullet.y * persent);
+    }
+
+
+    private void Awake()
+    {
+        Destroy(gameObject, timeAutoDestroy);
+        baseSizeBullet=transform.localScale;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

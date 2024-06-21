@@ -9,15 +9,11 @@ public class KnightGirlSkill : MonoBehaviour
     [SerializeField]
     float timeDeActiveSkill = 5;
 
-
-    Animator animator;
-
     float timer = 0;
     CharacterInfo_1 player;
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
         player = GetComponentInParent<CharacterInfo_1>();
     }
 

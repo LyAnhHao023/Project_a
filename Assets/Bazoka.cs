@@ -29,7 +29,7 @@ public class Bazoka : WeaponBase
 
     CharacterInfo_1 characterInfo_1;
 
-    private float buffSizeBullet=1f;
+    private float buffSizeBullet=0;
 
     private void Start()
     {
@@ -72,15 +72,16 @@ public class Bazoka : WeaponBase
     {
 
         GameObject createBullet = Instantiate(BulletBazoka, firePos.position, transform.rotation);
-        createBullet.transform.localScale = new Vector3(createBullet.transform.localScale.x * characterInfo_1.weaponSize * buffSizeBullet, createBullet.transform.localScale.y * characterInfo_1.weaponSize * buffSizeBullet,
-                                              createBullet.transform.localScale.z * characterInfo_1.weaponSize * buffSizeBullet);
+        BazokaBullet bulletScript = createBullet.GetComponent<BazokaBullet>();
+
+        bulletScript.BuffSizeBulletByPersent(buffSizeBullet + characterInfo_1.weaponSize);
         createBullet.transform.parent = bulletsObject.transform;
         //Set dmg
         bool isCrit = UnityEngine.Random.value * 100 < characterStats.crit;
 
         float dmg = isCrit ?
                     (weaponStats.dmg + characterStats.strenght) * characterStats.critDmg : (weaponStats.dmg + characterStats.strenght);
-        createBullet.GetComponent<BazokaBullet>().SetDmg((int)dmg, isCrit);
+        bulletScript.SetDmg((int)dmg, isCrit);
         Rigidbody2D rigidbody2D = createBullet.GetComponent<Rigidbody2D>();
         rigidbody2D.AddForce(transform.right * bulletForce, ForceMode2D.Impulse);
 

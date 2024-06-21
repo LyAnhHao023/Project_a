@@ -17,9 +17,17 @@ public class RockFallingMap3 : MonoBehaviour
 
     private Collider2D colliderOJ;
 
+    bool isSkillBoss=false;
+
     private void Awake()
     {
         colliderOJ = GetComponent<Collider2D>();
+    }
+
+    public void SetPlayerTarget(GameObject player)
+    {
+        this.player = player;
+        isSkillBoss=true;
     }
 
     private void OnEnable()
@@ -47,7 +55,7 @@ public class RockFallingMap3 : MonoBehaviour
     {
         CharacterInfo_1 playerGO = collision.GetComponent<CharacterInfo_1>();
         EnemyBase enemy = collision.GetComponent<EnemyBase>();
-        if(playerGO != null )
+        if(playerGO != null&&!isSkillBoss)
         {
             playerGO.TakeDamage(dmg);
         }

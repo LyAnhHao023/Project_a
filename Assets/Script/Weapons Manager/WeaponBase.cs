@@ -13,6 +13,14 @@ public abstract class WeaponBase : MonoBehaviour
 
     WeaponStats weaponBaseStats;
 
+    private Vector3 baseSizeWeapon;
+
+
+    private void Awake()
+    {
+        baseSizeWeapon = transform.localScale;
+    }
+
     public virtual void Update()
     {
         timer-=Time.deltaTime;
@@ -26,12 +34,12 @@ public abstract class WeaponBase : MonoBehaviour
     public virtual void SetData(WeaponData wd)
     {
         weaponData = wd;
-        weaponStats = wd.stats;
+        weaponStats.SetStats(wd.stats);
     }
 
     public void BuffWeaponSizeByPersent(float persent)
     {
-        transform.localScale=new Vector3(transform.localScale.x * persent, transform.localScale.y * persent, transform.localScale.y * persent);
+        transform.localScale+=new Vector3(baseSizeWeapon.x * persent, baseSizeWeapon.y * persent, baseSizeWeapon.y * persent);
     }
 
     public virtual void SetBaseStat(WeaponData wd)

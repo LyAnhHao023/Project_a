@@ -16,6 +16,13 @@ public class WeaponStats
         this.level = level;
         this.timeAttack = timeAttack;
     }
+
+    public void SetStats(WeaponStats stats)
+    {
+        this.dmg = stats.dmg;
+        this.level = stats.level;
+        this.timeAttack = stats.timeAttack;
+    }
 }
 [CreateAssetMenu]
 public class WeaponData : ScriptableObject

@@ -21,6 +21,7 @@ public class BombScript : WeaponBase
     private void Awake()
     {
         SetCharacterStats();
+        BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
         ObjectDrops = GameObject.Find("===ObjectDrop===").transform;
     }
     public override void Attack()
@@ -49,6 +50,7 @@ public class BombScript : WeaponBase
             GameObject newBomb=Instantiate(BombChildrenPrefab, transform.position,Quaternion.identity);
             newBomb.transform.parent = ObjectDrops;
             newBomb.transform.position = transform.position;
+            newBomb.transform.localScale = transform.localScale;
         }
     }
 

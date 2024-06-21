@@ -40,10 +40,10 @@ public class WeaponsManager : MonoBehaviour
     //int i = 0;
     //float timer = 10;
 
-    private void Start()
-    {
-        AddWeapon(BazokaWeapon);
-    }
+    //private void Start()
+    //{
+    //    AddWeapon(BazokaWeapon);
+    //}
 
     public void AddWeapon(WeaponData weaponData)
     {

@@ -28,6 +28,12 @@ public abstract class WeaponBase : MonoBehaviour
         weaponData = wd;
         weaponStats = wd.stats;
     }
+
+    public void BuffWeaponSizeByPersent(float persent)
+    {
+        transform.localScale=new Vector3(transform.localScale.x * persent, transform.localScale.y * persent, transform.localScale.y * persent);
+    }
+
     public virtual void SetBaseStat(WeaponData wd)
     {
         weaponBaseStats = GetBaseStat();

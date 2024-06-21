@@ -7,15 +7,21 @@ public class BigWeapon : ItemBase
     [SerializeField]
     float persentBuffBigWeapons;
 
-    private void Awake()
+    private void Start()
     {
         level = 1;
         SetItemStat();
     }
     public override void ItemEffect()
     {
-        GameObject gameObject = GameObject.Find("Weapons");
-        gameObject.transform.localScale= new Vector3(1f*persentBuffBigWeapons,1f*persentBuffBigWeapons,1);
+        GetComponentInParent<CharacterInfo_1>().weaponSize += persentBuffBigWeapons - 1;
+
+        List<weaponEnquip> weapons = GetComponentInParent<WeaponsManager>().weapons_lst;
+
+        foreach (weaponEnquip weapon in weapons)
+        {
+            weapon.weaponObject.GetComponent<WeaponBase>().BuffWeaponSizeByPersent(persentBuffBigWeapons);
+        }
     }
 
     public override void SetItemStat()

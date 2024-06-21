@@ -5,35 +5,32 @@ using UnityEngine;
 
 public class OldeHeroSkill : MonoBehaviour
 {
-    [SerializeField]
-    int killToUseSkill = 10;
-    [SerializeField]
-    int dmgSkill=20;
-
+    
     [SerializeField]
     GameObject effectSkillPrefab;
 
-    int currentKill=0;
-    int energy = 0;
-    CharacterStats characterStats;
+
     Animator animator;
 
+    float timer =0;
+    SkillInfo skillInfor;
+    CharacterStats characterStats;
     private void Start()
     {
         animator = GetComponent<Animator>();
+        skillInfor=GetComponentInParent<CharacterInfo_1>().skillInfor;
+        characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        int kill = GetComponentInParent<CharacterInfo_1>().numberMonsterKilled;
-        energy += kill - currentKill;
-        currentKill = kill;
+        timer-=Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Q)&&energy>=killToUseSkill)
+        if (Input.GetKeyDown(KeyCode.Q)&&timer<=0)
         {
-            energy = 0;
+            timer = skillInfor.cdSkill;
             Skill();
         }
 
@@ -42,8 +39,7 @@ public class OldeHeroSkill : MonoBehaviour
     private void Skill()
     {
         animator.SetBool("Skill",true);
-        characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
-        effectSkillPrefab.GetComponent<effectSkillOdleHero>().SetDmg(characterStats,dmgSkill,transform.position);
+        effectSkillPrefab.GetComponent<effectSkillOdleHero>().SetDmg(characterStats, skillInfor.strenght, transform.position);
         effectSkillPrefab.SetActive(true);
         Invoke("DeActiveSkil", 2f);
 

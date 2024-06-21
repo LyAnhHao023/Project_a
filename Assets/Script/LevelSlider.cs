@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelSlider : MonoBehaviour
 {
-    [SerializeField] int maxPage;
+    public int maxPage;
     int currentPage;
     Vector3 targetPos;
     [SerializeField] Vector3 pageStep;
@@ -14,13 +15,41 @@ public class LevelSlider : MonoBehaviour
     [SerializeField] float tweenTime;
     [SerializeField] LeanTweenType tweenType;
 
-    [SerializeField] List<GameObject> pageList;
+    public FindAllChildren findAllChildren;
+
+    List<GameObject> MapButtonList;
 
     private void Awake()
     {
-        maxPage = pageList.Count;
+        MapButtonList = findAllChildren.characterHolder();
+
         currentPage = 1;
         targetPos = levelPageRect.localPosition;
+    }
+
+    private void Update()
+    {
+        if(MapButtonList.Count != maxPage)
+        {
+            maxPage = MapButtonList.Count;
+            SetButton();
+        }
+    }
+
+    private void Start()
+    {
+        SetButton();
+    }
+
+    public void SetButton()
+    {
+        for (int i = 0; i < MapButtonList.Count; i++)
+        {
+            if (currentPage - 1 == i)
+                MapButtonList[i].GetComponentInParent<Button>().enabled = true;
+            else
+                MapButtonList[i].GetComponentInParent<Button>().enabled = false;
+        }
     }
 
     public void Next()
@@ -44,6 +73,7 @@ public class LevelSlider : MonoBehaviour
 
     void MovePage()
     {
+        SetButton();
         levelPageRect.LeanMoveLocal(targetPos, tweenTime).setEase(tweenType);
     }
 }

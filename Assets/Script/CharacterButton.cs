@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CharacterButton : MonoBehaviour
 {
     [SerializeField] Image CharacterImage;
-    [SerializeField] GameObject CharacterOverlay;
+    [SerializeField] GameObject CharacterLocker;
     [SerializeField] GameObject CharButton;
 
     GameObject CharacterHolder;
@@ -23,12 +23,9 @@ public class CharacterButton : MonoBehaviour
 
     public void Set(CharacterData characterData)
     {
-        //Name = GameObject.FindGameObjectWithTag("CharacterName").GetComponent<Text>();
-        //spriteToUIImage = GameObject.FindGameObjectWithTag("CharacterHolder").GetComponent<SpriteToUIImage>();
-
         CharData = characterData;
         CharacterImage.sprite = characterData.image;
-        CharacterOverlay.SetActive(!characterData.acquired);
+        CharacterLocker.SetActive(!characterData.acquired);
         CharButton.GetComponent<Button>().enabled = characterData.acquired;
     }
 

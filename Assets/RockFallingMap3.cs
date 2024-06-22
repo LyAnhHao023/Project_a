@@ -19,6 +19,8 @@ public class RockFallingMap3 : MonoBehaviour
 
     bool isSkillBoss=false;
 
+    Vector3 currentPos;
+
     private void Awake()
     {
         colliderOJ = GetComponent<Collider2D>();
@@ -36,7 +38,13 @@ public class RockFallingMap3 : MonoBehaviour
         StartCoroutine(DeActive(1.65f, gameObject));
         colliderOJ.enabled = false;
         warningZonePrefab.SetActive(true);
-        gameObject.transform.position = RandomPosition()+player.transform.position;
+        currentPos = RandomPosition()+player.transform.position;
+        gameObject.transform.position = currentPos;
+    }
+
+    private void Update()
+    {
+        gameObject.transform.position = currentPos;
     }
 
     private Vector3 RandomPosition()
@@ -55,11 +63,12 @@ public class RockFallingMap3 : MonoBehaviour
     {
         CharacterInfo_1 playerGO = collision.GetComponent<CharacterInfo_1>();
         EnemyBase enemy = collision.GetComponent<EnemyBase>();
-        if(playerGO != null&&!isSkillBoss)
+        if(playerGO != null)
         {
             playerGO.TakeDamage(dmg);
+            return;
         }
-        if(enemy != null)
+        if(enemy != null && !isSkillBoss)
         {
             bool isDead = enemy.EnemyTakeDmg(dmg);
             PostDmg(dmg, transform.position, false);

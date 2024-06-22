@@ -49,7 +49,7 @@ public class BossMinotaur : EnemyBase
 
     GameObject ParentDropItem;
 
-    bool isUseSkill1=false;
+    bool isUseSkill=false;
 
 
     private void Start()
@@ -67,15 +67,15 @@ public class BossMinotaur : EnemyBase
         timerSkill1 -= Time.deltaTime;
         timerSkill2 -= Time.deltaTime;
 
-        if( timerSkill1 <= 0)
+        if( timerSkill1 <= 0&&!isUseSkill)
         {
             timerSkill1 = timeSkill1;
             StartCoroutine(SkillOne());
         }
-        else if( timerSkill2 <= 0&& !isUseSkill1) 
+        else if( timerSkill2 <= 0&& !isUseSkill) 
         {
             timerSkill2 = timeSkill2;
-            SkillTwo();
+            StartCoroutine(SkillTwo());
         }
     }
 
@@ -93,8 +93,8 @@ public class BossMinotaur : EnemyBase
     private IEnumerator SkillOne()
     {
         animator.SetBool("Skill1", true);
-        isUseSkill1=true;
-        yield return new WaitForSeconds(0.02f);
+        isUseSkill = true;
+        yield return new WaitForSeconds(0.3f);
         Vector2 lookDir = targetGameObject.transform.position - transform.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
 
@@ -107,14 +107,25 @@ public class BossMinotaur : EnemyBase
         Rigidbody2D rb= slash.GetComponent<Rigidbody2D>();
         rb.AddForce(slash.transform.right * 9f, ForceMode2D.Impulse);
         Destroy(slash, 5f);
-        yield return new WaitForSeconds(0.03f);
         animator.SetBool("Skill1", false);
-        isUseSkill1 = false;
+        isUseSkill = false;
     }
 
-    private void SkillTwo()
+    private IEnumerator SkillTwo()
     {
+        GetComponent<AIPath>().canMove = false;
+        animator.SetBool("Skill2", true);
+        isUseSkill=true;
+        yield return new WaitForSeconds(1.2f);
+        foreach (var item in Skill2Lst)
+        {
+            item.SetActive(true);
+        }
+        yield return new WaitForSeconds(0.1f);
 
+        GetComponent<AIPath>().canMove = true;
+        animator.SetBool("Skill2", false);
+        isUseSkill = false;
     }
 
     public override void SetTarget(GameObject GameObject)

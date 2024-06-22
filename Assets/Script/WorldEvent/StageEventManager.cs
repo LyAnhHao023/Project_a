@@ -11,20 +11,40 @@ public class StageEventManager : MonoBehaviour
     [SerializeField]
     SpawEnemy spawEnemyManager;
 
+    [SerializeField] EnemyData BoxDropPrefab;
+
+    [SerializeField] float TimeBoxDrop = 15f;
+
     [SerializeField]
-    Timer timer;
+    Timer timerScript;
+
+    float timer;
 
     int eventIndex=0;
 
+    private void Start()
+    {
+        timer = TimeBoxDrop;
+    }
+
     private void Update()
     {
+        timer -= Time.deltaTime;
+
+        if (timer <= 0)
+        {
+            timer = TimeBoxDrop;
+            SpawBoxDrop();
+        }
+
         if (eventIndex >= StageData.stageEvents.Count) { return; }
 
-        if (timer.elapsedTime > StageData.stageEvents[eventIndex].Time)
+        if (timerScript.elapsedTime > StageData.stageEvents[eventIndex].Time)
         {
             SpawEnemy();
             eventIndex++;
         }
+
     }
 
     private void SpawEnemy()
@@ -36,5 +56,10 @@ public class StageEventManager : MonoBehaviour
         {
             spawEnemyManager.AddRepeatedSpaw(currentEvent);
         }
+    }
+
+    private void SpawBoxDrop()
+    {
+        spawEnemyManager.CreateNewEnemy(BoxDropPrefab, false);
     }
 }

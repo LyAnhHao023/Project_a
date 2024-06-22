@@ -30,7 +30,7 @@ public class GunScript : WeaponBase
     CharacterInfo_1 characterInfo_1;
 
     //dung cho viec nang cap
-    private float buffSizeBullet = 1;
+    private float buffSizeBullet = 0;
 
     private void Start()
     {
@@ -71,15 +71,18 @@ public class GunScript : WeaponBase
     public override void Attack()
     {
         GameObject createBullet = Instantiate(Bullet, firePos.position, Quaternion.identity);
-        createBullet.transform.localScale=new Vector3(createBullet.transform.localScale.x * characterInfo_1.weaponSize * buffSizeBullet, createBullet.transform.localScale.y * characterInfo_1.weaponSize * buffSizeBullet,
-                                              createBullet.transform.localScale.z * characterInfo_1.weaponSize * buffSizeBullet);
+
+        BulletScript bulletScript = createBullet.GetComponent<BulletScript>();
+
+        bulletScript.BuffSizeBulletByPersent(buffSizeBullet+characterInfo_1.weaponSize);
+
         createBullet.transform.parent = bulletsObject.transform;
         //Set dmg
         bool isCrit = UnityEngine.Random.value * 100 < characterStats.crit;
 
         float dmg = isCrit ?
                     (weaponStats.dmg + characterStats.strenght) * characterStats.critDmg : (weaponStats.dmg + characterStats.strenght);
-        createBullet.GetComponent<BulletScript>().SetDmg((int)dmg,isCrit);
+        bulletScript.SetDmg((int)dmg,isCrit);
         Rigidbody2D rigidbody2D = createBullet.GetComponent<Rigidbody2D>();
         rigidbody2D.AddForce(transform.right * bulletForce, ForceMode2D.Impulse);
 

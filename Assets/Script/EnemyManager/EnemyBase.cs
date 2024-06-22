@@ -11,6 +11,8 @@ public abstract class EnemyBase : MonoBehaviour
 
     public bool isKnockback=false;
     private Rigidbody2D rb;
+
+    
     public virtual void SetData(EnemyData enemy)
     {
         enemyData = enemy;

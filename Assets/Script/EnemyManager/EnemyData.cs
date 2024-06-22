@@ -31,5 +31,6 @@ public class EnemyData : ScriptableObject
 {
     public EnenmyStats stats;
     public string name;
+    public bool isBoss;
     public GameObject EnemyBasePrefab;
 }

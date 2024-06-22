@@ -86,12 +86,14 @@ public class CharacterInfo_1 : MonoBehaviour
     public bool isInvincible=false;
     [HideInInspector]
     //phần trăm buff độ lớn của vk
-    public float weaponSize = 1f;
+    public float weaponSize = 0;
 
     private void Start()
     {
         if (StaticData.SelectedCharacter != null)
             characterData = StaticData.SelectedCharacter;
+
+        weaponSize = 0;
 
         characterAnimate = Instantiate(characterData.animatorPrefab, CharacterAnimateTranform.transform);
         characterStats.SetStats(characterData.stats);

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BigWeapon : ItemBase
 {
     [SerializeField]
-    float persentBuffBigWeapons;
+    float persentBuffBigWeapons=0.3f;
 
     private void Start()
     {
@@ -14,7 +14,7 @@ public class BigWeapon : ItemBase
     }
     public override void ItemEffect()
     {
-        GetComponentInParent<CharacterInfo_1>().weaponSize += persentBuffBigWeapons - 1;
+        GetComponentInParent<CharacterInfo_1>().weaponSize += persentBuffBigWeapons;
 
         List<weaponEnquip> weapons = GetComponentInParent<WeaponsManager>().weapons_lst;
 
@@ -30,26 +30,24 @@ public class BigWeapon : ItemBase
         {
             case 1:
                 {
-                    persentBuffBigWeapons = 1.2f;
+                    ItemEffect();
                 }
                 break;
             case 2:
                 {
-                    persentBuffBigWeapons = 1.4f;
+                    ItemEffect();
                 }
                 break;
             case 3:
                 {
-                    persentBuffBigWeapons = 1.6f;
+                    ItemEffect();
                 }
                 break;
             case 4:
                 {
-                    persentBuffBigWeapons = 1.8f;
+                    ItemEffect();
                 }
                 break;
         }
-
-        ItemEffect();
     }
 }

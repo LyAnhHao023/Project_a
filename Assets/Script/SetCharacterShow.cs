@@ -14,6 +14,9 @@ public class SetCharacterShow : MonoBehaviour
     [SerializeField] Text ATK;
     [SerializeField] Text SPD;
 
+    [SerializeField] GameObject skillHolder;
+    [SerializeField] SetSkillInfo skillInfo;
+
     float timer = 5;
 
     bool stand;
@@ -46,5 +49,8 @@ public class SetCharacterShow : MonoBehaviour
         SPD.text = charData.stats.speed.ToString();
         spriteToUIImage.SetCharacterAnimation(charData.animatorPrefab.GetComponent<SpriteRenderer>());
         stand = true;
+        skillHolder.SetActive(true);
+        skillInfo.Set(charData.skillInfo);
+        skillInfo.SetSkillVideo(charData);
     }
 }

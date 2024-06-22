@@ -9,12 +9,17 @@ public class KnightGirlSkill : MonoBehaviour
     [SerializeField]
     float timeDeActiveSkill = 5;
 
+    SkillCooldownUI skillCooldownUI;
+
     float timer = 0;
     CharacterInfo_1 player;
 
     private void Start()
     {
+        skillCooldownUI = GameObject.FindGameObjectWithTag("SkillCooldown").GetComponent<SkillCooldownUI>();
         player = GetComponentInParent<CharacterInfo_1>();
+
+        skillCooldownUI.SetSkillInfo(player.skillInfor);
     }
 
 
@@ -26,6 +31,7 @@ public class KnightGirlSkill : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && timer <= 0)
         {
             timer = player.skillInfor.cdSkill;
+            skillCooldownUI.SetCooldown(timer);
             Skill();
         }
 

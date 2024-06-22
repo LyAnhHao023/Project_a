@@ -33,7 +33,7 @@ public class SkillInfo
 
     public void SetData(SkillInfo data)
     {
-        this.Icon = null;
+        this.Icon = data.Icon;
         this.name = data.name;
         this.decription = data.decription;
         this.strenght=data.strenght;

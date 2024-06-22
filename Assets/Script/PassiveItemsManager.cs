@@ -49,7 +49,7 @@ public class PassiveItemsManager : MonoBehaviour
 
     float timer = 5;
 
-    private void Update()
+    /*private void Update()
     {
         timer-=Time.deltaTime;
         if (timer < 0)
@@ -57,7 +57,7 @@ public class PassiveItemsManager : MonoBehaviour
             timer = 1000;
             AddItem(bigWeapons);
         }
-    }
+    }*/
 
 
     public void AddItem(ItemsData itemData)

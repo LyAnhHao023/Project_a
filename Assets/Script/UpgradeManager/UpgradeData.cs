@@ -34,6 +34,8 @@ public class UpgradeData : ScriptableObject
 
     public List<UpgradeInfo> UpgradeInfos;
 
+    public bool bought = false;
+
     public void Awake()
     {
         acquired = false;

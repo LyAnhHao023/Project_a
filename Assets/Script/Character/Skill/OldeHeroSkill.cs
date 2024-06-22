@@ -9,6 +9,7 @@ public class OldeHeroSkill : MonoBehaviour
     [SerializeField]
     GameObject effectSkillPrefab;
 
+    SkillCooldownUI skillCooldownUI;
 
     Animator animator;
 
@@ -17,9 +18,12 @@ public class OldeHeroSkill : MonoBehaviour
     CharacterStats characterStats;
     private void Start()
     {
+        skillCooldownUI = GameObject.FindGameObjectWithTag("SkillCooldown").GetComponent<SkillCooldownUI>();
         animator = GetComponent<Animator>();
         skillInfor=GetComponentInParent<CharacterInfo_1>().skillInfor;
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
+
+        skillCooldownUI.SetSkillInfo(skillInfor);
     }
 
 
@@ -31,6 +35,7 @@ public class OldeHeroSkill : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q)&&timer<=0)
         {
             timer = skillInfor.cdSkill;
+            skillCooldownUI.SetCooldown(timer);
             Skill();
         }
 

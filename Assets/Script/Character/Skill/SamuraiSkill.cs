@@ -10,16 +10,20 @@ public class SamuraiSkill : MonoBehaviour
 
     [SerializeField] float timeToDeActiveSkill = 5f;
 
+    SkillCooldownUI skillCooldownUI;
+
 
     float timer = 0;
     SkillInfo skillInfor;
     CharacterStats characterStats;
     private void Start()
     {
+        skillCooldownUI = GameObject.FindGameObjectWithTag("SkillCooldown").GetComponent<SkillCooldownUI>();
         skillInfor = GetComponentInParent<CharacterInfo_1>().skillInfor;
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
-    }
 
+        skillCooldownUI.SetSkillInfo(skillInfor);
+    }
 
     // Update is called once per frame
     void Update()
@@ -29,6 +33,7 @@ public class SamuraiSkill : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && timer <= 0)
         {
             timer = skillInfor.cdSkill;
+            skillCooldownUI.SetCooldown(timer);
             Skill();
         }
 

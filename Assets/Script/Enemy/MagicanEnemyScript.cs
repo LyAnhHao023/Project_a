@@ -46,8 +46,15 @@ public class MagicanEnemyScript : EnemyBase
     public override void SetTarget(GameObject GameObject)
     {
         targetGameObject = GameObject;
-        gameObject.GetComponent<AIPath>().maxSpeed = enemyStats.speed;
-        GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
+        if (GetComponent<AIPath>() != null)
+        {
+            GetComponent<AIPath>().maxSpeed = enemyStats.speed;
+            GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
+        }
+        else
+        {
+            GetComponent<EnemyMove>().SetData(targetGameObject.transform, enemyStats);
+        }
     }
 
     public override void SetParentDropItem(GameObject gameObject)
@@ -64,7 +71,14 @@ public class MagicanEnemyScript : EnemyBase
         GameObject targetObject = Collider2D.Where(c => c.gameObject == targetGameObject).FirstOrDefault()?.gameObject;
         if(targetObject != null)
         {
-            GetComponent<AIPath>().canMove = false;
+            if (GetComponent<AIPath>() != null)
+            {
+                GetComponent<AIPath>().canMove = false;
+            }
+            else
+            {
+                GetComponent<EnemyMove>().canMove = false;
+            }
             animator.SetBool("isReady", true);
             timer -=Time.deltaTime;
             if(timer < 0)
@@ -76,7 +90,14 @@ public class MagicanEnemyScript : EnemyBase
         }
         else
         {
-            GetComponent<AIPath>().canMove = true;
+            if (GetComponent<AIPath>() != null)
+            {
+                GetComponent<AIPath>().canMove = true;
+            }
+            else
+            {
+                GetComponent<EnemyMove>().canMove = true;
+            }
             animator.SetBool("isReady", false);
         }
 
@@ -100,8 +121,14 @@ public class MagicanEnemyScript : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
-            GetComponent<AIPath>().canMove = false;
-            GetComponent<Rigidbody2D>().simulated=false;
+            if (GetComponent<AIPath>() != null)
+            {
+                GetComponent<AIPath>().canMove = false;
+            }
+            else
+            {
+                GetComponent<EnemyMove>().canMove = false;
+            }
             animator.SetBool("Dead", true);
             Destroy(gameObject,1f);
             Drop();

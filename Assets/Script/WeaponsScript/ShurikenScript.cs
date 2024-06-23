@@ -15,7 +15,7 @@ public class ShurikenScript : WeaponBase
 
     WeaponStats baseStat = new WeaponStats(5, 1, 10f);
 
-    private void Awake()
+    private void Start()
     {
         SetCharacterStats();
         BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
@@ -34,7 +34,7 @@ public class ShurikenScript : WeaponBase
             }
         }
 
-        if(weaponStats.level >= 4)
+        if(weaponStats.level >= 5)
         {
             foreach (GameObject child in ShurikenChildrenLst1)
             {
@@ -82,5 +82,60 @@ public class ShurikenScript : WeaponBase
     public override WeaponStats GetBaseStat()
     {
         return baseStat;
+    }
+
+    public override void LevelUp()
+    {
+        weaponStats.level++;
+        switch (weaponStats.level)
+        {
+            case 2:
+                {
+                    //Increase size of SHURIKEN by 20%. Increase damage of shuriken by 20%.
+                    BuffWeaponSizeByPersent(0.20f);
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 20 / 100);
+                }
+                break;
+            case 3:
+                {
+                    //Reduce delay between attacks by 20%.
+                    weaponStats.timeAttack -= weaponData.stats.timeAttack * 20 / 100;
+                }
+                break;
+            case 4:
+                {
+                    //Increase damage by 33%, and size by 20%.
+                    BuffWeaponSizeByPersent(0.2f);
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 33 / 100);
+                }
+                break;
+            case 5:
+                {
+                    //Increase hit limit  30% and can active two shuriken
+                    foreach (var item in ShurikenChildrenLst)
+                    {
+                        item.GetComponent<ShurikenChildrenScript>().deactivateDistance += 3;
+                    }
+                    foreach (var item in ShurikenChildrenLst1)
+                    {
+                        item.GetComponent<ShurikenChildrenScript>().deactivateDistance += 3;
+                    }
+                }
+                break;
+            case 6:
+                {
+                    //Increase size aatack by 40%.
+                    BuffWeaponSizeByPersent(0.4f);
+                }
+                break;
+            case 7:
+                {
+                    //Increase size dmg by 50%.
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 50 / 100);
+                }
+                break;
+
+            default: break;
+        }
     }
 }

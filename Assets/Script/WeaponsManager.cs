@@ -37,13 +37,24 @@ public class WeaponsManager : MonoBehaviour
 
     public List<weaponEnquip> weapons_lst=new List<weaponEnquip>(5);
 
-    //int i = 0;
-    //float timer = 10;
+    int i = 0;
+    float timer = 5;
 
-    /*private void Start()
+    private void Update()
     {
-        AddWeapon(BazokaWeapon);
-    }*/
+        timer-=Time.deltaTime;
+        if (timer < 0&&i==0)
+        {
+            i++;
+            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+        }
+    }
 
     public void AddWeapon(WeaponData weaponData)
     {

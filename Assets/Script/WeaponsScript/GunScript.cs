@@ -100,4 +100,9 @@ public class GunScript : WeaponBase
     {
         return baseStat;
     }
+
+    public override void LevelUp()
+    {
+       
+    }
 }

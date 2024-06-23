@@ -63,4 +63,9 @@ public class BombScript : WeaponBase
     {
         return baseStat;
     }
+
+    public override void LevelUp()
+    {
+        throw new System.NotImplementedException();
+    }
 }

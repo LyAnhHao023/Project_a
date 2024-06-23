@@ -11,6 +11,8 @@ public class effectSkillOdleHero : MonoBehaviour
 
     Vector3 playerTranform;
 
+    List<int> idEnemy= new List<int>();
+
     public void SetDmg(CharacterStats stats,int dmg, Vector3 player)
     {
         characterStats= stats;
@@ -19,12 +21,23 @@ public class effectSkillOdleHero : MonoBehaviour
 
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void Update()
     {
         timer -= Time.deltaTime;
-        if (timer < 0)
+
+        if (timer <= 0) 
         {
             timer = 0.5f;
+            idEnemy.Clear();
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        
+        if (!idEnemy.Contains(collision.GetInstanceID()))
+        {
+            idEnemy.Add(collision.GetInstanceID());
 
             EnemyBase enemy = collision.gameObject.GetComponent<EnemyBase>();
             if (enemy != null)

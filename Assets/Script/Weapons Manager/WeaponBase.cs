@@ -42,6 +42,8 @@ public abstract class WeaponBase : MonoBehaviour
         transform.localScale+=new Vector3(baseSizeWeapon.x * persent, baseSizeWeapon.y * persent, baseSizeWeapon.y * persent);
     }
 
+    public abstract void LevelUp();
+
     public virtual void SetBaseStat(WeaponData wd)
     {
         weaponBaseStats = GetBaseStat();

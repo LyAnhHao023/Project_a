@@ -48,17 +48,27 @@ public class MagicicanBossScript : EnemyBase
 
     bool isUseSkill=false;
 
+    AIPath AIPath;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        AIPath = GetComponent<AIPath>();
     }
 
     public override void SetTarget(GameObject GameObject)
     {
         targetGameObject = GameObject;
-        gameObject.GetComponent<AIPath>().maxSpeed = enemyStats.speed;
+        if (AIPath != null)
+        {
+            GetComponent<AIPath>().maxSpeed = enemyStats.speed;
+            GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
+        }
+        else
+        {
+            GetComponent<EnemyMove>().SetData(targetGameObject.transform, enemyStats);
+        }
         SkillTelePrefab.GetComponent<MagicicanSkill>().SetDmg(enemyStats.dmg, targetGameObject);
-        GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
     }
 
     public override void SetParentDropItem(GameObject gameObject)
@@ -77,7 +87,15 @@ public class MagicicanBossScript : EnemyBase
             isUseSkill = true;
             animator.SetTrigger("Tele");
             animator.SetBool("isReady", false);
-            gameObject.GetComponent<AIPath>().canMove = false;
+            if(AIPath != null)
+            {
+                AIPath.canMove = false;
+            }
+            else
+            {
+                GetComponent<EnemyMove>().canMove = false;
+            }
+            
             Invoke("StartSkillTele", 0.4f);
         }
 
@@ -87,10 +105,17 @@ public class MagicicanBossScript : EnemyBase
             GameObject targetObject = Collider2D.Where(c => c.gameObject == targetGameObject).FirstOrDefault()?.gameObject;
             if (targetObject != null)
             {
-                GetComponent<AIPath>().canMove = false;
+                if (AIPath != null)
+                {
+                    AIPath.canMove = false;
+                }
+                else
+                {
+                    GetComponent<EnemyMove>().canMove = false;
+                }
                 animator.SetBool("isReady", true);
                 timer -= Time.deltaTime;
-                if (timer < 0)
+                if (timer <= 0)
                 {
                     timer = enemyStats.timeAttack;
                     Attack();
@@ -99,7 +124,14 @@ public class MagicicanBossScript : EnemyBase
             }
             else
             {
-                GetComponent<AIPath>().canMove = true;
+                if (AIPath != null)
+                {
+                    AIPath.canMove = true;
+                }
+                else
+                {
+                    GetComponent<EnemyMove>().canMove = true;
+                }
                 animator.SetBool("isReady", false);
             }
         }
@@ -142,8 +174,14 @@ public class MagicicanBossScript : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
-            GetComponent<AIPath>().canMove = false;
-            GetComponent<Rigidbody2D>().simulated = false;
+            if (AIPath != null)
+            {
+                AIPath.canMove = false;
+            }
+            else
+            {
+                GetComponent<EnemyMove>().canMove = false;
+            }
             animator.SetBool("Dead", true);
             Destroy(gameObject, 1f);
             Drop();

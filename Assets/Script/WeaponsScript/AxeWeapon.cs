@@ -77,4 +77,9 @@ public class AxeWeapon : WeaponBase
     {
         return baseStat;
     }
+
+    public override void LevelUp()
+    {
+        throw new NotImplementedException();
+    }
 }

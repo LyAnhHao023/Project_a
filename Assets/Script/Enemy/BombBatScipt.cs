@@ -16,8 +16,6 @@ public class BombBatScipt : EnemyBase
     [SerializeField]
     GameObject exploder;
 
-    float timeAttack;
-
     Animator animator;
 
     int rotasionChange = 0;
@@ -47,8 +45,16 @@ public class BombBatScipt : EnemyBase
     public override void SetTarget(GameObject GameObject)
     {
         targetGameObject = GameObject;
-        gameObject.GetComponent<AIPath>().maxSpeed = enemyStats.speed;
-        GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
+        AIPath aIPath=GetComponent<AIPath>();
+        if(aIPath != null)
+        {
+            aIPath.maxSpeed = enemyStats.speed;
+            GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
+        }
+        else
+        {
+            GetComponent<EnemyMove>().SetData(targetGameObject.transform, enemyStats);
+        }
     }
 
     public override void SetParentDropItem(GameObject gameObject)
@@ -80,7 +86,16 @@ public class BombBatScipt : EnemyBase
     private void Attack()
     {
         GetComponent<Collider2D>().isTrigger = true;
-        GetComponent<AIPath>().canMove = false;
+
+        AIPath aIPath = GetComponent<AIPath>();
+        if (aIPath != null)
+        {
+            GetComponent<AIPath>().canMove = false;
+        }
+        else
+        {
+            GetComponent<EnemyMove>().canMove = false;
+        }
         warningZone.SetActive(true);
         Invoke("Explosion",2f);
         animator.SetBool("isReady", true);

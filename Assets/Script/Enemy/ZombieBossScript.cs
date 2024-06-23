@@ -38,8 +38,15 @@ public class ZombieBossScript : EnemyBase
     public override void SetTarget(GameObject GameObject)
     {
         targetGameObject = GameObject;
-        gameObject.GetComponent<AIPath>().maxSpeed = enemyStats.speed;
-        GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
+        if (GetComponent<AIPath>() != null)
+        {
+            GetComponent<AIPath>().maxSpeed = enemyStats.speed;
+            GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
+        }
+        else
+        {
+            GetComponent<EnemyMove>().SetData(targetGameObject.transform, enemyStats);
+        }
     }
 
     public override void SetParentDropItem(GameObject gameObject)
@@ -118,9 +125,14 @@ public class ZombieBossScript : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
-            gameObject.GetComponent<AIPath>().canMove = false;
-            Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
-            rigidbody.simulated = false;
+            if (GetComponent<AIPath>() != null)
+            {
+                gameObject.GetComponent<AIPath>().canMove = false;
+            }
+            else
+            {
+                GetComponent<EnemyMove>().canMove = false;
+            }
             animator.SetBool("Dead", true);
             DestroyZombie();
             return true;

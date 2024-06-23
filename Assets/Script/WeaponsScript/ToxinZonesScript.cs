@@ -15,6 +15,8 @@ public class ToxinZonesScript : WeaponBase
     [SerializeField]
     WeaponStats baseStat = new WeaponStats(1, 1, 1f);
 
+    bool isKnockBack=false;
+
     private void Start()
     {
         SetCharacterStats();
@@ -45,6 +47,12 @@ public class ToxinZonesScript : WeaponBase
         if (isDead)
         {
             GetComponentInParent<CharacterInfo_1>().KilledMonster();
+        }
+        //KnockBack
+        if (!enemy.GetComponent<Collider2D>().isTrigger&&isKnockBack)
+        {
+            Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
+            enemy.Knockback(knockbackDirection, 2);
         }
     }
 
@@ -102,5 +110,51 @@ public class ToxinZonesScript : WeaponBase
     public override WeaponStats GetBaseStat()
     {
         return baseStat;
+    }
+
+    public override void LevelUp()
+    {
+        weaponStats.level++;
+        switch (weaponStats.level)
+        {
+            case 2:
+                {
+                    //Increase area by 15%.
+                    BuffWeaponSizeByPersent(0.15f);
+                }
+                break;
+            case 3:
+                {
+                    //Increase damage by 30%.
+                    weaponStats.dmg +=(int) Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
+                }
+                break;
+            case 4:
+                {
+                    //Increase area by 25%.
+                    BuffWeaponSizeByPersent(0.25f);
+                }
+                break;
+            case 5:
+                {
+                    //Increase frequency of hits by 20%.
+                    weaponStats.timeAttack -= weaponData.stats.timeAttack * 30 / 100;
+                }
+                break;
+            case 6:
+                {
+                    //Increase damage by 60%.
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 60 / 100);
+                }
+                break;
+            case 7:
+                {
+                    //Add small knockback on hit.
+                    isKnockBack = true;
+                }
+                break;
+
+            default: break;
+        }
     }
 }

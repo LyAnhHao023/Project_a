@@ -57,22 +57,38 @@ public abstract class EnemyBase : MonoBehaviour
 
     public void Knockback(Vector2 direction, float force)
     {
-        if (!isKnockback)
+        if (!isKnockback&& !GetComponent<Collider2D>().isTrigger)
         {
             isKnockback = true;
-            GetComponent<AIPath>().canMove = false;
+            if (GetComponent<AIPath>() != null)
+            {
+                GetComponent<AIPath>().canMove = false;
+            }
+            else
+            {
+                GetComponent<EnemyMove>().canMove = false;
+            }
             rb.AddForce(direction * force, ForceMode2D.Impulse);
 
             // Sau một khoảng thời gian, reset lại trạng thái isKnockback
-            Invoke("ResetKnockback", 0.5f);
+            StartCoroutine(ResetKnockback());
         }
     }
 
-    private void ResetKnockback()
+    private IEnumerator ResetKnockback()
     {
-        isKnockback = false;
-        GetComponent<AIPath>().canMove = true;
+        yield return new WaitForSeconds(0.5f);
+        if (GetComponent<AIPath>() != null)
+        {
+            GetComponent<AIPath>().canMove = true;
+        }
+        else
+        {
+            GetComponent<EnemyMove>().canMove = true;
+        }
         rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(0.5f);
+        isKnockback = false;
 
     }
 

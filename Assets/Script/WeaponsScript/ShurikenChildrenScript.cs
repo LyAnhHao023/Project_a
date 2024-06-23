@@ -8,7 +8,7 @@ public class ShurikenChildrenScript : MonoBehaviour
     [SerializeField]
     float speed = 10f; // Tốc độ xoáy ốc
     [SerializeField]
-    float deactivateDistance = 8f; // Khoảng cách khi vật thể sẽ tự động tắt
+    public float deactivateDistance = 8f; // Khoảng cách khi vật thể sẽ tự động tắt
     [SerializeField]
     int shurikenNum; // Khoảng cách khi vật thể sẽ tự động tắt
 

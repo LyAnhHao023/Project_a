@@ -13,7 +13,7 @@ public class InventorySlot : MonoBehaviour
     {
         this.icon.sprite = icon;
         level.SetActive(true);
-        levelText.text = string.Format("Lv. {0}", weaponData.stats.level);
+        levelText.text = string.Format("Lv. {0}", weaponData.stats.GetLevel());
     }
 
     public void SetItemSlot(ItemsData itemData, Sprite icon)

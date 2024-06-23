@@ -88,6 +88,15 @@ public class CharacterInfo_1 : MonoBehaviour
     //phần trăm buff độ lớn của vk
     public float weaponSize = 0;
 
+    private void Awake()
+    {
+        healthPercent = PlayerPrefs.GetInt("HPlv", 0) * 0.04f;
+        attackPercent = PlayerPrefs.GetInt("ATKlv", 0) * 0.04f;
+        speedPercent = PlayerPrefs.GetInt("SPElv", 0) * 0.04f;
+        critPercent = PlayerPrefs.GetInt("CRTlv", 0) * 1f;
+        expPercent = PlayerPrefs.GetInt("EXPlv", 0) * 0.04f;
+    }
+
     private void Start()
     {
         if (StaticData.SelectedCharacter != null)
@@ -226,9 +235,11 @@ public class CharacterInfo_1 : MonoBehaviour
         {
             case 0: //WeaponUpgrade
                 {
+                    WeaponData weaponUpgrade = upgradeDatas[id].weaponData;
                     upgradeDatas[id].acquired = true;
+                    weaponUpgrade.stats.SetStats(upgradeDatas[id].UpgradeInfos[upgradeDatas[id].level].stats);
                     levelUpSelectBuff.WeaponNextUpgradeInfo(upgradeDatas[id]);
-                    weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
+                    weaponsManager.AddWeapon(weaponUpgrade);
                     inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
                 }
                 break;

@@ -27,6 +27,7 @@ public class UpgradeData : ScriptableObject
     public UpgradeType upgradeType;
     public string buffName;
     public Sprite icon;
+    public int level = 1;
     public string description;
     public WeaponData weaponData;
     public ItemsData itemsData;

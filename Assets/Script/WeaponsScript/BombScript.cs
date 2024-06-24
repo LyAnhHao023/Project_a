@@ -15,43 +15,41 @@ public class BombScript : WeaponBase
     [SerializeField]
     int numberBombDrop=1;
 
+    int bomDrop = 0;
+
     [SerializeField]
     WeaponStats baseStat = new WeaponStats(5, 1, 3f);
 
-    private void Awake()
+    private void Start()
     {
         SetCharacterStats();
         BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
         ObjectDrops = GameObject.Find("===ObjectDrop===").transform;
     }
-    public override void Attack()
+
+    public override void Update()
     {
-        switch (weaponStats.level)
+        timer -= Time.deltaTime;
+
+        if (timer <= 0)
         {
-            case 1:
-                {
-                    numberBombDrop = 1;
-                }
-                break;
-            case 4:
-                {
-                    numberBombDrop = 2;
-                }
-                break;
-            case 7:
-                {
-                    numberBombDrop = 3;
-                }
-                break;
+            timer = weaponStats.timeAttack;
+            bomDrop += numberBombDrop;
         }
 
-        for(int i = 0; i < numberBombDrop; i++)
+        if(bomDrop > 0)
         {
-            GameObject newBomb=Instantiate(BombChildrenPrefab, transform.position,Quaternion.identity);
-            newBomb.transform.parent = ObjectDrops;
-            newBomb.transform.position = transform.position;
-            newBomb.transform.localScale = transform.localScale;
+            bomDrop--;
+            Attack();
         }
+    }
+
+    public override void Attack()
+    {
+        GameObject newBomb = Instantiate(BombChildrenPrefab, transform.position, Quaternion.identity);
+        newBomb.transform.parent = ObjectDrops;
+        newBomb.transform.position = transform.position;
+        newBomb.transform.localScale = transform.localScale;
     }
 
     public override void SetCharacterStats()
@@ -66,6 +64,48 @@ public class BombScript : WeaponBase
 
     public override void LevelUp()
     {
-        throw new System.NotImplementedException();
+        weaponStats.level++;
+        switch (weaponStats.level)
+        {
+            case 2:
+                {
+                    //Increase size by 15%.
+                    BuffWeaponSizeByPersent(0.15f);
+                }
+                break;
+            case 3:
+                {
+                    //Increase damage by 30%.
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
+                }
+                break;
+            case 4:
+                {
+                    //Throw 2 bombs.
+                    numberBombDrop = 2;
+                }
+                break;
+            case 5:
+                {
+                    //Reduce the time between attacks by 30%.
+                    weaponStats.timeAttack -= weaponData.stats.timeAttack * 30 / 100;
+                }
+                break;
+            case 6:
+                {
+                    //Increase size by 25%. Increase damage by 30%.
+                    BuffWeaponSizeByPersent(0.25f);
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
+                }
+                break;
+            case 7:
+                {
+                    //Throw 3 bombs.
+                    numberBombDrop = 3;
+                }
+                break;
+
+            default: break;
+        }
     }
 }

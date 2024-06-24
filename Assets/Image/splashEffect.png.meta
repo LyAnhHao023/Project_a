@@ -446,10 +446,10 @@ TextureImporter:
       name: splashEffect_10
       rect:
         serializedVersion: 2
-        x: 313
-        y: 225
+        x: 314
+        y: 204
         width: 53
-        height: 30
+        height: 53
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -509,7 +509,7 @@ TextureImporter:
       name: splashEffect_13
       rect:
         serializedVersion: 2
-        x: 609
+        x: 610
         y: 191
         width: 61
         height: 65

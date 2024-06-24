@@ -199,14 +199,14 @@ public class MagicicanBossScript : EnemyBase
         Transform chest = Instantiate(ChestPrefab).transform;
         chest.position = RandomPositionDrops(transform.position);
 
-        for (int i = 0; i <= numberDropCoins; i++)
+        for (int i = 0; i < numberDropCoins; i++)
         {
             GameObject createCoins = Instantiate(CoinPrefab);
             createCoins.transform.position = RandomPositionDrops(transform.position);
             createCoins.GetComponent<CoinScript>().SetPlayer(targetGameObject);
             createCoins.transform.parent = ParentDropItem.transform;
         }
-        for (int i = 0; i <= numberDropExp; i++)
+        for (int i = 0; i < numberDropExp; i++)
         {
             GameObject createExpRed = Instantiate(ExpRedPrefab);
             createExpRed.transform.position = RandomPositionDrops(transform.position);

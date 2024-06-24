@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GunScript : WeaponBase
@@ -32,6 +33,10 @@ public class GunScript : WeaponBase
     //dung cho viec nang cap
     private float buffSizeBullet = 0;
 
+    bool isPenetrating=false;
+
+    bool isFire3Bullet=false;
+
     private void Start()
     {
         SetCharacterStats();
@@ -44,7 +49,20 @@ public class GunScript : WeaponBase
     {
         if(Time.deltaTime != 0)
             RotationGun();
-        base.Update();
+        timer -= Time.deltaTime;
+
+        if (timer <= 0)
+        {
+            timer = weaponStats.timeAttack;
+            if (isFire3Bullet)
+            {
+                StartCoroutine(Fire3Bullet());
+            }
+            else
+            {
+                Attack();
+            }
+        }
     }
 
     private void RotationGun()
@@ -68,11 +86,22 @@ public class GunScript : WeaponBase
 
     }
 
+    private IEnumerator Fire3Bullet()
+    {
+        Attack();
+        yield return new WaitForSeconds(0.05f);
+        Attack();
+        yield return new WaitForSeconds(0.05f);
+        Attack();
+    }
+
     public override void Attack()
     {
         GameObject createBullet = Instantiate(Bullet, firePos.position, Quaternion.identity);
 
         BulletScript bulletScript = createBullet.GetComponent<BulletScript>();
+
+        bulletScript.isPenetrating = isPenetrating;
 
         bulletScript.BuffSizeBulletByPersent(buffSizeBullet+characterInfo_1.weaponSize);
 
@@ -103,6 +132,52 @@ public class GunScript : WeaponBase
 
     public override void LevelUp()
     {
-       
+        weaponStats.level++;
+        switch (weaponStats.level)
+        {
+            case 2:
+                {
+                    //Increase size by 3%.
+                    BuffWeaponSizeByPersent(0.3f);
+                    buffSizeBullet += 0.3f;
+                }
+                break;
+            case 3:
+                {
+                    //Increase damage by 30%.
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
+                }
+                break;
+            case 4:
+                {
+                    //Reduce the time between attacks by 30%.
+                    weaponStats.timeAttack -= weaponData.stats.timeAttack * 30 / 100;
+
+                }
+                break;
+            case 5:
+                {
+                    //can fire 3 bullet at sametime
+                    isFire3Bullet = true;
+                    
+                }
+                break;
+            case 6:
+                {
+                    //Increase size by 30%. Increase damage by 30%.
+                    BuffWeaponSizeByPersent(0.3f);
+                    buffSizeBullet += 0.3f;
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
+                }
+                break;
+            case 7:
+                {
+                    //Throw 3 bombs.
+                    isPenetrating = true;
+                }
+                break;
+
+            default: break;
+        }
     }
 }

@@ -18,7 +18,6 @@ public class ChildrenBoom : MonoBehaviour
 
     private void Awake()
     {
-        transform.localScale =GameObject.Find("Weapons").transform.localScale;
         exploderPrefab.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
         timer = timeDisActive;

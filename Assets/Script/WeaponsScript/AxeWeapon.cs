@@ -5,6 +5,7 @@ using System.ComponentModel;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class AxeWeapon : WeaponBase
 {
@@ -17,6 +18,10 @@ public class AxeWeapon : WeaponBase
     CharacterStats characterStats;
 
     WeaponStats baseStat = new WeaponStats(2, 1, 1f);
+
+    bool isActiveTwoAxe=false;
+
+    bool isKnockBack=false;
 
     private void Start()
     {
@@ -42,22 +47,35 @@ public class AxeWeapon : WeaponBase
             {
                 GetComponentInParent<CharacterInfo_1>().KilledMonster();
             }
+            //KnockBack
+            if (!z.GetComponent<Collider2D>().isTrigger && isKnockBack)
+            {
+                Vector2 knockbackDirection = (z.transform.position - transform.position).normalized;
+                z.Knockback(knockbackDirection, 3);
+            }
 
         }
     }
 
     public override void Attack()
     {
-        if (playerMove.scaleX == 1)
+        if (isActiveTwoAxe)
         {
-            rightAxe.SetActive(true);
-            //Lay danh sach thong tin cua vat the ma Axe va cham
-            //colliders = Physics2D.OverlapBoxAll(rightAxe.transform.position, AxeAttackSize, 0f);
+            StartCoroutine(ActiveTwoAxe());
         }
         else
         {
-            leftAxe.SetActive(true);
-            //colliders = Physics2D.OverlapBoxAll(leftAxe.transform.position, AxeAttackSize, 0f);
+            if (playerMove.scaleX == 1)
+            {
+                rightAxe.SetActive(true);
+                //Lay danh sach thong tin cua vat the ma Axe va cham
+                //colliders = Physics2D.OverlapBoxAll(rightAxe.transform.position, AxeAttackSize, 0f);
+            }
+            else
+            {
+                leftAxe.SetActive(true);
+                //colliders = Physics2D.OverlapBoxAll(leftAxe.transform.position, AxeAttackSize, 0f);
+            }
         }
 
         //Lay danh sach thong tin cua vat the ma Axe va cham
@@ -66,6 +84,14 @@ public class AxeWeapon : WeaponBase
         //{
         //    ApllyDmg(colliders);
         //}
+    }
+
+    private IEnumerator ActiveTwoAxe()
+    {
+        rightAxe.SetActive(true);
+        yield return new WaitForSeconds(0.15f);
+        leftAxe.SetActive(true);
+
     }
 
     public override void SetCharacterStats()
@@ -80,6 +106,51 @@ public class AxeWeapon : WeaponBase
 
     public override void LevelUp()
     {
-        throw new NotImplementedException();
+        weaponStats.level++;
+        switch (weaponStats.level)
+        {
+            case 2:
+                {
+                    //Increase area by 40%.
+                    BuffWeaponSizeByPersent(0.4f);
+                   
+                }
+                break;
+            case 3:
+                {
+                    //Increase damage by 30%.
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
+                }
+                break;
+            case 4:
+                {
+                    //Increase area by 40%.
+                    BuffWeaponSizeByPersent(0.4f);
+                    //Increase frequency of hits by 30%.
+                    weaponStats.timeAttack -= weaponData.stats.timeAttack * 30 / 100;
+                }
+                break;
+            case 5:
+                {
+                    //can active 2 axe at sametime, Increase damage by 30%.
+                    isActiveTwoAxe = true;
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 20 / 100);
+                }
+                break;
+            case 6:
+                {
+                    //Increase damage by 60%.
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 60 / 100);
+                }
+                break;
+            case 7:
+                {
+                    //Add small knockback on hit.
+                    isKnockBack = true;
+                }
+                break;
+
+            default: break;
+        }
     }
 }

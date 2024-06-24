@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Gorilla%27s_Paw_Icon_0: 6593947930632469753
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

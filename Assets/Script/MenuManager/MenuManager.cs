@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -30,6 +32,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Vector3 startOpenChestStep;
     [SerializeField] float tweenTime;
     [SerializeField] LeanTweenType tweenType;
+
+    [SerializeField] Text GameOverText;
 
     private bool isPaused;
 
@@ -124,13 +128,16 @@ public class MenuManager : MonoBehaviour
         Unpause();
     }
 
-    public void GameOverScreen()
+    public void GameOverScreen(int totalKill)
     {
         isPaused = true;
         isGameOver = true;
         Time.timeScale = 0f;
         _gameOverUI.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
+
+        //GameOverText.text = complete ? "CLEAR STAGE" : "GAME OVER";
+
     }
 
     public void LevelUpScene(List<UpgradeData> upgradeDatas)

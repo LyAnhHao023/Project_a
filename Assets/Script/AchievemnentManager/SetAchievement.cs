@@ -14,7 +14,7 @@ public class SetArchievement : MonoBehaviour
     public void Set(ArchievementData archievementData)
     {
         icon.sprite = archievementData.icon;
-        name.text = archievementData.name;
+        name.text = archievementData.achieName;
         description.text = archievementData.description;
         points.text = string.Format("+ {0}", archievementData.points);
         Locker.SetActive(!archievementData.complete);

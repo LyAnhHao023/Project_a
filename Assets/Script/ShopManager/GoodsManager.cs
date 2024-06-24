@@ -17,8 +17,7 @@ public class GoodsManager : MonoBehaviour
         {
             goodsHolder = Instantiate(goodsPerfab, goodsTranform.transform);
 
-            goodsDatas[i].acquiced = PlayerPrefs.GetInt(goodsDatas[i].name, -1) == 1 ? true : false;
-            goodsDatas[i].level = PlayerPrefs.GetInt(goodsDatas[i].name + "lv", 0);
+            goodsDatas[i].level = PlayerPrefs.GetInt(goodsDatas[i].goodsName + "lv", 0);
 
             goodsHolder.GetComponent<SetItemShop>().Set(goodsDatas[i]);
         }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class ArchievementData : ScriptableObject
 {
     public Sprite icon;
-    public string name;
+    public string achieName;
     public string description;
     public int points;
     public bool complete = false;

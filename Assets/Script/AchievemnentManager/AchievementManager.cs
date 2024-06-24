@@ -21,7 +21,7 @@ public class ArchievementManager : MonoBehaviour
         {
             archievementHolder = Instantiate(archievementPefab, archievementTranform.transform);
 
-            archievementDatas[i].complete = PlayerPrefs.GetInt(archievementDatas[i].name, -1) == 1 ? true : false;
+            archievementDatas[i].complete = PlayerPrefs.GetInt(archievementDatas[i].achieName, -1) == 1 ? true : false;
 
             archievementHolder.GetComponent<SetArchievement>().Set(archievementDatas[i]);
 

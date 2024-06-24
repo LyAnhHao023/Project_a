@@ -14,12 +14,11 @@ public class levelInfo
 public class GoodsData : ScriptableObject
 {
     public Sprite icon;
-    public string name;
+    public string goodsName;
     public string description;
     public int level;
     public int price;
     public int maxLevel;
     public float percentBuff;
-    public bool acquiced = false;
     public List<levelInfo> levelInfos;
 }

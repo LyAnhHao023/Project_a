@@ -174,6 +174,7 @@ public class MagicicanBossScript : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
+            GetComponent <Collider2D>().enabled = false;
             if (AIPath != null)
             {
                 AIPath.canMove = false;

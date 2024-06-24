@@ -14,7 +14,7 @@ public class DmgMessengerScript : MonoBehaviour
     {
         timer = timeLife;
 
-        newTranform = transform.position + Vector3.one;
+        newTranform = transform.position + new Vector3(Random.Range(-1,1),1,0);
     }
 
     private void Update()

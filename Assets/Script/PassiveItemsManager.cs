@@ -43,21 +43,24 @@ public class PassiveItemsManager : MonoBehaviour
     ItemsData BurningAuraPrefab;
     [SerializeField]
     ItemsData BuffAreaGainExpPrefab;
+    [SerializeField]
+    ItemsData ReduceCDSkillPrefab;
 
 
     public List<ItemsEnquip> itemsEquip_lst = new List<ItemsEnquip>(5);
 
-    float timer = 5;
+    int i = 0;
+    float timer=0;
 
-    /*private void Update()
+    private void Update()
     {
-        timer-=Time.deltaTime;
-        if (timer < 0)
+        timer -= Time.deltaTime;
+        if (timer < 0&&i==0)
         {
-            timer = 1000;
-            AddItem(bigWeapons);
+            i = 1000;
+            AddItem(ReduceCDSkillPrefab);
         }
-    }*/
+    }
 
 
     public void AddItem(ItemsData itemData)

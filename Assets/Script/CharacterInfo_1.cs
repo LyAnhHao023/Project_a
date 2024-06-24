@@ -247,11 +247,19 @@ public class CharacterInfo_1 : MonoBehaviour
         {
             case 0: //WeaponUpgrade
                 {
-                    WeaponData weaponUpgrade = upgradeDatas[id].weaponData;
                     upgradeDatas[id].acquired = true;
-                    weaponUpgrade.stats.SetStats(upgradeDatas[id].UpgradeInfos[upgradeDatas[id].level].stats);
                     levelUpSelectBuff.WeaponNextUpgradeInfo(upgradeDatas[id]);
-                    weaponsManager.AddWeapon(weaponUpgrade);
+                    weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
+
+                    foreach(var weapon in weaponSlotsManager)
+                    {
+                        if(weapon.weaponData.name == upgradeDatas[id].weaponData.name)
+                        {
+                            weapon.level = upgradeDatas[id].level;
+                            break;
+                        }
+                    }
+
                     inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
                 }
                 break;

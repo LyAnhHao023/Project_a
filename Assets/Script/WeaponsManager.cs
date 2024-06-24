@@ -40,7 +40,7 @@ public class WeaponsManager : MonoBehaviour
     int i = 0;
     float timer = 5;
 
-    private void Update()
+    /*private void Update()
     {
         timer-=Time.deltaTime;
         if (timer < 0&&i==0)
@@ -54,7 +54,7 @@ public class WeaponsManager : MonoBehaviour
             weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
             weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
         }
-    }
+    }*/
 
     public void AddWeapon(WeaponData weaponData)
     {
@@ -72,7 +72,7 @@ public class WeaponsManager : MonoBehaviour
             {
                 if(item.weaponData == weaponData)
                 {
-                    item.weaponObject.GetComponent<WeaponBase>().weaponStats.SetStats(weaponData.stats);
+                    item.weaponObject.GetComponent<WeaponBase>().LevelUp();
                     break;
                 }
             }

@@ -2,7 +2,6 @@ using NUnit.Framework.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class ItemsEnquip
@@ -52,7 +51,7 @@ public class PassiveItemsManager : MonoBehaviour
     int i = 0;
     float timer=0;
 
-    private void Update()
+    /*private void Update()
     {
         timer -= Time.deltaTime;
         if (timer < 0&&i==0)
@@ -60,7 +59,7 @@ public class PassiveItemsManager : MonoBehaviour
             i = 1000;
             AddItem(ReduceCDSkillPrefab);
         }
-    }
+    }*/
 
 
     public void AddItem(ItemsData itemData)

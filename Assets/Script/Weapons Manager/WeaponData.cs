@@ -23,11 +23,6 @@ public class WeaponStats
         this.level = stats.level;
         this.timeAttack = stats.timeAttack;
     }
-
-    public int GetLevel()
-    {
-        return this.level;
-    }
 }
 [CreateAssetMenu]
 public class WeaponData : ScriptableObject

@@ -18,7 +18,6 @@ public class UpgradeInfo
 {
     public int level;
     public string description;
-    public WeaponStats stats;
 }
 
 [CreateAssetMenu]
@@ -27,15 +26,15 @@ public class UpgradeData : ScriptableObject
     public UpgradeType upgradeType;
     public string buffName;
     public Sprite icon;
-    public int level = 1;
+    public int level;
     public string description;
     public WeaponData weaponData;
     public ItemsData itemsData;
-    public bool acquired = false;
+    public bool acquired;
 
     public List<UpgradeInfo> UpgradeInfos;
 
-    public bool bought = false;
+    public bool bought;
 
     public void Awake()
     {

@@ -24,7 +24,7 @@ public class UpgradeButton : MonoBehaviour
                 {
                     type.text = types[0];
                     newText.SetActive(false);
-                    buffName.text += string.Format(" Lv. {0}", upgradeData.weaponData.stats.level + 1);
+                    buffName.text += string.Format(" Lv. {0}", upgradeData.level + 1);
                 }
                 break;
             case 1:

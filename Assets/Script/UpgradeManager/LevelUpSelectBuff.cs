@@ -312,13 +312,13 @@ public class LevelUpSelectBuff : MonoBehaviour
 
     public void WeaponNextUpgradeInfo(UpgradeData weaponA)
     {
-        if (weaponA.weaponData.stats.level < 7)
+        if (weaponA.level < 7)
         {
             weaponA.acquired = false;
-            weaponA.level = weaponA.UpgradeInfos[weaponA.weaponData.stats.GetLevel()].stats.level;
+            weaponA.level = weaponA.UpgradeInfos[weaponA.level].level;
             if (weaponA.level == 7)
                 return;
-            weaponA.description = weaponA.UpgradeInfos[weaponA.weaponData.stats.GetLevel()].description;
+            weaponA.description = weaponA.UpgradeInfos[weaponA.level].description;
         }
     }
 

@@ -65,29 +65,32 @@ public class SetGoodsInfo : MonoBehaviour
     public void SetInfo(GoodsData goods)
     {
         Icon.sprite = goods.icon;
-        Name.text = goods.name;
+        Name.text = goods.goodsName;
         Description.text = goods.description;
-        Locker.SetActive(!goods.acquiced);
+        Locker.SetActive(goods.level>0?false:true);
     }
 
     string PriceCheck(GoodsData goods)
     {
+        if(goods.level == goods.maxLevel && goods.level == 1)
+        {
+            return "ACQUIRED";
+        }
+
         if (goods.level == goods.maxLevel)
         {
             return "MAX";
         }
 
-        if(!goods.acquiced)
-        {
-            return "UNLOCK";
-        }
+        if (goods.goodsName == "Army")
+            return string.Format("{0} PT", goods.levelInfos[goods.level].price);
 
         return goods.levelInfos[goods.level].price.ToString();
     }
 
     void SetNextPrice()
     {
-        PlayerPrefs.SetInt(goodsData.name + "lv", goodsData.level);
+        PlayerPrefs.SetInt(goodsData.goodsName + "lv", goodsData.level);
         PlayerPrefs.Save();
 
         if (goodsData.level < goodsData.maxLevel)
@@ -96,10 +99,8 @@ public class SetGoodsInfo : MonoBehaviour
 
     void Onclick()
     {
-        totalCoins -= goodsData.price;
-
-        if (!goodsData.acquiced)
-            goodsData.acquiced = true;
+        if(goodsData.goodsName != "Army")
+            totalCoins -= goodsData.price;
 
         goodsData.level+=1;
         SetNextPrice();

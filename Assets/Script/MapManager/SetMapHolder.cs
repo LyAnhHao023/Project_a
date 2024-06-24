@@ -43,5 +43,6 @@ public class SetMapHolder : MonoBehaviour
         LevelSelect.SetActive(false);
         SelectCharacter.SetActive(true);
         menu.SetMapData(mapData);
+        StaticData.MapSelect = mapData;
     }
 }

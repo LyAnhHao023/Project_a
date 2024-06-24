@@ -65,6 +65,10 @@ public class CharacterInfo_1 : MonoBehaviour
     int baseAttack;
     float baseCrit;
     float baseSpeed;
+    int hpRegen;
+
+    float timeToHealth = 30;
+    float timerToHealth;
 
     [SerializeField]
     public CharacterData characterData;
@@ -95,12 +99,15 @@ public class CharacterInfo_1 : MonoBehaviour
         speedPercent = PlayerPrefs.GetInt("SPElv", 0) * 0.04f;
         critPercent = PlayerPrefs.GetInt("CRTlv", 0) * 1f;
         expPercent = PlayerPrefs.GetInt("EXPlv", 0) * 0.04f;
+        hpRegen = PlayerPrefs.GetInt("HP Regenlv", 0);
     }
 
     private void Start()
     {
         if (StaticData.SelectedCharacter != null)
             characterData = StaticData.SelectedCharacter;
+
+        timerToHealth = timeToHealth;
 
         weaponSize = 0;
 
@@ -154,6 +161,11 @@ public class CharacterInfo_1 : MonoBehaviour
     {
 
         elapsedTime += Time.deltaTime;
+        timerToHealth -= Time.deltaTime;
+        if (timerToHealth <= 0)
+        {
+            HealthByNumber(hpRegen);
+        }
 
         if (slowHealthAcquired)
         {
@@ -225,7 +237,7 @@ public class CharacterInfo_1 : MonoBehaviour
         menuManager.LevelUpScene(upgradeDatas);
         currentExp -= maxExpValue;
         level += 1;
-        maxExpValue += Mathf.FloorToInt((float)(maxExpValue * 0.1));
+        maxExpValue += Mathf.FloorToInt((float)(maxExpValue * 0.5));
         expBar.SetMaxExp(level, maxExpValue);
     }
 
@@ -334,7 +346,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
                 if (currentHealth <= 0 || (currentSlowhealth <= 0 && slowHealthAcquired))
                 {
-                    menuManager.GameOverScreen();
+                    menuManager.GameOverScreen(numberMonsterKilled);
                     coins = CoinGainPercent(coins, Mathf.FloorToInt(elapsedTime % 60));
                     overCoin.SetCoinGain(coins);
                     int coinLocal = PlayerPrefs.GetInt("Coins", 0);

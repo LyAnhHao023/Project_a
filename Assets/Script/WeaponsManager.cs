@@ -33,6 +33,8 @@ public class WeaponsManager : MonoBehaviour
     WeaponData ShurikenWeapon;
     [SerializeField]
     WeaponData BazokaWeapon;
+    [SerializeField]
+    WeaponData WallSpikeWeapon;
 
 
     public List<weaponEnquip> weapons_lst=new List<weaponEnquip>(5);
@@ -40,28 +42,33 @@ public class WeaponsManager : MonoBehaviour
     int i = 0;
     float timer = 5;
 
-    private void Update()
-    {
-        timer-=Time.deltaTime;
-        if (timer < 0&&i==0)
-        {
-            i++;
-            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-            weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-        }
-    }
+    //private void Start()
+    //{
+    //    AddWeapon(WallSpikeWeapon);
+    //}
+
+    //private void Update()
+    //{
+    //    timer-=Time.deltaTime;
+    //    if (timer < 0&&i==0)
+    //    {
+    //        i++;
+    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+    //    }
+    //}
 
     public void AddWeapon(WeaponData weaponData)
     {
         if (!weapons_lst.Any(w => w.weaponData == weaponData))
         {
             GameObject weaponObject = Instantiate(weaponData.weaponBasePrefab, weaponObjectTranform);
-            weaponObject.GetComponent<WeaponBase>().SetBaseStat(weaponData);
+            weaponObject.GetComponent<WeaponBase>().SetData(weaponData);
             weaponEnquip newWeaponEnquip = new weaponEnquip(weaponData, weaponObject);
             weapons_lst.Add(newWeaponEnquip);
         }

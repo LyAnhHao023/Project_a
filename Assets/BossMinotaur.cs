@@ -156,7 +156,7 @@ public class BossMinotaur : EnemyBase
         if (enemyStats.hp <= 0)
         {
             GetComponent<AIPath>().canMove = false;
-            GetComponent<Rigidbody2D>().simulated = false;
+            GetComponent<Collider2D>().enabled = false;
             animator.SetBool("Dead", true);
             Destroy(gameObject, 1f);
             Drop();

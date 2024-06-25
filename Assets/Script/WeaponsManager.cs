@@ -35,6 +35,8 @@ public class WeaponsManager : MonoBehaviour
     WeaponData BazokaWeapon;
     [SerializeField]
     WeaponData WallSpikeWeapon;
+    [SerializeField]
+    WeaponData HolyBeamPrefab;
 
 
     public List<weaponEnquip> weapons_lst=new List<weaponEnquip>(5);
@@ -42,10 +44,10 @@ public class WeaponsManager : MonoBehaviour
     int i = 0;
     float timer = 5;
 
-    //private void Start()
-    //{
-    //    AddWeapon(WallSpikeWeapon);
-    //}
+    private void Start()
+    {
+        AddWeapon(HolyBeamPrefab);
+    }
 
     //private void Update()
     //{

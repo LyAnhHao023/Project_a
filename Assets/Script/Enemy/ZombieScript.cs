@@ -124,7 +124,8 @@ public class ZombieScript : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
-            if(GetComponent<AIPath>() != null)
+            GetComponent<Collider2D>().enabled = false;
+            if (GetComponent<AIPath>() != null)
             {
                 gameObject.GetComponent<AIPath>().canMove = false;
             }

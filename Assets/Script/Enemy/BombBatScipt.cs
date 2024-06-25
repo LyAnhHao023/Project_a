@@ -114,6 +114,7 @@ public class BombBatScipt : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
+            GetComponent<Collider2D>().enabled=false;
             DestroyBombBat();
             return true;
         }

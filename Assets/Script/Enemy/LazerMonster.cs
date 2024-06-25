@@ -131,7 +131,7 @@ public class LazerMonster : EnemyBase
         if (enemyStats.hp <= 0)
         {
             gameObject.GetComponent<AIPath>().canMove = false;
-            GetComponent<Rigidbody2D>().simulated = false;
+            GetComponent<Collider2D>().enabled = false;
             animator.SetBool("Dead", true);
             DestroyOb();
             return true;

@@ -82,7 +82,7 @@ public abstract class EnemyBase : MonoBehaviour
         {
             GetComponent<AIPath>().canMove = true;
         }
-        else
+        else if(enemyStats.hp>0)
         {
             GetComponent<EnemyMove>().canMove = true;
         }

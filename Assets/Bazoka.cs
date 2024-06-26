@@ -20,6 +20,8 @@ public class Bazoka : WeaponBase
     [SerializeField]
     Transform bulletsObject;
 
+    [SerializeField]
+    WeaponStats baseStat = new WeaponStats(1, 1, 1f);
 
     Vector3 weaponSize=Vector3.one;
 
@@ -91,6 +93,11 @@ public class Bazoka : WeaponBase
     public override void SetCharacterStats()
     {
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
+    }
+
+    public override WeaponStats GetBaseStat()
+    {
+        return baseStat;
     }
 
     public override void LevelUp()

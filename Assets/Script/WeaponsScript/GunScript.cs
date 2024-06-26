@@ -25,6 +25,8 @@ public class GunScript : WeaponBase
     [SerializeField]
     Transform bulletsObject;
 
+    [SerializeField]
+    WeaponStats baseStat = new WeaponStats(1,1,1f);
 
     CharacterInfo_1 characterInfo_1;
 
@@ -34,8 +36,6 @@ public class GunScript : WeaponBase
     bool isPenetrating=false;
 
     bool isFire3Bullet=false;
-
-    float buffATK;
 
     private void Start()
     {
@@ -125,6 +125,11 @@ public class GunScript : WeaponBase
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
     }
 
+    public override WeaponStats GetBaseStat()
+    {
+        return baseStat;
+    }
+
     public override void LevelUp()
     {
         weaponStats.level++;
@@ -140,8 +145,7 @@ public class GunScript : WeaponBase
             case 3:
                 {
                     //Increase damage by 30%.
-                    buffATK += 0.3f;
-                    SetStat();
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
                 }
                 break;
             case 4:
@@ -163,8 +167,7 @@ public class GunScript : WeaponBase
                     //Increase size by 30%. Increase damage by 30%.
                     BuffWeaponSizeByPersent(0.3f);
                     buffSizeBullet += 0.3f;
-                    buffATK += 0.3f;
-                    SetStat();
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
                 }
                 break;
             case 7:
@@ -176,10 +179,5 @@ public class GunScript : WeaponBase
 
             default: break;
         }
-    }
-
-    void SetStat()
-    {
-        weaponStats.dmg = weaponData.stats.dmg + (int)Mathf.Ceil(weaponData.stats.dmg * buffATK);
     }
 }

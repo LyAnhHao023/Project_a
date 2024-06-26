@@ -61,7 +61,7 @@ public class WeaponsManager : MonoBehaviour
         if (!weapons_lst.Any(w => w.weaponData == weaponData))
         {
             GameObject weaponObject = Instantiate(weaponData.weaponBasePrefab, weaponObjectTranform);
-            weaponObject.GetComponent<WeaponBase>().SetData(weaponData);
+            weaponObject.GetComponent<WeaponBase>().SetBaseStat(weaponData);
             weaponEnquip newWeaponEnquip = new weaponEnquip(weaponData, weaponObject);
             weapons_lst.Add(newWeaponEnquip);
         }

@@ -17,11 +17,11 @@ public class AxeWeapon : WeaponBase
 
     CharacterStats characterStats;
 
+    WeaponStats baseStat = new WeaponStats(2, 1, 1f);
+
     bool isActiveTwoAxe=false;
 
     bool isKnockBack=false;
-
-    float buffATK;
 
     private void Start()
     {
@@ -99,6 +99,11 @@ public class AxeWeapon : WeaponBase
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
     }
 
+    public override WeaponStats GetBaseStat()
+    {
+        return baseStat;
+    }
+
     public override void LevelUp()
     {
         weaponStats.level++;
@@ -114,8 +119,7 @@ public class AxeWeapon : WeaponBase
             case 3:
                 {
                     //Increase damage by 30%.
-                    buffATK += 0.3f;
-                    SetStat();
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
                 }
                 break;
             case 4:
@@ -130,15 +134,13 @@ public class AxeWeapon : WeaponBase
                 {
                     //can active 2 axe at sametime, Increase damage by 30%.
                     isActiveTwoAxe = true;
-                    buffATK += 0.2f;
-                    SetStat();
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 20 / 100);
                 }
                 break;
             case 6:
                 {
                     //Increase damage by 60%.
-                    buffATK += 0.6f;
-                    SetStat();
+                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 60 / 100);
                 }
                 break;
             case 7:
@@ -150,10 +152,5 @@ public class AxeWeapon : WeaponBase
 
             default: break;
         }
-    }
-
-    void SetStat()
-    {
-        weaponStats.dmg = weaponData.stats.dmg + (int)Mathf.Ceil(weaponData.stats.dmg * buffATK);
     }
 }

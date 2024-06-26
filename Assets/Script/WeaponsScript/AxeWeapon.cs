@@ -17,8 +17,6 @@ public class AxeWeapon : WeaponBase
 
     CharacterStats characterStats;
 
-    WeaponStats baseStat = new WeaponStats(2, 1, 1f);
-
     bool isActiveTwoAxe=false;
 
     bool isKnockBack=false;
@@ -97,11 +95,6 @@ public class AxeWeapon : WeaponBase
     public override void SetCharacterStats()
     {
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
-    }
-
-    public override WeaponStats GetBaseStat()
-    {
-        return baseStat;
     }
 
     public override void LevelUp()

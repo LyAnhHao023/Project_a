@@ -165,6 +165,7 @@ public class CharacterInfo_1 : MonoBehaviour
         if (timerToHealth <= 0)
         {
             HealthByNumber(hpRegen);
+            timerToHealth = timeToHealth;
         }
 
         if (slowHealthAcquired)
@@ -389,7 +390,7 @@ public class CharacterInfo_1 : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-        healthBar.SetHealth(currentHealth);
+        healthBar.SetHealth(currentHealth, slowHealthAcquired);
     }
 
     public void HealthByNumber(int health)
@@ -399,7 +400,7 @@ public class CharacterInfo_1 : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-        healthBar.SetHealth(currentHealth);
+        healthBar.SetHealth(currentHealth, slowHealthAcquired);
     }
 
     public int CoinGainPercent(int coins, int timer)

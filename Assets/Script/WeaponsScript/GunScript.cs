@@ -25,9 +25,6 @@ public class GunScript : WeaponBase
     [SerializeField]
     Transform bulletsObject;
 
-    [SerializeField]
-    WeaponStats baseStat = new WeaponStats(1,1,1f);
-
     CharacterInfo_1 characterInfo_1;
 
     //dung cho viec nang cap
@@ -123,11 +120,6 @@ public class GunScript : WeaponBase
     public override void SetCharacterStats()
     {
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
-    }
-
-    public override WeaponStats GetBaseStat()
-    {
-        return baseStat;
     }
 
     public override void LevelUp()

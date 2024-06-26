@@ -95,11 +95,6 @@ public class Bazoka : WeaponBase
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
     }
 
-    public override WeaponStats GetBaseStat()
-    {
-        return baseStat;
-    }
-
     public override void LevelUp()
     {
         throw new System.NotImplementedException();

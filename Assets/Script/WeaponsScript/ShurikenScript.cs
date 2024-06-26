@@ -13,8 +13,6 @@ public class ShurikenScript : WeaponBase
 
     List<GameObject> ActiveShurikenChildrenLst = new List<GameObject>();
 
-    WeaponStats baseStat = new WeaponStats(5, 1, 10f);
-
     private void Start()
     {
         SetCharacterStats();
@@ -77,11 +75,6 @@ public class ShurikenScript : WeaponBase
     public override void SetCharacterStats()
     {
         characterStats=GetComponentInParent<CharacterInfo_1>().characterStats;
-    }
-
-    public override WeaponStats GetBaseStat()
-    {
-        return baseStat;
     }
 
     public override void LevelUp()

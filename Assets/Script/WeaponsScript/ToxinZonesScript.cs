@@ -12,9 +12,6 @@ public class ToxinZonesScript : WeaponBase
     [SerializeField]
     int speedSlow=1;
 
-    [SerializeField]
-    WeaponStats baseStat = new WeaponStats(1, 1, 1f);
-
     bool isKnockBack=false;
 
     private void Start()
@@ -105,11 +102,6 @@ public class ToxinZonesScript : WeaponBase
     public override void SetCharacterStats()
     {
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
-    }
-
-    public override WeaponStats GetBaseStat()
-    {
-        return baseStat;
     }
 
     public override void LevelUp()

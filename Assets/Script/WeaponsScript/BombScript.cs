@@ -17,9 +17,6 @@ public class BombScript : WeaponBase
 
     int bomDrop = 0;
 
-    [SerializeField]
-    WeaponStats baseStat = new WeaponStats(5, 1, 3f);
-
     private void Start()
     {
         SetCharacterStats();
@@ -55,11 +52,6 @@ public class BombScript : WeaponBase
     public override void SetCharacterStats()
     {
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
-    }
-
-    public override WeaponStats GetBaseStat()
-    {
-        return baseStat;
     }
 
     public override void LevelUp()

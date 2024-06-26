@@ -111,11 +111,6 @@ public class WallSpikeWeapon : WeaponBase
         throw new System.NotImplementedException();
     }
 
-    public override WeaponStats GetBaseStat()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void LevelUp()
     {
         weaponStats.level++;

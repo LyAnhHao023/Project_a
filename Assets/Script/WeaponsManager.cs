@@ -44,10 +44,10 @@ public class WeaponsManager : MonoBehaviour
     int i = 0;
     float timer = 5;
 
-    private void Start()
+    /*private void Start()
     {
         AddWeapon(HolyBeamPrefab);
-    }
+    }*/
 
     //private void Update()
     //{
@@ -81,7 +81,7 @@ public class WeaponsManager : MonoBehaviour
             {
                 if(item.weaponData == weaponData)
                 {
-                    item.weaponObject.GetComponent<WeaponBase>().weaponStats.SetStats(weaponData.stats);
+                    item.weaponObject.GetComponent<WeaponBase>().LevelUp();
                     break;
                 }
             }

@@ -120,8 +120,7 @@ public class WolfEnemy : EnemyBase
         if (enemyStats.hp <= 0)
         {
             gameObject.GetComponent<AIPath>().canMove = false;
-            Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
-            rigidbody.simulated = false;
+            GetComponent<Collider2D>().enabled = false;
             animator.SetBool("Dead", true);
             DestroyOb();
             return true;

@@ -139,6 +139,7 @@ public class VampireGirlMsScript : EnemyBase
             {
                 GetComponent<EnemyMove>().canMove = false;
             }
+            GetComponent<Collider2D>().enabled = false;
             animator.SetBool("Dead", true);
             DestroyOb();
             return true;

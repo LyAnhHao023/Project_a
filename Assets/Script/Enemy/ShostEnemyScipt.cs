@@ -52,8 +52,7 @@ public class ShostEnemyScipt : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
-            Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
-            rigidbody.simulated = false;
+            GetComponent<Collider2D>().enabled = false;
             animator.SetBool("Dead", true);
             DestroyEnemy();
             return true;

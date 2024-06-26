@@ -38,6 +38,7 @@ public class BoxDrop : EnemyBase
         {
             RendererPrefab.SetActive(false);
             EffectPrefab.SetActive(true);
+            GetComponent<Collider2D>().enabled = false;
             Drop();
             Destroy(gameObject,1f);
             return false;

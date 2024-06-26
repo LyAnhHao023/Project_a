@@ -17,8 +17,7 @@ public class BombScript : WeaponBase
 
     int bomDrop = 0;
 
-    [SerializeField]
-    WeaponStats baseStat = new WeaponStats(5, 1, 3f);
+    float buffATK;
 
     private void Start()
     {
@@ -57,11 +56,6 @@ public class BombScript : WeaponBase
         characterStats = GetComponentInParent<CharacterInfo_1>().characterStats;
     }
 
-    public override WeaponStats GetBaseStat()
-    {
-        return baseStat;
-    }
-
     public override void LevelUp()
     {
         weaponStats.level++;
@@ -76,7 +70,8 @@ public class BombScript : WeaponBase
             case 3:
                 {
                     //Increase damage by 30%.
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
+                    buffATK += 0.3f;
+                    SetStat();
                 }
                 break;
             case 4:
@@ -88,14 +83,16 @@ public class BombScript : WeaponBase
             case 5:
                 {
                     //Reduce the time between attacks by 30%.
-                    weaponStats.timeAttack -= weaponData.stats.timeAttack * 30 / 100;
+                    buffATK += 0.3f;
+                    SetStat();
                 }
                 break;
             case 6:
                 {
                     //Increase size by 25%. Increase damage by 30%.
                     BuffWeaponSizeByPersent(0.25f);
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
+                    buffATK += 0.3f;
+                    SetStat();
                 }
                 break;
             case 7:
@@ -107,5 +104,10 @@ public class BombScript : WeaponBase
 
             default: break;
         }
+    }
+
+    void SetStat()
+    {
+        weaponStats.dmg = weaponData.stats.dmg + (int)Mathf.Ceil(weaponData.stats.dmg * buffATK);
     }
 }

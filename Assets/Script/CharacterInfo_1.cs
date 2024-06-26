@@ -159,12 +159,12 @@ public class CharacterInfo_1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         elapsedTime += Time.deltaTime;
         timerToHealth -= Time.deltaTime;
         if (timerToHealth <= 0)
         {
             HealthByNumber(hpRegen);
+            timerToHealth = timeToHealth;
         }
 
         if (slowHealthAcquired)
@@ -349,8 +349,10 @@ public class CharacterInfo_1 : MonoBehaviour
 
                     slowHealthBar.SetHealth(currentSlowhealth);
                 }
-
-                healthBar.SetHealth(currentHealth, slowHealthAcquired);
+                else
+                {
+                    healthBar.SetHealth(currentHealth);
+                }
 
                 if (currentHealth <= 0 || (currentSlowhealth <= 0 && slowHealthAcquired))
                 {
@@ -389,7 +391,7 @@ public class CharacterInfo_1 : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-        healthBar.SetHealth(currentHealth);
+        healthBar.SetHealth(currentHealth, slowHealthAcquired);
     }
 
     public void HealthByNumber(int health)
@@ -399,7 +401,7 @@ public class CharacterInfo_1 : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-        healthBar.SetHealth(currentHealth);
+        healthBar.SetHealth(currentHealth, slowHealthAcquired);
     }
 
     public int CoinGainPercent(int coins, int timer)

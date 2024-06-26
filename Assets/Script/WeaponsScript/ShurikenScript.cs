@@ -13,7 +13,7 @@ public class ShurikenScript : WeaponBase
 
     List<GameObject> ActiveShurikenChildrenLst = new List<GameObject>();
 
-    WeaponStats baseStat = new WeaponStats(5, 1, 10f);
+    float buffATK;
 
     private void Start()
     {
@@ -79,11 +79,6 @@ public class ShurikenScript : WeaponBase
         characterStats=GetComponentInParent<CharacterInfo_1>().characterStats;
     }
 
-    public override WeaponStats GetBaseStat()
-    {
-        return baseStat;
-    }
-
     public override void LevelUp()
     {
         weaponStats.level++;
@@ -93,7 +88,8 @@ public class ShurikenScript : WeaponBase
                 {
                     //Increase size of SHURIKEN by 20%. Increase damage of shuriken by 20%.
                     BuffWeaponSizeByPersent(0.20f);
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 20 / 100);
+                    buffATK += 0.2f;
+                    SetStat();
                 }
                 break;
             case 3:
@@ -106,7 +102,8 @@ public class ShurikenScript : WeaponBase
                 {
                     //Increase damage by 33%, and size by 20%.
                     BuffWeaponSizeByPersent(0.2f);
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 33 / 100);
+                    buffATK += 0.33f;
+                    SetStat();
                 }
                 break;
             case 5:
@@ -131,11 +128,17 @@ public class ShurikenScript : WeaponBase
             case 7:
                 {
                     //Increase size dmg by 50%.
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 50 / 100);
+                    buffATK += 0.5f;
+                    SetStat();
                 }
                 break;
 
             default: break;
         }
+    }
+
+    void SetStat()
+    {
+        weaponStats.dmg = weaponData.stats.dmg + (int)Mathf.Ceil(weaponData.stats.dmg * buffATK);
     }
 }

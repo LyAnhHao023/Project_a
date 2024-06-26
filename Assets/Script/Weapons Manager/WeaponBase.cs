@@ -11,7 +11,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     public float timer=0;
 
-    WeaponStats weaponBaseStats;
+    public WeaponStats baseStats;
 
     private Vector3 baseSizeWeapon;
 
@@ -35,11 +35,18 @@ public abstract class WeaponBase : MonoBehaviour
     {
         weaponData = wd;
         weaponStats.SetStats(wd.stats);
+        baseStats.SetStats(wd.stats);
     }
 
     public void BuffWeaponSizeByPersent(float persent)
     {
         transform.localScale+=new Vector3(baseSizeWeapon.x * persent, baseSizeWeapon.y * persent, baseSizeWeapon.y * persent);
+    }
+
+    public void BuffWeaponDamageByPersent(float persent)
+    {
+        int damage =(int)Mathf.Ceil((float)baseStats.dmg*persent);
+        weaponStats.dmg += damage;
     }
 
     public abstract void LevelUp();

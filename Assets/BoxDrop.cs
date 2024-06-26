@@ -28,7 +28,7 @@ public class BoxDrop : EnemyBase
     private void Start()
     {
         animator = GetComponent<Animator>();
-        Destroy(gameObject,30f);
+        StartCoroutine(AutoDesTroy());
     }
 
     public override bool EnemyTakeDmg(int dmg)
@@ -53,6 +53,16 @@ public class BoxDrop : EnemyBase
     {
         yield return new WaitForSeconds(0.06f);
         animator.enabled = false;
+    }
+
+    private IEnumerator AutoDesTroy()
+    {
+        yield return new WaitForSeconds(30f);
+        RendererPrefab.SetActive(false);
+        EffectPrefab.SetActive(true);
+        GetComponent<Collider2D>().enabled = false;
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
     }
 
     private void Drop()

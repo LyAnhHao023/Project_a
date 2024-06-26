@@ -137,7 +137,7 @@ public class GunScript : WeaponBase
             case 3:
                 {
                     //Increase damage by 30%.
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
+                    BuffWeaponDamageByPersent(0.3f);
                 }
                 break;
             case 4:
@@ -159,7 +159,7 @@ public class GunScript : WeaponBase
                     //Increase size by 30%. Increase damage by 30%.
                     BuffWeaponSizeByPersent(0.3f);
                     buffSizeBullet += 0.3f;
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
+                    BuffWeaponDamageByPersent(0.3f);
                 }
                 break;
             case 7:

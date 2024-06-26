@@ -86,7 +86,7 @@ public class ShurikenScript : WeaponBase
                 {
                     //Increase size of SHURIKEN by 20%. Increase damage of shuriken by 20%.
                     BuffWeaponSizeByPersent(0.20f);
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 20 / 100);
+                    BuffWeaponDamageByPersent(0.2f);
                 }
                 break;
             case 3:
@@ -97,9 +97,9 @@ public class ShurikenScript : WeaponBase
                 break;
             case 4:
                 {
-                    //Increase damage by 33%, and size by 20%.
+                    //Increase damage by 30%, and size by 20%.
                     BuffWeaponSizeByPersent(0.2f);
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 33 / 100);
+                    BuffWeaponDamageByPersent(0.3f);
                 }
                 break;
             case 5:
@@ -124,7 +124,7 @@ public class ShurikenScript : WeaponBase
             case 7:
                 {
                     //Increase size dmg by 50%.
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 50 / 100);
+                    BuffWeaponDamageByPersent(0.5f);
                 }
                 break;
 

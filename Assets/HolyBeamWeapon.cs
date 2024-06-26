@@ -102,7 +102,7 @@ public class HolyBeamWeapon : WeaponBase
             case 4:
                 {
                     //Increase damage by 50%.
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 50 / 100);
+                    BuffWeaponDamageByPersent(0.5f);
                 }
                 break;
             case 5:

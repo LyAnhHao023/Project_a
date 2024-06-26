@@ -78,7 +78,7 @@ public abstract class EnemyBase : MonoBehaviour
     private IEnumerator ResetKnockback()
     {
         yield return new WaitForSeconds(0.5f);
-        if (GetComponent<AIPath>() != null)
+        if (GetComponent<AIPath>() != null&& enemyStats.hp > 0)
         {
             GetComponent<AIPath>().canMove = true;
         }

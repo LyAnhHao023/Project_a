@@ -51,8 +51,8 @@ public class WeaponsManager : MonoBehaviour
 
     //private void Update()
     //{
-    //    timer-=Time.deltaTime;
-    //    if (timer < 0&&i==0)
+    //    timer -= Time.deltaTime;
+    //    if (timer < 0 && i == 0)
     //    {
     //        i++;
     //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();

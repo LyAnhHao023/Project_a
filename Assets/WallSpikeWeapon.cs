@@ -125,7 +125,7 @@ public class WallSpikeWeapon : WeaponBase
             case 3:
                 {
                     //Increase damage by 30%.
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
+                    BuffWeaponDamageByPersent(0.3f);
                 }
                 break;
             case 4:
@@ -137,7 +137,7 @@ public class WallSpikeWeapon : WeaponBase
             case 5:
                 {
                     //	Increase damage by 50%.
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 50 / 100);
+                    BuffWeaponDamageByPersent(0.5f);
                 }
                 break;
             case 6:

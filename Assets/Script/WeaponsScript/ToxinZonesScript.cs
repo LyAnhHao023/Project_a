@@ -118,7 +118,7 @@ public class ToxinZonesScript : WeaponBase
             case 3:
                 {
                     //Increase damage by 30%.
-                    weaponStats.dmg +=(int) Mathf.Ceil(weaponData.stats.dmg * 30 / 100);
+                    BuffWeaponDamageByPersent(0.3f);
                 }
                 break;
             case 4:
@@ -136,7 +136,7 @@ public class ToxinZonesScript : WeaponBase
             case 6:
                 {
                     //Increase damage by 60%.
-                    weaponStats.dmg += (int)Mathf.Ceil(weaponData.stats.dmg * 60 / 100);
+                    BuffWeaponDamageByPersent(0.6f);
                 }
                 break;
             case 7:

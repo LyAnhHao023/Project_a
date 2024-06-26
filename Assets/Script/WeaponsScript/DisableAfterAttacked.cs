@@ -7,6 +7,17 @@ public class DisableAfterAttacked : MonoBehaviour
     [SerializeField] float disableTime=0.8f;
     float timer;
 
+    [SerializeField] Transform ScaleParent;
+
+    float scaleCur=1;
+
+    ParticleSystem particleSystem;
+
+    private void Start()
+    {
+        particleSystem = GetComponent<ParticleSystem>();
+    }
+
     private void OnEnable()
     {
         timer = disableTime;
@@ -14,6 +25,12 @@ public class DisableAfterAttacked : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (ScaleParent.localScale.x > scaleCur)
+        {
+            scaleCur=ScaleParent.localScale.x;
+            particleSystem.startSize += 5 * (scaleCur - 1);
+        }
+
         timer-= Time.deltaTime;
         if (timer < 0)
         {

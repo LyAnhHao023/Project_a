@@ -18,6 +18,8 @@ public class SetMapHolder : MonoBehaviour
 
     MapData mapData;
 
+    int numComplete = 0;
+
     private void Awake()
     {
         mapManager = GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>();
@@ -36,6 +38,14 @@ public class SetMapHolder : MonoBehaviour
         mapData = data;
         lockHolder.SetActive(!data.unlocked);
         MapHolder.enabled = data.unlocked;
+
+        foreach(var item in data.missions)
+        {
+            int completed = PlayerPrefs.GetInt(item.missionName + data.Name, 0);
+            item.completed = completed > 0;
+            if(completed > 0)
+                numComplete++;
+        }
     }
 
     void Onclick()

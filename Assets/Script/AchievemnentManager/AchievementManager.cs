@@ -2,32 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArchievementManager : MonoBehaviour
+public class AchievementManager : MonoBehaviour
 {
-    [SerializeField] GameObject ArchievementPanel;
+    [SerializeField] GameObject AchievementPanel;
 
-    public List<ArchievementData> archievementDatas;
+    public List<AchievementData> achievementDatas;
 
-    public GameObject archievementPefab;
-    public GameObject archievementTranform;
+    public GameObject achievementPefab;
+    public GameObject achievementTranform;
 
-    GameObject archievementHolder;
+    GameObject achievementHolder;
 
     public int totalPoints;
 
     private void Start()
     {
-        for (int i = 0; i < archievementDatas.Count; i++)
+        for (int i = 0; i < achievementDatas.Count; i++)
         {
-            archievementHolder = Instantiate(archievementPefab, archievementTranform.transform);
+            achievementHolder = Instantiate(achievementPefab, achievementTranform.transform);
 
-            archievementDatas[i].complete = PlayerPrefs.GetInt(archievementDatas[i].achieName, -1) == 1 ? true : false;
+            achievementDatas[i].complete = PlayerPrefs.GetInt(achievementDatas[i].achieName, -1) == 1 ? true : false;
 
-            archievementHolder.GetComponent<SetArchievement>().Set(archievementDatas[i]);
+            achievementHolder.GetComponent<SetAchievement>().Set(achievementDatas[i]);
 
-            if (archievementDatas[i].complete)
+            if (achievementDatas[i].complete)
             {
-                totalPoints += archievementDatas[i].points;
+                totalPoints += achievementDatas[i].points;
 
                 PlayerPrefs.SetInt("TotalPoints", totalPoints);
                 PlayerPrefs.Save();

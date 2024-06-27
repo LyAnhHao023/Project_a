@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SetArchievement : MonoBehaviour
+public class SetAchievement : MonoBehaviour
 {
     [SerializeField] Image icon;
     [SerializeField] Text name;
@@ -11,12 +11,22 @@ public class SetArchievement : MonoBehaviour
     [SerializeField] Text points;
     [SerializeField] GameObject Locker;
 
-    public void Set(ArchievementData archievementData)
+    public void Set(AchievementData achievementData)
     {
-        icon.sprite = archievementData.icon;
-        name.text = archievementData.achieName;
-        description.text = archievementData.description;
-        points.text = string.Format("+ {0}", archievementData.points);
-        Locker.SetActive(!archievementData.complete);
+        if(achievementData.type.ToString() == "Count")
+        {
+            int total = PlayerPrefs.GetInt(achievementData.key, 0);
+            achievementData.complete = total >= achievementData.num;
+        }
+        else
+        {
+            achievementData.complete = PlayerPrefs.GetInt(achievementData.key, 0) == 1 ? true : false;
+        }
+
+        icon.sprite = achievementData.icon;
+        name.text = achievementData.achieName;
+        description.text = achievementData.description;
+        points.text = string.Format("+ {0}", achievementData.points);
+        Locker.SetActive(!achievementData.complete);
     }
 }

@@ -39,8 +39,8 @@ public class CapsuleExp : MonoBehaviour
         CharacterInfo_1 c = collision.GetComponent<CharacterInfo_1>();
         if (c != null)
         {
-            Destroy(gameObject);
             c.GainExp(expBuff);
+            Destroy(gameObject);
         }
     }
 }

@@ -11,9 +11,12 @@ public class CoinScript : MonoBehaviour
 
     bool isNotFollow = false;
 
+    AudioManager audioManager;
+
     public void SetPlayer(GameObject gameObject)
     {
         player = gameObject;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public void IncreaseCoin(int number)
@@ -36,6 +39,8 @@ public class CoinScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        audioManager.PlaySFX(audioManager.PickUpCoin);
         CharacterInfo_1 c = collision.GetComponent<CharacterInfo_1>();
         if (c != null)
         {

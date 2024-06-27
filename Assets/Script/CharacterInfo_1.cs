@@ -91,6 +91,9 @@ public class CharacterInfo_1 : MonoBehaviour
     [HideInInspector]
     //phần trăm buff độ lớn của vk
     public float weaponSize = 0;
+    
+    //AudioManager
+    AudioManager audioManager;
 
     private void Awake()
     {
@@ -100,6 +103,8 @@ public class CharacterInfo_1 : MonoBehaviour
         critPercent = PlayerPrefs.GetInt("CRTlv", 0) * 1f;
         expPercent = PlayerPrefs.GetInt("EXPlv", 0) * 0.04f;
         hpRegen = PlayerPrefs.GetInt("HP Regenlv", 0);
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void Start()
@@ -222,6 +227,8 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void GainExp(int exp)
     {
+
+        audioManager.PlaySFX(audioManager.PickUpExp);
         currentExp += exp + (int)(exp * expPercent);
 
         if (currentExp >= maxExpValue)
@@ -339,7 +346,8 @@ public class CharacterInfo_1 : MonoBehaviour
             if (shieldCurrentValue <= 0)
             {
                 currentHealth -= damage;
-
+                //AudioManager
+                audioManager.PlaySFX(audioManager.TakeDmg);
                 if (slowHealthAcquired)
                 {
                     if (currentHealth < 1)

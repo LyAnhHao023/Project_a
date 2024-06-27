@@ -14,10 +14,13 @@ public class Health : MonoBehaviour
 
     Animator animator;
 
+    AudioManager audioManager;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
         timer = timeAutoDestroy;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -34,6 +37,8 @@ public class Health : MonoBehaviour
         CharacterInfo_1 heartPlayer = collision.GetComponent<CharacterInfo_1>();
         if (heartPlayer != null)
         {
+            audioManager.PlaySFX(audioManager.PickUpHeath);
+
             heartPlayer.HealthByPercent(healthPercent);
             animator.SetBool("isBroken", true);
             Destroy(gameObject, 0.3f);

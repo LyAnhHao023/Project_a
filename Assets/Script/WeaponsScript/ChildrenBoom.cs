@@ -16,19 +16,23 @@ public class ChildrenBoom : MonoBehaviour
 
     float timer;
 
+    bool isMoove = true;
+
+    Vector3 direction;
+
     private void Awake()
     {
         exploderPrefab.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
         timer = timeDisActive;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 direction = (mousePos - transform.position).normalized;
-        rb.AddForce(direction * 40f, (ForceMode2D)ForceMode.Impulse);
+        direction = (mousePos - transform.position).normalized;
+        rb.AddForce(direction * 40f, ForceMode2D.Impulse);
+        Invoke("StopMove", 0.2f);
     }
 
     private void Update()
     {
-        Invoke("StopMove", 0.2f);
         timer -= Time.deltaTime;
         if (timer < 0 )
         {
@@ -40,17 +44,24 @@ public class ChildrenBoom : MonoBehaviour
     public void StopMove()
     {
         rb.velocity = Vector3.zero;
-        rb.mass = 0;
+        gameObject.layer = 3;
+        isMoove = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         EnemyBase enemy = collision.gameObject.GetComponent<EnemyBase>();
-        ChildrenBoom childrenBoom=collision.gameObject.GetComponent<ChildrenBoom>();
         if (enemy != null)
         {
             imgBombPrefab.SetActive(false);
             exploderPrefab.SetActive(true);
+        }else if (collision.gameObject.layer==3&& isMoove)
+        {//layer cua Bomb
+            Rigidbody2D rbcol=collision.GetComponent<Rigidbody2D>();
+            rbcol.AddForce(direction * 30,ForceMode2D.Impulse);
+        }else if (collision.gameObject.layer == 6)
+        {//layer cua obstacle
+            rb.velocity=Vector3.zero;
         }
     }
 

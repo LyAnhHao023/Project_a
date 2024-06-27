@@ -19,7 +19,7 @@ public class EventLightningMap1 : MonoBehaviour
     void Update()
     {
         timer-=Time.deltaTime;
-        if (timer <= 1.5)
+        if (timer <= 1)
         {
             LightBeforLightning.SetActive(true);
             StartCoroutine(LightningActive());
@@ -28,7 +28,7 @@ public class EventLightningMap1 : MonoBehaviour
 
     private IEnumerator LightningActive()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.3f);
         Lightning.SetActive(true);
         timer = timeLightning;
     }

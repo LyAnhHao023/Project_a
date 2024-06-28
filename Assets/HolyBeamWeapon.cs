@@ -16,11 +16,15 @@ public class HolyBeamWeapon : WeaponBase
 
     int knockBackMass = 4;
 
+    AudioManager audioManager;
+
     private void Start()
     {
         playerMove = GetComponentInParent<playerMove>();
         SetCharacterStats();
         BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public void ApllyDmg(Collider2D collision)
@@ -59,10 +63,14 @@ public class HolyBeamWeapon : WeaponBase
         {
             if (playerMove.scaleX == 1)
             {
+                audioManager.PlaySFX(audioManager.HolyBeam);
+
                 rightBeam.SetActive(true);
             }
             else
             {
+                audioManager.PlaySFX(audioManager.HolyBeam);
+
                 leftBeam.SetActive(true);
             }
         }
@@ -70,6 +78,8 @@ public class HolyBeamWeapon : WeaponBase
 
     private void ActiveTwoBeam()
     {
+        audioManager.PlaySFX(audioManager.HolyBeam);
+        audioManager.PlaySFX(audioManager.HolyBeam);
         rightBeam.SetActive(true);
         leftBeam.SetActive(true);
 

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [Header("-----AudioClip-----")]
+    [Header("-----AudioGameObject-----")]
 
     [SerializeField] AudioSource backGroundMusicSource;
     [SerializeField] AudioSource SFX;
 
-    [Header("-----AudioClip-----")]
+    [Header("-----AudioClipGame-----")]
     public AudioClip Background;
     public AudioClip LevelUp;
     public AudioClip Lose;
@@ -18,6 +18,15 @@ public class AudioManager : MonoBehaviour
     public AudioClip PickUpHeath;
     public AudioClip PickUpCoin;
     public AudioClip TakeDmg;
+
+    [Header("-----AudioClipWeapon-----")]
+    public AudioClip Axe;
+    public AudioClip Gun;
+    public AudioClip Bomb;
+    public AudioClip HolyBeam;
+    public AudioClip Shuriken;
+    public AudioClip WallSpike;
+    public AudioClip ToxinZone;
 
     // Start is called before the first frame update
     void Start()

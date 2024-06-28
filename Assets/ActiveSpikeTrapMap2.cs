@@ -8,6 +8,13 @@ public class ActiveSpikeTrapMap2 : MonoBehaviour
     [SerializeField] float timeCdTrap;
     float timer;
 
+    AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void FixedUpdate()
     {
         timer-=Time.deltaTime;
@@ -15,9 +22,13 @@ public class ActiveSpikeTrapMap2 : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(timer<=0)
+        CharacterInfo_1 player=collision.GetComponent<CharacterInfo_1>();
+        EnemyBase enemy=collision.GetComponent<EnemyBase>();
+        if(timer<=0&&(player!=null|| enemy != null))
         {
-            timer=timeCdTrap;
+            audioSource.Play();
+
+            timer =timeCdTrap;
             TrapPrefab.SetActive(true);
             StartCoroutine(DeActiveTrap());
         }
@@ -26,7 +37,7 @@ public class ActiveSpikeTrapMap2 : MonoBehaviour
     private IEnumerator DeActiveTrap()
     {
         yield return new WaitForSeconds(10f);
-
+        audioSource.Stop();
         TrapPrefab.SetActive(false);
     }
 }

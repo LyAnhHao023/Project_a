@@ -20,11 +20,15 @@ public class WallSpikeWeapon : WeaponBase
 
     int wallTravel = 3;
 
+    AudioManager audioManager;
+
     private void Start()
     {
         SetCharacterStats();
         BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
         playerMove = GetComponentInParent<playerMove>();
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public override void Update()
@@ -69,6 +73,8 @@ public class WallSpikeWeapon : WeaponBase
 
     private void ActiveWallSpikeRandomPos()
     {
+        audioManager.PlaySFX(audioManager.WallSpike);
+
         Vector3 positionAttack = RandomPositionWall();
 
         Vector2 lookDir = positionAttack - transform.position;
@@ -82,6 +88,8 @@ public class WallSpikeWeapon : WeaponBase
 
     private void ActiveWallSpikeBehind()
     {
+        audioManager.PlaySFX(audioManager.WallSpike);
+
         Vector3 positionAttack = transform.position + new Vector3(playerMove.scaleX == 1 ? -wallTravel : wallTravel, Random.Range(-1,2), 0);
 
         Vector2 lookDir = positionAttack - transform.position;

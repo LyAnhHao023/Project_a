@@ -1,4 +1,5 @@
-﻿using Pathfinding;
+﻿using Cinemachine;
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,12 +52,24 @@ public class BossMinotaur : EnemyBase
 
     bool isUseSkill=false;
 
+    private CinemachineVirtualCamera camera;
+
+    private AudioManager audioManager;
+
+    [SerializeField]
+    AudioClip shakeSound;
+
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         timerSkill1 = timeSkill1;
         timerSkill2 = timeSkill2;
+
+        camera = GameObject.FindGameObjectWithTag("VirturalCamera").GetComponent<CinemachineVirtualCamera>();
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
     }
 
     private void Update()
@@ -117,15 +130,31 @@ public class BossMinotaur : EnemyBase
         animator.SetBool("Skill2", true);
         isUseSkill=true;
         yield return new WaitForSeconds(1.2f);
-        foreach (var item in Skill2Lst)
-        {
-            item.SetActive(true);
-        }
+
+        audioManager.PlaySFX(shakeSound);
+        //Shake Camera
+        CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        _cbmcp.m_AmplitudeGain = 2f;
+        StartCoroutine(StopShake());
+
+        
         yield return new WaitForSeconds(0.1f);
 
         GetComponent<AIPath>().canMove = true;
         animator.SetBool("Skill2", false);
         isUseSkill = false;
+    }
+
+    private IEnumerator StopShake()
+    {
+        yield return new WaitForSeconds(0.5f);
+        CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        _cbmcp.m_AmplitudeGain = 0f;
+
+        foreach (var item in Skill2Lst)
+        {
+            item.SetActive(true);
+        }
     }
 
     public override void SetTarget(GameObject GameObject)

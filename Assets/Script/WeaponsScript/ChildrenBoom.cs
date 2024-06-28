@@ -20,6 +20,8 @@ public class ChildrenBoom : MonoBehaviour
 
     Vector3 direction;
 
+    AudioManager audioManager;
+
     private void Awake()
     {
         exploderPrefab.SetActive(false);
@@ -27,8 +29,10 @@ public class ChildrenBoom : MonoBehaviour
         timer = timeDisActive;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         direction = (mousePos - transform.position).normalized;
-        rb.AddForce(direction * 40f, ForceMode2D.Impulse);
+        rb.AddForce(direction * 60f, ForceMode2D.Impulse);
         Invoke("StopMove", 0.2f);
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -53,6 +57,8 @@ public class ChildrenBoom : MonoBehaviour
         EnemyBase enemy = collision.gameObject.GetComponent<EnemyBase>();
         if (enemy != null)
         {
+            audioManager.PlaySFX(audioManager.Bomb);
+
             imgBombPrefab.SetActive(false);
             exploderPrefab.SetActive(true);
         }else if (collision.gameObject.layer==3&& isMoove)

@@ -13,10 +13,14 @@ public class ShurikenScript : WeaponBase
 
     List<GameObject> ActiveShurikenChildrenLst = new List<GameObject>();
 
+    AudioManager audioManager;
+
     private void Start()
     {
         SetCharacterStats();
         BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public override void Attack()
@@ -57,6 +61,8 @@ public class ShurikenScript : WeaponBase
         EnemyBase enemy = collision.GetComponent<EnemyBase>();
         if (enemy != null)
         {
+            audioManager.PlaySFX(audioManager.Shuriken);
+
             bool isCrit = Random.value * 100 < characterStats.crit;
             float dmg = isCrit ?
                 (weaponStats.dmg + characterStats.strenght) * characterStats.critDmg : (weaponStats.dmg + characterStats.strenght);

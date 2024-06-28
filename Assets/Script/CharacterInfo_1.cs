@@ -90,6 +90,9 @@ public class CharacterInfo_1 : MonoBehaviour
     int shieldMaxValue;
     public int shieldCurrentValue;
 
+    //AudioManager
+    AudioManager audioManager;
+
     //kiểm tra bất tử
     [HideInInspector]
     public bool isInvincible=false;
@@ -105,6 +108,8 @@ public class CharacterInfo_1 : MonoBehaviour
         critPercent = PlayerPrefs.GetInt("CRTlv", 0) * 1f;
         expPercent = PlayerPrefs.GetInt("EXPlv", 0) * 0.04f;
         hpRegen = PlayerPrefs.GetInt("HP Regenlv", 0);
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void Start()
@@ -232,6 +237,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void GainExp(int exp)
     {
+        audioManager.PlaySFX(audioManager.PickUpExp);
         currentExp += exp + (int)(exp * expPercent);
 
         if (currentExp >= maxExpValue)
@@ -438,6 +444,9 @@ public class CharacterInfo_1 : MonoBehaviour
             {
                 currentHealth -= damage;
                 MissionCheck();
+
+                //AudioManager
+                audioManager.PlaySFX(audioManager.TakeDmg);
 
                 if (slowHealthAcquired)
                 {

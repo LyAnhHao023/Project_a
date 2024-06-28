@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject _OpenChestUI;
     [SerializeField] private GameObject statShow;
     [SerializeField] private GameObject buffTable;
+    [SerializeField] private GameObject missionUI;
 
     /*[SerializeField] private GameObject _mainMenuFirst;*/
     /*[SerializeField] private GameObject _settingsMenuFirst;*/
@@ -50,6 +51,7 @@ public class MenuManager : MonoBehaviour
         _levelUpUI.SetActive(false);
         _OpenChestUI.SetActive(false);
         levelUpEffect.SetActive(false);
+        missionUI.SetActive(false);
 
         isGameOver = false;
         isSelectBuff = false;
@@ -96,6 +98,7 @@ public class MenuManager : MonoBehaviour
     {
         _mainMenuCanvas.SetActive(true);
         /*_settingsMenuCanvas.SetActive(false);*/
+        missionUI.SetActive(true);
 
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -112,6 +115,7 @@ public class MenuManager : MonoBehaviour
     {
         _mainMenuCanvas.SetActive(false);
         /*_settingsMenuCanvas.SetActive(false);*/
+        missionUI.SetActive(false);
 
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -128,7 +132,7 @@ public class MenuManager : MonoBehaviour
         Unpause();
     }
 
-    public void GameOverScreen(int totalKill)
+    public void GameOverScreen(bool stageComplete = false)
     {
         isPaused = true;
         isGameOver = true;
@@ -136,7 +140,17 @@ public class MenuManager : MonoBehaviour
         _gameOverUI.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
 
-        //GameOverText.text = complete ? "CLEAR STAGE" : "GAME OVER";
+        missionUI.SetActive(true);
+
+        int totalK = PlayerPrefs.GetInt("TotalKill", 0) + StaticData.totalKill;
+        PlayerPrefs.SetInt("TotalKill", totalK);
+        PlayerPrefs.Save();
+
+        int coinLocal = PlayerPrefs.GetInt("Coins", 0);
+        PlayerPrefs.SetInt("Coins", coinLocal + StaticData.totalCoin);
+        PlayerPrefs.Save();
+
+        GameOverText.text = stageComplete ? "CLEAR STAGE" : "GAME OVER";
 
     }
 

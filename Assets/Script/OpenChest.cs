@@ -78,7 +78,7 @@ public class OpenChest : MonoBehaviour
     public void OpenC()
     {
         upgradeDatas = selectBuff.GetUpgrades(GetRandomType(items));
-        characterInfo.upgradeDatas = upgradeDatas;
+        characterInfo.upgradeDatasFromChest = upgradeDatas;
 
         currentIndex = -1;
 
@@ -111,7 +111,7 @@ public class OpenChest : MonoBehaviour
     {
         if (isGet)
         {
-            characterInfo.Upgrade(currentIndex);
+            characterInfo.UpgradeFromChest(currentIndex);
         }
 
         buffHolder.transform.LeanScale(Vector2.zero, 0f).setIgnoreTimeScale(true);

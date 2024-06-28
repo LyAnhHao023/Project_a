@@ -10,6 +10,10 @@ using UnityEngine.UI;
 
 public class CharacterInfo_1 : MonoBehaviour
 {
+    public MissionManager missionManager;
+
+    List<MissionObject> missionObjects;
+
     public InventorySlotsManager inventorySlotsManager;
 
     public MenuManager menuManager;
@@ -43,6 +47,7 @@ public class CharacterInfo_1 : MonoBehaviour
     [SerializeField] LevelUpSelectBuff levelUpSelectBuff;
 
     public List<UpgradeData> upgradeDatas;
+    public List<UpgradeData> upgradeDatasFromChest;
     List<UpgradeData> weaponSlotsManager = new List<UpgradeData>();
     List<UpgradeData> itemSlotsManager = new List<UpgradeData>();
 
@@ -91,9 +96,6 @@ public class CharacterInfo_1 : MonoBehaviour
     [HideInInspector]
     //phần trăm buff độ lớn của vk
     public float weaponSize = 0;
-    
-    //AudioManager
-    AudioManager audioManager;
 
     private void Awake()
     {
@@ -103,8 +105,6 @@ public class CharacterInfo_1 : MonoBehaviour
         critPercent = PlayerPrefs.GetInt("CRTlv", 0) * 1f;
         expPercent = PlayerPrefs.GetInt("EXPlv", 0) * 0.04f;
         hpRegen = PlayerPrefs.GetInt("HP Regenlv", 0);
-
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void Start()
@@ -113,6 +113,8 @@ public class CharacterInfo_1 : MonoBehaviour
             characterData = StaticData.SelectedCharacter;
 
         timerToHealth = timeToHealth;
+
+        missionObjects = missionManager.missionsObject;
 
         weaponSize = 0;
 
@@ -217,18 +219,19 @@ public class CharacterInfo_1 : MonoBehaviour
     {
         ++numberMonsterKilled;
         countSys.SetKillCount(numberMonsterKilled);
+        MissionCheck();
+        StaticData.totalKill = numberMonsterKilled;
     }
 
     public void GainCoin(int coinGain)
     {
         coins += coinGain;
         countSys.SetCoinCount(coins);
+        StaticData.totalCoin = CoinGainPercent(coins, Mathf.FloorToInt(elapsedTime % 60));
     }
 
     public void GainExp(int exp)
     {
-
-        audioManager.PlaySFX(audioManager.PickUpExp);
         currentExp += exp + (int)(exp * expPercent);
 
         if (currentExp >= maxExpValue)
@@ -339,6 +342,94 @@ public class CharacterInfo_1 : MonoBehaviour
         menuManager.LevelUpDone();
     }
 
+    public void UpgradeFromChest(int id)
+    {
+        switch ((int)upgradeDatasFromChest[id].upgradeType)
+        {
+            case 0: //WeaponUpgrade
+                {
+                    upgradeDatasFromChest[id].acquired = true;
+                    levelUpSelectBuff.WeaponNextUpgradeInfo(upgradeDatasFromChest[id]);
+                    weaponsManager.AddWeapon(upgradeDatasFromChest[id].weaponData);
+
+                    foreach (var weapon in weaponSlotsManager)
+                    {
+                        if (weapon.weaponData.name == upgradeDatasFromChest[id].weaponData.name)
+                        {
+                            weapon.level = upgradeDatas[id].level;
+                            break;
+                        }
+                    }
+
+                    inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
+                }
+                break;
+            case 1: //ItemUpgrade
+                {
+                    upgradeDatasFromChest[id].acquired = true;
+                    levelUpSelectBuff.ItemNextUpgradeInfo(upgradeDatasFromChest[id]);
+                    itemsManager.AddItem(upgradeDatasFromChest[id].itemsData);
+                    inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
+                }
+                break;
+            case 2: //WeaponUnlock
+                {
+                    weaponSlotsManager.Add(upgradeDatasFromChest[id]);
+                    weaponsManager.AddWeapon(upgradeDatasFromChest[id].weaponData);
+                    inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
+                    upgradeDatas[id].acquired = true;
+
+                    levelUpSelectBuff.WeaponAcquired(upgradeDatasFromChest[id]);
+                }
+                break;
+            case 3: //ItemUnlock
+                {
+                    itemSlotsManager.Add(upgradeDatasFromChest[id]);
+                    itemsManager.AddItem(upgradeDatasFromChest[id].itemsData);
+                    inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
+                    upgradeDatasFromChest[id].acquired = true;
+
+                    levelUpSelectBuff.ItemAcquired(upgradeDatasFromChest[id]);
+
+                    if (upgradeDatasFromChest[id].itemsData.name == "SlowHealth")
+                    {
+                        slowHealthAcquired = true;
+                    }
+                }
+                break;
+            case 4: //StatUpgrade
+                {
+                    if (upgradeDatasFromChest[id].buffName.Contains("ATK"))
+                    {
+                        attackPercent += 0.1f;
+                        statUpdate();
+                    }
+                    if (upgradeDatasFromChest[id].buffName.Contains("CRT"))
+                    {
+                        critPercent += 2;
+                        statUpdate();
+                    }
+                    if (upgradeDatasFromChest[id].buffName.Contains("HP"))
+                    {
+                        healthPercent += 0.1f;
+                        statUpdate();
+                    }
+                    if (upgradeDatasFromChest[id].buffName.Contains("SPD"))
+                    {
+                        speedPercent += 0.05f;
+                        statUpdate();
+                    }
+                }
+                break;
+            case 5: //GainCoin
+                {
+                    coins += 50;
+                    countSys.SetCoinCount(coins);
+                }
+                break;
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         if(!isInvincible)
@@ -346,8 +437,8 @@ public class CharacterInfo_1 : MonoBehaviour
             if (shieldCurrentValue <= 0)
             {
                 currentHealth -= damage;
-                //AudioManager
-                audioManager.PlaySFX(audioManager.TakeDmg);
+                MissionCheck();
+
                 if (slowHealthAcquired)
                 {
                     if (currentHealth < 1)
@@ -363,14 +454,8 @@ public class CharacterInfo_1 : MonoBehaviour
 
                 if (currentHealth <= 0 || (currentSlowhealth <= 0 && slowHealthAcquired))
                 {
-                    menuManager.GameOverScreen(numberMonsterKilled);
-                    coins = CoinGainPercent(coins, Mathf.FloorToInt(elapsedTime % 60));
+                    menuManager.GameOverScreen();
                     overCoin.SetCoinGain(coins);
-                    int coinLocal = PlayerPrefs.GetInt("Coins", 0);
-                    //Debug.Log(coinLocal +" local");
-                    PlayerPrefs.SetInt("Coins", coinLocal + coins);
-                    PlayerPrefs.Save();
-                    //Debug.Log(PlayerPrefs.GetInt("Coins", 0));
                 }
             }
             else
@@ -454,6 +539,30 @@ public class CharacterInfo_1 : MonoBehaviour
             currentSlowhealth -= dmg;
 
             slowHealthBar.SetHealth(currentSlowhealth);
+        }
+    }
+
+    public float healthCheck;
+
+    void MissionCheck()
+    {
+        foreach(var item in missionObjects)
+        {
+            if (!item.missionInfo.completed)
+            {
+                if (item.missionInfo.missionType.ToString() == "HP")
+                {
+                    healthCheck = maxHealth * ((float)item.missionInfo.num / 100);
+                    if (currentHealth <= healthCheck)
+                        item.missionHolder.GetComponent<SetMission>().SetHPMissionComplete(item.missionInfo, true);
+                }
+                if (item.missionInfo.missionType.ToString() == "Kill")
+                {
+                    item.missionHolder.GetComponent<SetMission>().SetKillMissionProgress(item.missionInfo, numberMonsterKilled);
+                    if(numberMonsterKilled >= item.missionInfo.num)
+                        item.missionHolder.GetComponent<SetMission>().SetKillMissionComplete(item.missionInfo, true, numberMonsterKilled);
+                }
+            }
         }
     }
 }

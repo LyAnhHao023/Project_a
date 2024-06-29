@@ -15,7 +15,13 @@ public class EventLightningMap1 : MonoBehaviour
 
     float timer = 7;
 
-    // Update is called once per frame
+    AudioSource audio;
+
+    private void Start()
+    {
+        audio=GetComponent<AudioSource>();
+    }
+
     void Update()
     {
         timer-=Time.deltaTime;
@@ -29,6 +35,7 @@ public class EventLightningMap1 : MonoBehaviour
     private IEnumerator LightningActive()
     {
         yield return new WaitForSeconds(0.3f);
+        audio.Play();
         Lightning.SetActive(true);
         timer = timeLightning;
     }

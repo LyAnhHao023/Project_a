@@ -21,11 +21,14 @@ public class AxeWeapon : WeaponBase
 
     bool isKnockBack=false;
 
+    AudioManager audioManager;
+
     private void Start()
     {
         playerMove = GetComponentInParent<playerMove>();
         SetCharacterStats();
         BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
 
@@ -65,12 +68,16 @@ public class AxeWeapon : WeaponBase
         {
             if (playerMove.scaleX == 1)
             {
+                audioManager.PlaySFX(audioManager.Axe);
+
                 rightAxe.SetActive(true);
                 //Lay danh sach thong tin cua vat the ma Axe va cham
                 //colliders = Physics2D.OverlapBoxAll(rightAxe.transform.position, AxeAttackSize, 0f);
             }
             else
             {
+                audioManager.PlaySFX(audioManager.Axe);
+
                 leftAxe.SetActive(true);
                 //colliders = Physics2D.OverlapBoxAll(leftAxe.transform.position, AxeAttackSize, 0f);
             }
@@ -86,8 +93,10 @@ public class AxeWeapon : WeaponBase
 
     private IEnumerator ActiveTwoAxe()
     {
+        audioManager.PlaySFX(audioManager.Axe);
         rightAxe.SetActive(true);
         yield return new WaitForSeconds(0.15f);
+        audioManager.PlaySFX(audioManager.Axe);
         leftAxe.SetActive(true);
 
     }

@@ -34,12 +34,16 @@ public class GunScript : WeaponBase
 
     bool isFire3Bullet=false;
 
+    AudioManager audioManager;
+
     private void Start()
     {
         SetCharacterStats();
         bulletsObject = GameObject.Find("BulletsObject").transform;
         characterInfo_1=GetComponentInParent<CharacterInfo_1>();
         BuffWeaponSizeByPersent(characterInfo_1.weaponSize);
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public override void Update()
@@ -94,6 +98,9 @@ public class GunScript : WeaponBase
 
     public override void Attack()
     {
+        //Audio
+        audioManager.PlaySFX(audioManager.Gun);
+
         GameObject createBullet = Instantiate(Bullet, firePos.position, Quaternion.identity);
 
         BulletScript bulletScript = createBullet.GetComponent<BulletScript>();

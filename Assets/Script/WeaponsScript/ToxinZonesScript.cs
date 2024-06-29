@@ -14,12 +14,16 @@ public class ToxinZonesScript : WeaponBase
 
     bool isKnockBack=false;
 
+    AudioManager audioManager;
+
     private void Start()
     {
         SetCharacterStats();
         BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
         ////SetRadiusEffect(transform.localScale.x);
         //currentSizeWeapon=transform.localScale.x;
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -71,6 +75,9 @@ public class ToxinZonesScript : WeaponBase
         {
             timer = weaponStats.timeAttack;
             List<EnemyBase> tempEnemies = new List<EnemyBase>(slowedEnemies);
+
+            audioManager.PlaySFX(audioManager.ToxinZone);
+
             foreach (var item in tempEnemies)
             {
                 if (item != null)

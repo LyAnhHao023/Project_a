@@ -20,6 +20,12 @@ public class ZombieSurroundEnemy : EnemyBase
     GameObject ParentDropItem;
     public override bool EnemyTakeDmg(int dmg) => throw new System.NotImplementedException();
 
+    private void Start()
+    {
+        AudioManager audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager.PlaySFX(audioManager.Warning);
+    }
+
     public void DestroyParent()
     {
         Destroy(gameObject, 1f);

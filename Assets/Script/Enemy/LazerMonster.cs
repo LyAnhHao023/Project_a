@@ -34,10 +34,13 @@ public class LazerMonster : EnemyBase
 
     float timerSkillLazer;
 
+    AudioSource audioSource;
+
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        audioSource=GetComponent<AudioSource>();
 
     }
 
@@ -61,6 +64,7 @@ public class LazerMonster : EnemyBase
         timerSkillLazer-= Time.deltaTime;
         if(timerSkillLazer < 0)
         {
+            audioSource.Play();
             timerSkillLazer = 4f;
             LazerSkillPrefab.SetActive(true);
         }

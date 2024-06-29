@@ -58,6 +58,8 @@ public class BossMinotaur : EnemyBase
 
     [SerializeField]
     AudioClip shakeSound;
+    [SerializeField]
+    AudioClip slashSound;
 
 
     private void Start()
@@ -105,6 +107,7 @@ public class BossMinotaur : EnemyBase
 
     private IEnumerator SkillOne()
     {
+        audioManager.PlaySFX(slashSound);
         animator.SetBool("Skill1", true);
         isUseSkill = true;
         yield return new WaitForSeconds(0.3f);

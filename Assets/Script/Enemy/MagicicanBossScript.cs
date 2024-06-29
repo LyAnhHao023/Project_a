@@ -50,10 +50,17 @@ public class MagicicanBossScript : EnemyBase
 
     AIPath AIPath;
 
+    AudioSource audioSource;
+    [SerializeField]
+    AudioClip TeleStart;
+    [SerializeField]
+    AudioClip TeleEnd;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
         AIPath = GetComponent<AIPath>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public override void SetTarget(GameObject GameObject)
@@ -140,6 +147,7 @@ public class MagicicanBossScript : EnemyBase
 
     private void StartSkillTele()
     {
+        audioSource.PlayOneShot(TeleStart);
         animator.SetBool("Warning", true);
         GetComponent<Collider2D>().enabled = false;
         transform.position=targetGameObject.transform.position;
@@ -148,6 +156,7 @@ public class MagicicanBossScript : EnemyBase
 
     private void EndSkill()
     {
+        audioSource.PlayOneShot(TeleEnd);
         animator.SetBool("Warning", false);
         GetComponent<Collider2D>().enabled = true;
         SkillTelePrefab.SetActive(true);

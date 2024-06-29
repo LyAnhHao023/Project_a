@@ -22,6 +22,8 @@ public class ZicZagEnemy : EnemyBase
     private void Awake()
     {
         Destroy(gameObject, 50f);
+        AudioManager audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager.PlaySFX(audioManager.Warning);
     }
 
     public void DestroyParent()

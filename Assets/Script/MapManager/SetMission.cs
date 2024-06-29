@@ -47,8 +47,12 @@ public class SetMission : MonoBehaviour
             StaticData.missionCompleteNum++;
         }
 
-        PlayerPrefs.SetInt(missionInfo.missionName + StaticData.MapSelect.Name, missionFailed ? 1 : 0);
-        PlayerPrefs.Save();
+        if(StaticData.MapSelect != null)
+        {
+            PlayerPrefs.SetInt(missionInfo.missionName + StaticData.MapSelect.Name, missionFailed ? 1 : 0);
+            PlayerPrefs.Save();
+            CheckFullStar();
+        }
     }
 
     public void SetKillMissionComplete(MissionInfo missionInfo, bool missionFailed = false, int killProgress = 0)
@@ -68,8 +72,12 @@ public class SetMission : MonoBehaviour
 
         SetKillMissionProgress(missionInfo, killProgress);
 
-        PlayerPrefs.SetInt(missionInfo.missionName + StaticData.MapSelect.Name, missionFailed ? 1 : 0);
-        PlayerPrefs.Save();
+        if(StaticData.MapSelect != null)
+        {
+            PlayerPrefs.SetInt(missionInfo.missionName + StaticData.MapSelect.Name, missionFailed ? 1 : 0);
+            PlayerPrefs.Save();
+            CheckFullStar();
+        }
     }
 
     public void SetKillMissionProgress(MissionInfo missionInfo, int killProgress = 0)

@@ -58,6 +58,7 @@ public class ChildrenBoom : MonoBehaviour
         if (enemy != null)
         {
             audioManager.PlaySFX(audioManager.Bomb);
+            GetComponent<Collider2D>().enabled = false;
 
             imgBombPrefab.SetActive(false);
             exploderPrefab.SetActive(true);

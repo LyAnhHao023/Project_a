@@ -8,6 +8,12 @@ public class MainMenu : MonoBehaviour
 {
     private MapData mapData;
 
+    /*private void Awake()
+    {
+        PlayerPrefs.SetInt("Knight Girllv", 1);
+        PlayerPrefs.Save();
+    }*/
+
     public void SetMapData(MapData data)
     {
         mapData = data;

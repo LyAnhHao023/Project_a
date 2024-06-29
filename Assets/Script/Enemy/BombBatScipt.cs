@@ -36,9 +36,12 @@ public class BombBatScipt : EnemyBase
 
     GameObject ParentDropItem;
 
+    AudioManager audioManager;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
     }
 
@@ -70,7 +73,7 @@ public class BombBatScipt : EnemyBase
         Collider2D[] Collider2D = Physics2D.OverlapBoxAll(transform.position, areaAttack, 0f);
         foreach (var item in Collider2D)
         {
-            if(item.gameObject == targetGameObject)
+            if(item.gameObject == targetGameObject&&!warningZone.active)
             {
                 Attack();
             }
@@ -103,6 +106,8 @@ public class BombBatScipt : EnemyBase
 
     private void Explosion()
     {
+        audioManager.PlaySFX(audioManager.BoombBat);
+
         GetComponent<SpriteRenderer>().enabled=false;
         warningZone.SetActive(false);
         exploder.SetActive(true);

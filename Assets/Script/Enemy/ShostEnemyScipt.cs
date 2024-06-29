@@ -36,6 +36,8 @@ public class ShostEnemyScipt : EnemyBase
         animator=GetComponent<Animator>();
        
         Destroy(gameObject, 11f);
+        AudioManager audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager.PlaySFX(audioManager.Warning);
     }
 
     void OnCollisionEnter2D(Collision2D collision)

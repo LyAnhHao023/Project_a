@@ -34,19 +34,17 @@ public class playerMove : MonoBehaviour
 
             animation.SetFloat("Speed", moveInput.sqrMagnitude);
 
-            if (moveInput.x != 0)
-            {
 
-                if (moveInput.x > 0)
-                {
-                    animation.transform.rotation = Quaternion.Euler(0, 0, 0);
-                    scaleX = 1;
-                }
-                else
-                {
-                    animation.transform.rotation = Quaternion.Euler(0, 180, 0);
-                    scaleX = -1;
-                }
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (mousePos.x >transform.position.x)
+            {
+                animation.transform.rotation = Quaternion.Euler(0, 0, 0);
+                scaleX = 1;
+            }
+            else
+            {
+                animation.transform.rotation = Quaternion.Euler(0, 180, 0);
+                scaleX = -1;
             }
         }
     }

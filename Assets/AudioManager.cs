@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource backGroundMusicSource;
     [SerializeField] AudioSource SFX;
 
-    [Header("-----AudioClipGame-----")]
+    [Header("-----AudioClipGamePlay-----")]
     public AudioClip Background;
     public AudioClip LevelUp;
     public AudioClip Lose;
@@ -18,6 +18,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip PickUpHeath;
     public AudioClip PickUpCoin;
     public AudioClip TakeDmg;
+    public AudioClip Warning;
 
     [Header("-----AudioClipWeapon-----")]
     public AudioClip Axe;
@@ -27,6 +28,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip Shuriken;
     public AudioClip WallSpike;
     public AudioClip ToxinZone;
+
+    [Header("-----AudioClipWeapon-----")]
+    public AudioClip BoombBat;
+    public AudioClip WildBoar;
 
     // Start is called before the first frame update
     void Start()

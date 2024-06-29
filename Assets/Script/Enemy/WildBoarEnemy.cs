@@ -33,10 +33,14 @@ public class WildBoarEnemy : EnemyBase
     bool isUseSkill=false;
 
     [SerializeField] bool isBoss=false;
+
+    AudioManager audioManager;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public override void SetTarget(GameObject GameObject)
@@ -76,6 +80,7 @@ public class WildBoarEnemy : EnemyBase
 
     private void ReadyRush()
     {
+        audioManager.PlaySFX(audioManager.WildBoar);
         isUseSkill = true;
         GetComponent<AIPath>().canMove = false;
         GetComponent<Collider2D>().isTrigger = true;

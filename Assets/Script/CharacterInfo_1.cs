@@ -99,6 +99,9 @@ public class CharacterInfo_1 : MonoBehaviour
     [HideInInspector]
     //phần trăm buff độ lớn của vk
     public float weaponSize = 0;
+    //% Giam sat thuong nhan vao;
+    [HideInInspector]
+    public float reduceDmgTake=0;
 
     private void Awake()
     {
@@ -121,6 +124,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
         missionObjects = missionManager.missionsObject;
 
+        reduceDmgTake = 0;
         weaponSize = 0;
 
         characterAnimate = Instantiate(characterData.animatorPrefab, CharacterAnimateTranform.transform);
@@ -438,6 +442,9 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        //Giam dmg nhan vao
+        damage -= (int)Mathf.Ceil((float)damage * reduceDmgTake);
+
         if(!isInvincible)
         {
             if (shieldCurrentValue <= 0)

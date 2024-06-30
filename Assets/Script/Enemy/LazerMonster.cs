@@ -34,13 +34,15 @@ public class LazerMonster : EnemyBase
 
     float timerSkillLazer;
 
-    AudioSource audioSource;
+    GameObject mainMenu;
+    MenuManager menuManager;
 
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        audioSource=GetComponent<AudioSource>();
+        mainMenu = GameObject.FindGameObjectWithTag("MenuManager");
+        menuManager = mainMenu.GetComponent<MenuManager>();
 
     }
 
@@ -64,7 +66,6 @@ public class LazerMonster : EnemyBase
         timerSkillLazer-= Time.deltaTime;
         if(timerSkillLazer < 0)
         {
-            audioSource.Play();
             timerSkillLazer = 4f;
             LazerSkillPrefab.SetActive(true);
         }
@@ -134,10 +135,26 @@ public class LazerMonster : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
+            StaticData.bigBossKill++;
             gameObject.GetComponent<AIPath>().canMove = false;
             GetComponent<Collider2D>().enabled = false;
             animator.SetBool("Dead", true);
             DestroyOb();
+
+            if(StaticData.LevelType == 0)
+            {
+                menuManager.GameOverScreen(true);
+                PlayerPrefs.SetInt("Stage1", 1);
+                PlayerPrefs.Save();
+            }
+
+            if(StaticData.LevelType == 2 && StaticData.bigBossKill >= 3)
+            {
+                menuManager.GameOverScreen(true);
+                PlayerPrefs.SetInt("Challange1", 1);
+                PlayerPrefs.Save();
+            }
+
             return true;
         }
         return false;

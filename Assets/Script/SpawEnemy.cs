@@ -58,6 +58,7 @@ public class SpawEnemy : MonoBehaviour
 
     float timer;
     float statsBuffByTime=1;
+    float buffPercent = 0.1f;
 
     List<EnemiesSpawGroup> lst_EnemiesSpawGroups;
     List<EnemiesSpawGroup> lst_ReSpawEnemy;
@@ -69,6 +70,12 @@ public class SpawEnemy : MonoBehaviour
     private void Start()
     {
         timer = timeToBuffEnemy;
+
+        if (StaticData.LevelType == 2)
+        {
+            buffPercent = 0.2f;
+            timeToBuffEnemy = 40f;
+        }
     }
 
     private void Update()
@@ -76,7 +83,7 @@ public class SpawEnemy : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer < 0)
         {
-            statsBuffByTime += 0.1f;
+            statsBuffByTime += buffPercent;
             timer = timeToBuffEnemy;
         }
 

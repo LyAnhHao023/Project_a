@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
     [SerializeField] GameObject levelSelectPanel;
     [SerializeField] GameObject characterSelect;
+    [SerializeField] Button endless;
+    [SerializeField] Button challange;
 
     public List<MapData> mapDatas;
 
@@ -35,5 +38,15 @@ public class MapManager : MonoBehaviour
     public GameObject CharacterSelect()
     {
         return characterSelect;
+    }
+
+    public Button Endless()
+    {
+        return endless;
+    }
+
+    public Button Challange()
+    {
+        return challange;
     }
 }

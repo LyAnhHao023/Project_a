@@ -15,6 +15,8 @@ public class SetMapHolder : MonoBehaviour
     private MapManager mapManager;
     private GameObject LevelSelect;
     private GameObject SelectCharacter;
+    private Button endless;
+    private Button challange;
 
     MapData mapData;
 
@@ -27,6 +29,9 @@ public class SetMapHolder : MonoBehaviour
 
         LevelSelect = mapManager.LevelSelectPanel();
         SelectCharacter = mapManager.CharacterSelect();
+        endless = mapManager.Endless();
+        challange = mapManager.Challange();
+
 
         MapHolder.onClick.AddListener(Onclick);
     }
@@ -45,6 +50,11 @@ public class SetMapHolder : MonoBehaviour
             item.completed = completed > 0;
             if(completed > 0)
                 numComplete++;
+
+            if (numComplete >= 3)
+            {
+                PlayerPrefs.SetInt("3Star" + data.key, 1);
+            }
         }
     }
 
@@ -54,5 +64,10 @@ public class SetMapHolder : MonoBehaviour
         SelectCharacter.SetActive(true);
         menu.SetMapData(mapData);
         StaticData.MapSelect = mapData;
+
+        if (mapData.storyCleared)
+            endless.enabled = true;
+        if (numComplete >= 3)
+            challange.enabled = true;
     }
 }

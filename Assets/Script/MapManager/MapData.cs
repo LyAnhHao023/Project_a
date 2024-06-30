@@ -26,6 +26,7 @@ public class MapData : ScriptableObject
     public SceneAsset Map;
     public string Name;
     public Sprite Icon;
+    public string key;
     public bool storyCleared = false;
     public bool unlocked = false;
     public List<MissionInfo> missions;

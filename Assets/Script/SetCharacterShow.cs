@@ -40,7 +40,7 @@ public class SetCharacterShow : MonoBehaviour
     public void SetCharacter(CharacterData charData)
     {
         CharacterHolder.SetActive(true);
-        AcceptButton.GetComponentInParent<Button>().enabled = true;
+        AcceptButton.GetComponentInParent<Button>().enabled = charData.acquired;
         CharData = charData;
         Name.text = charData.name;
         HP.text = charData.stats.maxHealth.ToString();

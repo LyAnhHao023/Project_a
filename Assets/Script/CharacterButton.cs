@@ -8,7 +8,6 @@ public class CharacterButton : MonoBehaviour
 {
     [SerializeField] Image CharacterImage;
     [SerializeField] GameObject CharacterLocker;
-    [SerializeField] GameObject CharButton;
 
     GameObject CharacterHolder;
     SetCharacterShow setCharacterShow;
@@ -28,7 +27,6 @@ public class CharacterButton : MonoBehaviour
         CharData = characterData;
         CharacterImage.sprite = characterData.image;
         CharacterLocker.SetActive(!characterData.acquired);
-        CharButton.GetComponent<Button>().enabled = characterData.acquired;
     }
 
     public void SetCharacter()

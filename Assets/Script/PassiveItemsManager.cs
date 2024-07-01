@@ -44,6 +44,10 @@ public class PassiveItemsManager : MonoBehaviour
     ItemsData BuffAreaGainExpPrefab;
     [SerializeField]
     ItemsData ReduceCDSkillPrefab;
+    [SerializeField]
+    ItemsData BuffCritItemPrefab;
+    [SerializeField]
+    ItemsData ExchangeAtParPrefab;
 
 
     public List<ItemsEnquip> itemsEquip_lst = new List<ItemsEnquip>(5);
@@ -60,6 +64,11 @@ public class PassiveItemsManager : MonoBehaviour
             AddItem(ReduceCDSkillPrefab);
         }
     }*/
+
+    private void Start()
+    {
+        AddItem(ExchangeAtParPrefab);
+    }
 
 
     public void AddItem(ItemsData itemData)

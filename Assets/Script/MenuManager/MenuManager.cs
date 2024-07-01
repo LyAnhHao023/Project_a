@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject _mainMenuCanvas;
-    /*[SerializeField] private GameObject _settingsMenuCanvas;*/
+    [SerializeField] private GameObject _settingsMenuCanvas;
     [SerializeField] private GameObject _gameOverUI;
     [SerializeField] private GameObject _levelUpUI;
     [SerializeField] private GameObject _OpenChestUI;
@@ -46,7 +46,7 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         _mainMenuCanvas.SetActive(false);
-        /*_settingsMenuCanvas.SetActive(false);*/
+        _settingsMenuCanvas.SetActive(false);
         _gameOverUI.SetActive(false);
         _levelUpUI.SetActive(false);
         _OpenChestUI.SetActive(false);
@@ -97,7 +97,7 @@ public class MenuManager : MonoBehaviour
     private void OpenMainMenu()
     {
         _mainMenuCanvas.SetActive(true);
-        /*_settingsMenuCanvas.SetActive(false);*/
+        _settingsMenuCanvas.SetActive(false);
         missionUI.SetActive(true);
 
         EventSystem.current.SetSelectedGameObject(null);
@@ -114,7 +114,7 @@ public class MenuManager : MonoBehaviour
     private void CloseAllMenus()
     {
         _mainMenuCanvas.SetActive(false);
-        /*_settingsMenuCanvas.SetActive(false);*/
+        _settingsMenuCanvas.SetActive(false);
         missionUI.SetActive(false);
 
         EventSystem.current.SetSelectedGameObject(null);

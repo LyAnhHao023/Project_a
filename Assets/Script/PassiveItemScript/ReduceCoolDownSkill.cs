@@ -7,7 +7,7 @@ public class ReduceCoolDownSkill : ItemBase
     CharacterInfo_1 player;
 
     [SerializeField]
-    float persentReduce = 0.3f;
+    float persentReduce = 0.2f;
 
     float cdBase;
 

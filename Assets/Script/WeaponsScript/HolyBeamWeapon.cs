@@ -106,7 +106,7 @@ public class HolyBeamWeapon : WeaponBase
                 {
                     //Reduce attack cooldown by 30% seconds.
                     weaponStats.timeAttack -= weaponData.stats.timeAttack * 30 / 100;
-
+                    
                 }
                 break;
             case 4:

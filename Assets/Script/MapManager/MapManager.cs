@@ -23,6 +23,14 @@ public class MapManager : MonoBehaviour
     {
         for (int i = 0; i < mapDatas.Count; i++)
         {
+            bool stageClear = PlayerPrefs.GetInt(mapDatas[i].key, 0) == 1 ? true : false;
+            mapDatas[i].storyCleared = stageClear;
+            if(stageClear && i - 1 < mapDatas.Count)
+            {
+                mapDatas[i + 1].unlocked = stageClear;
+            }
+
+
             mapHolder = Instantiate(mapHolderPerfab, MapHolderTranform.transform);
             mapHolder.GetComponent<SetMapHolder>().Set(mapDatas[i]);
         }

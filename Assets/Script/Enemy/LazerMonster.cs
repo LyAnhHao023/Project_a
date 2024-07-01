@@ -141,18 +141,23 @@ public class LazerMonster : EnemyBase
             animator.SetBool("Dead", true);
             DestroyOb();
 
-            if(StaticData.LevelType == 0)
+            if(StaticData.MapSelect != null)
             {
-                menuManager.GameOverScreen(true);
-                PlayerPrefs.SetInt("Stage1", 1);
-                PlayerPrefs.Save();
-            }
+                if (StaticData.LevelType == 0)
+                {
+                    menuManager.GameOverScreen(true);
+                    PlayerPrefs.SetInt("Stage" + StaticData.MapSelect.key, 1);
+                    PlayerPrefs.Save();
+                    PlayerPrefs.SetInt(StaticData.MapSelect.key, 1);
+                    PlayerPrefs.Save();
+                }
 
-            if(StaticData.LevelType == 2 && StaticData.bigBossKill >= 3)
-            {
-                menuManager.GameOverScreen(true);
-                PlayerPrefs.SetInt("Challange1", 1);
-                PlayerPrefs.Save();
+                if (StaticData.LevelType == 2 && StaticData.bigBossKill >= 3)
+                {
+                    menuManager.GameOverScreen(true);
+                    PlayerPrefs.SetInt("Challange" + StaticData.MapSelect.key, 1);
+                    PlayerPrefs.Save();
+                }
             }
 
             return true;

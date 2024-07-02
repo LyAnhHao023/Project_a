@@ -65,10 +65,10 @@ public class PassiveItemsManager : MonoBehaviour
         }
     }*/
 
-    private void Start()
+    /*private void Start()
     {
         AddItem(ExchangeAtParPrefab);
-    }
+    }*/
 
 
     public void AddItem(ItemsData itemData)

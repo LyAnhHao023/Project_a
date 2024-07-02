@@ -137,6 +137,8 @@ public class CharacterInfo_1 : MonoBehaviour
         baseSpeed = characterStats.speed;
         baseHealth = characterStats.maxHealth;
 
+        statUpdate();
+
         maxHealth = characterStats.maxHealth;
         currentHealth = maxHealth + Mathf.FloorToInt(characterStats.maxHealth * healthPercent);
         healthBar.SetMaxHealth(maxHealth);

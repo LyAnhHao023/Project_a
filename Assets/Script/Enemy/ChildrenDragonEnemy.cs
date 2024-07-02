@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ChildrenDragonEnemy : EnemyBase
 {
-    int hp;
     Animator animator;
     [SerializeField]
     DragonEnemy parentPrefab;
@@ -20,7 +19,8 @@ public class ChildrenDragonEnemy : EnemyBase
         rb = GetComponent<Rigidbody2D>();
         Vector3 dic=new Vector3(parentPrefab.transform.position.x-transform.position.x>0?1:-1,0,0);
         rb.AddForce(dic*100f, (ForceMode2D)ForceMode.Force);
-        hp = parentPrefab.enemyStats.hp;
+        SetData(parentPrefab.enemyData);
+        enemyStats.hp = parentPrefab.enemyStats.hp;
     }
 
     private void Update()
@@ -39,9 +39,9 @@ public class ChildrenDragonEnemy : EnemyBase
 
     public override bool EnemyTakeDmg(int dmg)
     {
-        hp -= dmg;
+        enemyStats.hp -= dmg;
         animator.SetTrigger("Hit");
-        if(hp < 0) 
+        if (enemyStats.hp <= 0) 
         {
             Dead();
             return true;

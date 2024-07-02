@@ -30,4 +30,5 @@ public class WeaponData : ScriptableObject
     public string name;
     public WeaponStats stats;
     public GameObject weaponBasePrefab;
+    public WeaponData weaponColabData;
 }

@@ -9,7 +9,7 @@ public class ArmyEffectSkill : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         EnemyBase enemy= collision.GetComponent<EnemyBase>();
-        if(enemy != null&&!enemy.enemyData.isBoss)
+        if(enemy != null&&(enemy.enemyData!=null? !enemy.enemyData.isBoss:true))
         {
             enemy.EnemyTakeDmg(enemy.enemyStats.hp);
             MessengerSystem.instance.DmgPopUp(enemy.enemyStats.hp.ToString(), enemy.transform.position, true);

@@ -39,6 +39,8 @@ public class WeaponsManager : MonoBehaviour
     WeaponData HolyBeamPrefab;
     [SerializeField]
     WeaponData WindMagicPrefab;
+    [SerializeField]
+    WeaponData SuperShurikenPrefab;
 
 
     public List<weaponEnquip> weapons_lst=new List<weaponEnquip>(5);
@@ -46,10 +48,10 @@ public class WeaponsManager : MonoBehaviour
     int i = 0;
     float timer = 5;
 
-    /*private void Start()
+    private void Start()
     {
-        AddWeapon(WindMagicPrefab);
-    }*/
+        AddWeapon(SuperShurikenPrefab);
+    }
 
     //private void Update()
     //{

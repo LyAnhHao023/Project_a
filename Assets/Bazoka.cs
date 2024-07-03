@@ -12,8 +12,8 @@ public class Bazoka : WeaponBase
     [SerializeField]
     GameObject fireEffect;
 
-    [SerializeField]
-    float bulletForce = 1;
+
+    float bulletForce = 6;
 
     CharacterStats characterStats;
 

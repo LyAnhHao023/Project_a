@@ -12,29 +12,40 @@ public class StageEventManager : MonoBehaviour
     SpawEnemy spawEnemyManager;
 
     [SerializeField] EnemyData BoxDropPrefab;
+    [SerializeField] GameObject AnvilUpdatePrefab;
 
     [SerializeField] float TimeBoxDrop = 15f;
+    [SerializeField] float TimeAnvilUpdateDrop = 20f;
 
     [SerializeField]
     Timer timerScript;
 
-    float timer;
+    float timerBoxDrop;
+    float timerAnvilUpdateDrop;
 
     int eventIndex=0;
 
     private void Start()
     {
-        timer = TimeBoxDrop;
+        timerBoxDrop = TimeBoxDrop;
+        timerAnvilUpdateDrop= TimeAnvilUpdateDrop;
     }
 
     private void Update()
     {
-        timer -= Time.deltaTime;
+        timerBoxDrop -= Time.deltaTime;
+        timerAnvilUpdateDrop -= Time.deltaTime;
 
-        if (timer <= 0)
+        if (timerBoxDrop <= 0)
         {
-            timer = TimeBoxDrop;
+            timerBoxDrop = TimeBoxDrop;
             SpawBoxDrop();
+        }
+
+        if (timerAnvilUpdateDrop <= 0)
+        {
+            timerAnvilUpdateDrop = TimeAnvilUpdateDrop;
+            SpawAnvilUpdateDrop();
         }
 
         if (eventIndex >= StageData.stageEvents.Count) { return; }
@@ -45,6 +56,12 @@ public class StageEventManager : MonoBehaviour
             eventIndex++;
         }
 
+    }
+
+    private void SpawAnvilUpdateDrop()
+    {
+        GameObject anvil= Instantiate(AnvilUpdatePrefab);
+        anvil.transform.SetParent(GameObject.Find("===ObjectDrop===").transform);
     }
 
     private void SpawEnemy()

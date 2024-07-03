@@ -40,7 +40,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     public void BuffWeaponSizeByPersent(float persent)
     {
-        transform.localScale+=new Vector3(baseSizeWeapon.x * persent, baseSizeWeapon.y * persent, baseSizeWeapon.y * persent);
+        transform.localScale+=new Vector3(baseSizeWeapon.x * persent, baseSizeWeapon.y * persent, 0);
     }
 
     public void BuffWeaponDamageByPersent(float persent)

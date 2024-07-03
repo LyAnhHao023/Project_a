@@ -20,11 +20,6 @@ public class Bazoka : WeaponBase
     [SerializeField]
     Transform bulletsObject;
 
-    [SerializeField]
-    WeaponStats baseStat = new WeaponStats(1, 1, 1f);
-
-    Vector3 weaponSize=Vector3.one;
-
     SpriteRenderer spriteRenderer;
 
     CharacterInfo_1 characterInfo_1;

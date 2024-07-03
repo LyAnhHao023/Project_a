@@ -562,7 +562,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public float healthCheck;
 
-    void MissionCheck()
+    public void MissionCheck()
     {
         foreach(var item in missionObjects)
         {

@@ -36,6 +36,8 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] Text GameOverText;
 
+    [SerializeField] CharacterInfo_1 characterInfo;
+
     private bool isPaused;
 
     private bool isGameOver;
@@ -137,7 +139,11 @@ public class MenuManager : MonoBehaviour
         isPaused = true;
         isGameOver = true;
         Time.timeScale = 0f;
+
+        characterInfo.MissionCheck();
+
         _gameOverUI.SetActive(true);
+
         EventSystem.current.SetSelectedGameObject(null);
 
         missionUI.SetActive(true);

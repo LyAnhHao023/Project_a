@@ -10,6 +10,9 @@ public class AnvilUpdate : MonoBehaviour
 
     [SerializeField] Vector2 spawArea;
 
+    MenuManager menuManager;
+    GameObject menuObject;
+
     private void Start()
     {
         Destroy(gameObject, 15f);
@@ -26,6 +29,8 @@ public class AnvilUpdate : MonoBehaviour
         transform.position = position;
 
         PointerOJ.GetComponent<Window_pointer>().SetTarget(new Vector3(transform.position.x, transform.position.y+1,0));
+        menuObject = GameObject.FindGameObjectWithTag("MenuManager");
+        menuManager = menuObject.GetComponent<MenuManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -33,6 +38,8 @@ public class AnvilUpdate : MonoBehaviour
         CharacterInfo_1 player=collision.GetComponent<CharacterInfo_1>();
         if (player != null)
         {
+            Debug.Log("TAKE");
+            menuManager.GetComponentInParent<MenuManager>().AnvilUpgradeScene();
             //do somthing............
         }
     }

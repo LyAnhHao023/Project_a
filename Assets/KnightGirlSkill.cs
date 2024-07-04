@@ -20,8 +20,6 @@ public class KnightGirlSkill : MonoBehaviour
         player = GetComponentInParent<CharacterInfo_1>();
 
         skillCooldownUI.SetSkillInfo(player.skillInfor);
-
-        player.isInvincible = false;
     }
 
 

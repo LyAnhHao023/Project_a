@@ -7,6 +7,7 @@ public class SkillCooldownUI : MonoBehaviour
 {
     [SerializeField] Image cooldown;
     [SerializeField] Image skillIcon;
+    [SerializeField] GameObject skillOverlay;
 
     float cooldownTimer;
     float cooldownTime;
@@ -21,6 +22,7 @@ public class SkillCooldownUI : MonoBehaviour
         cooldownTime = time;
         cooldownTimer = time;
         cooldown.fillAmount = cooldownTimer;
+        skillOverlay.SetActive(false);
     }
 
     public void SetSkillInfo(SkillInfo skillInfo)
@@ -35,10 +37,12 @@ public class SkillCooldownUI : MonoBehaviour
         if(cooldownTimer < 0 )
         {
             cooldown.fillAmount = 0;
+            skillOverlay.SetActive(false);
         }
         else
         {
             cooldown.fillAmount = cooldownTimer / cooldownTime;
+            skillOverlay.SetActive(true);
         }
     }
 }

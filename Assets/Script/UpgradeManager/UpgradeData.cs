@@ -27,6 +27,7 @@ public class UpgradeData : ScriptableObject
     public string buffName;
     public Sprite icon;
     public int level;
+    public int overLevel;
     public string description;
     public WeaponData weaponData;
     public ItemsData itemsData;
@@ -34,10 +35,5 @@ public class UpgradeData : ScriptableObject
 
     public List<UpgradeInfo> UpgradeInfos;
 
-    public bool bought;
-
-    public void Awake()
-    {
-        acquired = false;
-    }
+    public bool maxed;
 }

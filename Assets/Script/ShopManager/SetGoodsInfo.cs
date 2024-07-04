@@ -53,8 +53,6 @@ public class SetGoodsInfo : MonoBehaviour
 
         SetInfo(goods);
 
-        ButtonText.text = PriceCheck(goods);
-
         SetNextPrice();
 
         ButtonCheck(goods);
@@ -67,6 +65,7 @@ public class SetGoodsInfo : MonoBehaviour
         Icon.sprite = goods.icon;
         Name.text = goods.goodsName;
         Description.text = goods.description;
+        ButtonText.text = PriceCheck(goods);
         Locker.SetActive(goods.level>0?false:true);
     }
 
@@ -95,6 +94,8 @@ public class SetGoodsInfo : MonoBehaviour
 
         if (goodsData.level < goodsData.maxLevel)
             goodsData.price = goodsData.levelInfos[goodsData.level].price;
+
+        ButtonCheck(goodsData);
     }
 
     void Onclick()

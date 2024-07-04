@@ -48,8 +48,8 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public List<UpgradeData> upgradeDatas;
     public List<UpgradeData> upgradeDatasFromChest;
-    List<UpgradeData> weaponSlotsManager = new List<UpgradeData>();
-    List<UpgradeData> itemSlotsManager = new List<UpgradeData>();
+    public List<UpgradeData> weaponSlotsManager = new List<UpgradeData>();
+    public List<UpgradeData> itemSlotsManager = new List<UpgradeData>();
 
     [SerializeField] WeaponsManager weaponsManager;
     [SerializeField] PassiveItemsManager itemsManager;
@@ -98,7 +98,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
     //kiểm tra bất tử
     [HideInInspector]
-    public bool isInvincible=false;
+    public bool isInvincible = false;
     [HideInInspector]
     //phần trăm buff độ lớn của vk
     public float weaponSize = 0;
@@ -142,8 +142,10 @@ public class CharacterInfo_1 : MonoBehaviour
         baseSpeed = characterStats.speed;
         baseHealth = characterStats.maxHealth;
 
+        statUpdate();
+
         maxHealth = characterStats.maxHealth;
-        currentHealth = maxHealth + Mathf.FloorToInt(characterStats.maxHealth * healthPercent);
+        currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
 
         slowHealth.SetActive(false);
@@ -180,7 +182,7 @@ public class CharacterInfo_1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        countSys.SetCoinCount(coins);
         elapsedTime += Time.deltaTime;
         timerToHealth -= Time.deltaTime;
         if (timerToHealth <= 0)
@@ -371,7 +373,7 @@ public class CharacterInfo_1 : MonoBehaviour
                     {
                         if (weapon.weaponData.name == upgradeDatasFromChest[id].weaponData.name)
                         {
-                            weapon.level = upgradeDatas[id].level;
+                            weapon.level = upgradeDatasFromChest[id].level;
                             break;
                         }
                     }
@@ -392,7 +394,7 @@ public class CharacterInfo_1 : MonoBehaviour
                     weaponSlotsManager.Add(upgradeDatasFromChest[id]);
                     weaponsManager.AddWeapon(upgradeDatasFromChest[id].weaponData);
                     inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
-                    upgradeDatas[id].acquired = true;
+                    upgradeDatasFromChest[id].acquired = true;
 
                     levelUpSelectBuff.WeaponAcquired(upgradeDatasFromChest[id]);
                 }
@@ -443,6 +445,36 @@ public class CharacterInfo_1 : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void AddUpgrade(UpgradeData upgradeData, bool type)//true = weapon, false = item
+    {
+        if (type)
+        {
+            upgradeData.acquired = true;
+            levelUpSelectBuff.WeaponNextUpgradeInfo(upgradeData);
+            weaponsManager.AddWeapon(upgradeData.weaponData);
+
+            foreach (var weapon in weaponSlotsManager)
+            {
+                if (weapon.weaponData.name == upgradeData.weaponData.name)
+                {
+                    weapon.level = upgradeData.level;
+                    break;
+                }
+            }
+
+            inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
+        }
+        else
+        {
+            upgradeData.acquired = true;
+            levelUpSelectBuff.ItemNextUpgradeInfo(upgradeData);
+            itemsManager.AddItem(upgradeData.itemsData);
+            inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
+        }
+
+        menuManager.AnvilUpgradeDone();
     }
 
     public void TakeDamage(int damage)

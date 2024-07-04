@@ -16,6 +16,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject statShow;
     [SerializeField] private GameObject buffTable;
     [SerializeField] private GameObject missionUI;
+    [SerializeField] private GameObject _UpgradeAnvilUI;
+
+    private UpgradeSlotManager _slotManager;
 
     /*[SerializeField] private GameObject _mainMenuFirst;*/
     /*[SerializeField] private GameObject _settingsMenuFirst;*/
@@ -38,6 +41,9 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] CharacterInfo_1 characterInfo;
 
+    [SerializeField] GameObject Inventory;
+    [SerializeField] GameObject SkillHolder;
+
     private bool isPaused;
 
     private bool isGameOver;
@@ -54,10 +60,13 @@ public class MenuManager : MonoBehaviour
         _OpenChestUI.SetActive(false);
         levelUpEffect.SetActive(false);
         missionUI.SetActive(false);
+        _UpgradeAnvilUI.SetActive(false);
 
         isGameOver = false;
         isSelectBuff = false;
         isPaused = false;
+
+        _slotManager = _UpgradeAnvilUI.GetComponent<UpgradeSlotManager>();
     }
 
     // Update is called once per frame
@@ -217,6 +226,31 @@ public class MenuManager : MonoBehaviour
         isSelectBuff = false;
 
         _OpenChestUI.SetActive(false);
+        Unpause();
+    }
+
+    public void AnvilUpgradeScene()
+    {
+        _slotManager.SetWeapon(characterInfo.weaponSlotsManager);
+        _slotManager.SetPassiveItem(characterInfo.itemSlotsManager);
+        _UpgradeAnvilUI.SetActive(true);
+        Inventory.SetActive(false);
+        SkillHolder.SetActive(false);
+        isPaused = true;
+        isSelectBuff = true;
+
+        Time.timeScale = 0f;
+
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    public void AnvilUpgradeDone()
+    {
+        isSelectBuff = false;
+
+        _UpgradeAnvilUI.SetActive(false);
+        Inventory.SetActive(true);
+        SkillHolder.SetActive(true);
         Unpause();
     }
 }

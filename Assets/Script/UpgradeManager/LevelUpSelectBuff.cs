@@ -98,6 +98,7 @@ public class LevelUpSelectBuff : MonoBehaviour
     {
         foreach (var item in upgradeList)
         {
+            item.maxed = false;
             item.acquired = false;
             item.level = 1;
 
@@ -312,13 +313,45 @@ public class LevelUpSelectBuff : MonoBehaviour
 
     public void WeaponNextUpgradeInfo(UpgradeData weaponA)
     {
-        if (weaponA.level < 7)
+        if((int)weaponA.upgradeType == 2)
         {
-            weaponA.acquired = false;
-            weaponA.level = weaponA.UpgradeInfos[weaponA.level].level;
-            if (weaponA.level == 7)
-                return;
-            weaponA.description = weaponA.UpgradeInfos[weaponA.level].description;
+            foreach(var item in weaponUpgradeList)
+            {
+                if(item.weaponData == weaponA.weaponData && item.level < 7)
+                {
+                    item.acquired = false;
+                    item.level = item.UpgradeInfos[item.level].level;
+                    if (item.level == 7)
+                    {
+                        weaponA.maxed = true;
+                        break;
+                    }
+                    item.description = item.UpgradeInfos[item.level].description;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            if (weaponA.level < 7)
+            {
+                weaponA.acquired = false;
+                weaponA.level = weaponA.UpgradeInfos[weaponA.level].level;
+                if (weaponA.level == 7)
+                {
+                    foreach (var item in weaponAcquiredList)
+                    {
+                        if(weaponA.weaponData == item.weaponData)
+                        {
+                            item.maxed = true;
+                            break;
+                        }
+                    }
+
+                    return;
+                }
+                weaponA.description = weaponA.UpgradeInfos[weaponA.level].description;
+            }
         }
     }
 
@@ -332,13 +365,31 @@ public class LevelUpSelectBuff : MonoBehaviour
 
     public void ItemNextUpgradeInfo(UpgradeData itemA)
     {
-        if (itemA.itemsData.level < itemA.UpgradeInfos.Count)
+        if ((int)itemA.upgradeType == 3)
         {
-            itemA.acquired = false;
-            itemA.itemsData.level = itemA.UpgradeInfos[itemA.itemsData.level].level;
-            if (itemA.itemsData.level == itemA.UpgradeInfos.Count)
-                return;
-            itemA.description = itemA.UpgradeInfos[itemA.itemsData.level].description;
+            foreach (var item in itemUpgradeList)
+            {
+                if (item.weaponData == itemA.weaponData && itemA.itemsData.level < itemA.UpgradeInfos.Count)
+                {
+                    item.acquired = false;
+                    item.itemsData.level = item.UpgradeInfos[item.itemsData.level].level;
+                    if (item.itemsData.level == item.UpgradeInfos.Count)
+                        break;
+                    item.description = item.UpgradeInfos[item.itemsData.level].description;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            if (itemA.itemsData.level < itemA.UpgradeInfos.Count)
+            {
+                itemA.acquired = false;
+                itemA.itemsData.level = itemA.UpgradeInfos[itemA.itemsData.level].level;
+                if (itemA.itemsData.level == itemA.UpgradeInfos.Count)
+                    return;
+                itemA.description = itemA.UpgradeInfos[itemA.itemsData.level].description;
+            }
         }
     }
 }

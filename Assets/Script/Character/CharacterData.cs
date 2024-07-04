@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +41,19 @@ public class SkillInfo
     }
 }
 
+[Serializable]
+public class SkillTree
+{
+    //0: chưa nâng,1 chiến binh,2 pháp sư, 3 sad thủ
+    public int type;
+    public int level;
+    public void SetData(SkillTree data)
+    {
+        this.type = data.type;
+        this.level = data.level;
+    }
+}
+
 [CreateAssetMenu]
 public class CharacterData : ScriptableObject
 {
@@ -52,4 +65,5 @@ public class CharacterData : ScriptableObject
     public string Story;
     public SkillInfo skillInfo;
     public bool acquired = false;
+    public SkillTree skillTree;
 }

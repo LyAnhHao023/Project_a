@@ -64,11 +64,13 @@ public class CharacterInfo_1 : MonoBehaviour
     public float attackPercent = 0;
     public float speedPercent = 0;
     public float critPercent = 0;
+    public float critDamagePercent = 0;
     public float expPercent = 0;
 
     int baseHealth;
     int baseAttack;
     float baseCrit;
+    float baseCritDmg;
     float baseSpeed;
     int hpRegen;
 
@@ -82,6 +84,7 @@ public class CharacterInfo_1 : MonoBehaviour
     public GameObject characterAnimate;
     public CharacterStats characterStats;
     public SkillInfo skillInfor;
+    public SkillTree skillTree;
 
     public int numberMonsterKilled = 0;
 
@@ -130,10 +133,12 @@ public class CharacterInfo_1 : MonoBehaviour
         characterAnimate = Instantiate(characterData.animatorPrefab, CharacterAnimateTranform.transform);
         characterStats.SetStats(characterData.stats);
         skillInfor.SetData(characterData.skillInfo);
+        skillTree.SetData(characterData.skillTree);
 
 
         baseAttack = characterStats.strenght;
         baseCrit = characterStats.crit;
+        baseCritDmg=characterStats.critDmg;
         baseSpeed = characterStats.speed;
         baseHealth = characterStats.maxHealth;
 
@@ -528,6 +533,7 @@ public class CharacterInfo_1 : MonoBehaviour
     {
         characterStats.strenght = baseAttack + Mathf.FloorToInt((float)baseAttack * attackPercent);
         characterStats.crit = baseCrit + critPercent;
+        characterStats.critDmg=baseCritDmg+critDamagePercent;
         characterStats.maxHealth = baseHealth + Mathf.FloorToInt((float)baseHealth * healthPercent);
         characterStats.speed = baseSpeed + Mathf.FloorToInt((float)baseSpeed * speedPercent);
         statShow.SetAttack(characterStats.strenght);

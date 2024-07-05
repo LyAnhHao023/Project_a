@@ -37,12 +37,12 @@ public class SkillCooldownUI : MonoBehaviour
         if(cooldownTimer < 0 )
         {
             cooldown.fillAmount = 0;
-            skillOverlay.SetActive(false);
+            //skillOverlay.SetActive(false);
         }
         else
         {
             cooldown.fillAmount = cooldownTimer / cooldownTime;
-            skillOverlay.SetActive(true);
+            //skillOverlay.SetActive(true);
         }
     }
 }

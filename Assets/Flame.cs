@@ -7,6 +7,8 @@ public class Flame : MonoBehaviour
     int dmg;
     [SerializeField]
     float timeApplyDmg = 1f;
+    [SerializeField]
+    float timeAutoDestroy = 5f;
     float timer = 0f;
 
     CharacterInfo_1 player;
@@ -17,6 +19,7 @@ public class Flame : MonoBehaviour
     void Start()
     {
         player=GameObject.FindWithTag("Player").GetComponent<CharacterInfo_1>();
+        Destroy(gameObject, timeAutoDestroy);
     }
 
     public void SetDmg(int dmg)

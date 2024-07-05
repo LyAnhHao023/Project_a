@@ -13,7 +13,7 @@ public class MessengerSystem : MonoBehaviour
 
     List<TMPro.TextMeshPro> messengerList=new List<TMPro.TextMeshPro>(10);
 
-    int objectCout = 10;
+    int objectCout = 20;
     int count = 0;
 
     private void Awake()
@@ -30,6 +30,32 @@ public class MessengerSystem : MonoBehaviour
         GameObject newMesObject = Instantiate(dmgMessengerPrefab, transform);
         messengerList.Add(newMesObject.GetComponent<TMPro.TextMeshPro>());
         newMesObject.SetActive(false);
+    }
+
+    public void Heal(Vector3 pos,int heal)
+    {
+        messengerList[count].gameObject.SetActive(true);
+        messengerList[count].transform.position = pos;
+        messengerList[count].text = "+" + heal;
+        messengerList[count].color = new Color32(0, 255, 0, 255);
+        count++;
+        if (count >= objectCout)
+        {
+            count = 0;
+        }
+    }
+
+    public void Miss(Vector3 pos)
+    {
+        messengerList[count].gameObject.SetActive(true);
+        messengerList[count].transform.position = pos;
+        messengerList[count].text = "miss";
+        messengerList[count].color = new Color32(173, 216, 230, 255);
+        count++;
+        if (count >= objectCout)
+        {
+            count = 0;
+        }
     }
 
     public void DmgPopUp(string dmg, Vector3 worldPosition,bool isCrit)

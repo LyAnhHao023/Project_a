@@ -105,6 +105,9 @@ public class CharacterInfo_1 : MonoBehaviour
     //% Giam sat thuong nhan vao;
     [HideInInspector]
     public float reduceDmgTake=0;
+    //Tỉ lệ né đòn
+    [HideInInspector]
+    public float evasion = 0;
 
     private void Awake()
     {
@@ -129,6 +132,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
         reduceDmgTake = 0;
         weaponSize = 0;
+        evasion = 0;
 
         characterAnimate = Instantiate(characterData.animatorPrefab, CharacterAnimateTranform.transform);
         characterStats.SetStats(characterData.stats);
@@ -177,6 +181,9 @@ public class CharacterInfo_1 : MonoBehaviour
         statShow.SetAttack(characterStats.strenght);
         statShow.SetSpeed(Mathf.FloorToInt(characterStats.speed));
         statShow.SetCrit(characterStats.crit);
+
+        //load skill tree manager
+        GetComponent<SkilTreeManager>().LoadBuffSkillTree(skillTree);
     }
 
     // Update is called once per frame
@@ -479,6 +486,12 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (UnityEngine.Random.value * 100 <= evasion)
+        {
+            MessengerSystem.instance.Miss(transform.position);
+            return;
+        }
+
         //Giam dmg nhan vao
         damage -= (int)Mathf.Ceil((float)damage * reduceDmgTake);
 
@@ -531,7 +544,9 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void HealthByPercent(int health)
     {
-        currentHealth += maxHealth * health / 100;
+        float heal =Mathf.Ceil((float)maxHealth * (float)health / 100);
+        currentHealth += (int)heal;
+        MessengerSystem.instance.Heal(transform.position, (int)heal);
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
@@ -542,6 +557,7 @@ public class CharacterInfo_1 : MonoBehaviour
     public void HealthByNumber(int health)
     {
         currentHealth += health;
+        MessengerSystem.instance.Heal(transform.position, health);
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;

@@ -1,13 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SkilTreeManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject BigWeaponItemPrefab;
+    ItemsData BigWeaponItemPrefab;
+    [SerializeField]
+    ItemsData ReduceCdSkillPrefab;
+    [SerializeField ]
+    ItemsData BuffCritPrefab;
 
-    SkillTree skillTree;
+    [SerializeField]
+    ItemsData HealHpPerSeconds;
+    [SerializeField]
+    ItemsData FlameFoot;
 
     float healthPercent = 0;
     float attackPercent = 0;
@@ -16,13 +24,12 @@ public class SkilTreeManager : MonoBehaviour
     float critDmgPercent = 0;
     float reduceDmgTake = 0;
     float reduceCdSkill = 0;
-    float speed;
+    float speed=0;
+    float evasion=0;
 
 
-    // Start is called before the first frame update
-    void Start()
+    public void LoadBuffSkillTree(SkillTree skillTree)
     {
-        skillTree.SetData(GetComponent<CharacterInfo_1>().skillTree);
 
         if (skillTree.type == 0) return;
         //chiến binh
@@ -72,7 +79,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceDmgTake += 0.02f;
                         attackPercent += 0.05f;
                         reduceDmgTake += 0.03f;
-                        //Add Item BigWeapon
+                        GetComponent<PassiveItemsManager>().AddItem(BigWeaponItemPrefab);
                         break;
                     }
                 case 7:
@@ -82,7 +89,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceDmgTake += 0.02f;
                         attackPercent += 0.05f;
                         reduceDmgTake += 0.03f;
-                        //Add Item BigWeapon
+                        GetComponent<PassiveItemsManager>().AddItem(BigWeaponItemPrefab);
                         healthPercent += 0.05f;
                         break;
                     }
@@ -93,7 +100,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceDmgTake += 0.02f;
                         attackPercent += 0.05f;
                         reduceDmgTake += 0.03f;
-                        //Add Item BigWeapon
+                        GetComponent<PassiveItemsManager>().AddItem(BigWeaponItemPrefab);
                         healthPercent += 0.05f;
                         reduceDmgTake += 0.03f;
                         break;
@@ -105,7 +112,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceDmgTake += 0.02f;
                         attackPercent += 0.05f;
                         reduceDmgTake += 0.03f;
-                        //Add Item BigWeapon
+                        GetComponent<PassiveItemsManager>().AddItem(BigWeaponItemPrefab);
                         healthPercent += 0.05f;
                         reduceDmgTake += 0.03f;
                         attackPercent += 0.05f;
@@ -113,16 +120,26 @@ public class SkilTreeManager : MonoBehaviour
                     }
                 case 10:
                     {
+                        //buff 2% hp
                         healthPercent += 0.02f;
+                        //buff 5% hp
                         healthPercent += 0.05f;
+                        //reduce dmg take 2%
                         reduceDmgTake += 0.02f;
+                        // buff atk 5%
                         attackPercent += 0.05f;
+                        //reduce dmg take 3%
                         reduceDmgTake += 0.03f;
-                        //Add Item BigWeapon
+                        //add BigWeaponItem at begin
+                        GetComponent<PassiveItemsManager>().AddItem(BigWeaponItemPrefab);
+                        //buff 5% hp
                         healthPercent += 0.05f;
+                        // readuce dmg take 3%
                         reduceDmgTake += 0.03f;
+                        //buff atk 5%
                         attackPercent += 0.05f;
-                        //Add Item heal
+                        //add HealHpPerSeconds effect skill tree at begin 
+                        GetComponent<PassiveItemsManager>().AddItem(HealHpPerSeconds);
                         break;
                     }
             }
@@ -164,7 +181,7 @@ public class SkilTreeManager : MonoBehaviour
                         attackPercent += 0.02f;
                         reduceCdSkill += 0.02f;
                         attackPercent += 0.03f;
-                        speed += 0.5f;
+                        speed += 0.1f;
                         break;
                     }
                 case 6:
@@ -173,8 +190,8 @@ public class SkilTreeManager : MonoBehaviour
                         attackPercent += 0.02f;
                         reduceCdSkill += 0.02f;
                         attackPercent += 0.03f;
-                        speed += 0.5f;
-                        //Add reduceTimeCD item
+                        speed += 0.1f;
+                        GetComponent<PassiveItemsManager>().AddItem(ReduceCdSkillPrefab);
                         break;
                     }
                 case 7:
@@ -183,8 +200,8 @@ public class SkilTreeManager : MonoBehaviour
                         attackPercent += 0.02f;
                         reduceCdSkill += 0.02f;
                         attackPercent += 0.03f;
-                        speed += 0.5f;
-                        //Add reduceTimeCD item
+                        speed += 0.1f;
+                        GetComponent<PassiveItemsManager>().AddItem(ReduceCdSkillPrefab);
                         reduceCdSkill += 0.05f;
                         break;
                     }
@@ -194,10 +211,10 @@ public class SkilTreeManager : MonoBehaviour
                         attackPercent += 0.02f;
                         reduceCdSkill += 0.02f;
                         attackPercent += 0.03f;
-                        speed += 0.5f;
-                        //Add reduceTimeCD item
+                        speed += 0.1f;
+                        GetComponent<PassiveItemsManager>().AddItem(ReduceCdSkillPrefab);
                         reduceCdSkill += 0.05f;
-                        speed += 0.5f;
+                        speed += 0.15f;
                         break;
                     }
                 case 9:
@@ -206,10 +223,10 @@ public class SkilTreeManager : MonoBehaviour
                         attackPercent += 0.02f;
                         reduceCdSkill += 0.02f;
                         attackPercent += 0.03f;
-                        attackPercent += 0.04f;
-                        //Add reduceTimeCD item
+                        speed += 0.1f;
+                        GetComponent<PassiveItemsManager>().AddItem(ReduceCdSkillPrefab);
                         reduceCdSkill += 0.05f;
-                        speed += 0.5f;
+                        speed += 0.15f;
                         reduceCdSkill += 0.05f;
                         break;
                     }
@@ -219,12 +236,13 @@ public class SkilTreeManager : MonoBehaviour
                         attackPercent += 0.02f;
                         reduceCdSkill += 0.02f;
                         attackPercent += 0.03f;
-                        attackPercent += 0.04f;
-                        //Add reduceTimeCD item
+                        speed += 0.1f;
+                        GetComponent<PassiveItemsManager>().AddItem(ReduceCdSkillPrefab);
                         reduceCdSkill += 0.05f;
-                        attackPercent += 0.05f;
+                        speed += 0.15f;
                         reduceCdSkill += 0.05f;
-                        //Add Item FlameFoot
+                        // taọ ra vệt lửa để lại phía sau khi người chơi di chuyển vệt lửa gây sát thương cho kẻ địch
+                        GetComponent<PassiveItemsManager>().AddItem(FlameFoot);
                         break;
                     }
             }
@@ -276,7 +294,7 @@ public class SkilTreeManager : MonoBehaviour
                         critDmgPercent += 5f;
                         critPercent += 0.3f;
                         critDmgPercent += 10f;
-                        // Add Item buff Crit 
+                        GetComponent<PassiveItemsManager>().AddItem(BuffCritPrefab);
                         break;
                     }
                 case 7:
@@ -286,8 +304,8 @@ public class SkilTreeManager : MonoBehaviour
                         critDmgPercent += 5f;
                         critPercent += 0.3f;
                         critDmgPercent += 10f;
-                        // Add Item buff Crit 
-                        speed += 0.5f;
+                        GetComponent<PassiveItemsManager>().AddItem(BuffCritPrefab);
+                        speed += 0.3f;
                         break;
                     }
                 case 8:
@@ -297,9 +315,9 @@ public class SkilTreeManager : MonoBehaviour
                         critDmgPercent += 5f;
                         critPercent += 0.3f;
                         critDmgPercent += 10f;
-                        // Add Item buff Crit 
-                        speed += 0.5f;
-                        critPercent += 5f;   
+                        GetComponent<PassiveItemsManager>().AddItem(BuffCritPrefab);
+                        speed += 0.3f;
+                        critPercent += 5f;
                         break;
                     }
                 case 9:
@@ -309,8 +327,8 @@ public class SkilTreeManager : MonoBehaviour
                         critDmgPercent += 5f;
                         critPercent += 0.3f;
                         critDmgPercent += 10f;
-                        // Add Item buff Crit 
-                        speed += 0.5f;
+                        GetComponent<PassiveItemsManager>().AddItem(BuffCritPrefab);
+                        speed += 0.3f;
                         critPercent += 5f;
                         critDmgPercent += 15f;
                         break;
@@ -322,14 +340,33 @@ public class SkilTreeManager : MonoBehaviour
                         critDmgPercent += 5f;
                         critPercent += 0.3f;
                         critDmgPercent += 10f;
-                        // Add Item buff Crit 
-                        speed += 0.5f;
+                        GetComponent<PassiveItemsManager>().AddItem(BuffCritPrefab);
+                        speed += 0.3f;
                         critPercent += 5f;
                         critDmgPercent += 15f;
-                        //Add miss hit
+                        //có 30% ti le né tránh khi nhận sát thương
+                        evasion += 30;
                         break;
                     }
             }
         }
+
+        SkillTreeBuff();
+    }
+
+    private void SkillTreeBuff()
+    {
+        CharacterInfo_1 player=GetComponent<CharacterInfo_1>();
+        player.healthPercent+= healthPercent;
+        player.attackPercent+= attackPercent;
+        player.speedPercent += speedPercent;
+        player.critPercent += critPercent;
+        player.critDamagePercent+= critDmgPercent;
+        player.reduceDmgTake+= reduceDmgTake;
+        player.skillInfor.cdSkill-= player.characterData.skillInfo.cdSkill*reduceCdSkill;
+        player.speedPercent+= speed;
+        player.evasion+= evasion;
+
+        player.statUpdate();
     }
 }

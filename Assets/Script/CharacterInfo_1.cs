@@ -452,9 +452,14 @@ public class CharacterInfo_1 : MonoBehaviour
 
             foreach (var weapon in weaponSlotsManager)
             {
+                if (weapon.weaponData.name == upgradeData.weaponData.name && upgradeData.maxed)
+                {
+                    upgradeData.overLevel += 1;
+                }
+
                 if (weapon.weaponData.name == upgradeData.weaponData.name)
                 {
-                    weapon.level = upgradeData.level;
+                    weapon.level += 1;
                     break;
                 }
             }
@@ -468,8 +473,6 @@ public class CharacterInfo_1 : MonoBehaviour
             itemsManager.AddItem(upgradeData.itemsData);
             inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
         }
-
-        menuManager.AnvilUpgradeDone();
     }
 
     public void TakeDamage(int damage)

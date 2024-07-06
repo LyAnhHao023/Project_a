@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
+
 
 public class AnvilUpdate : MonoBehaviour
 {
@@ -12,6 +13,12 @@ public class AnvilUpdate : MonoBehaviour
 
     MenuManager menuManager;
     GameObject menuObject;
+
+    GameObject AnvilUI;
+    GameObject AcceptButton;
+
+    FindButtonWithTag find;
+    Button ButtonAcceptButton;
 
     private void Start()
     {
@@ -31,6 +38,10 @@ public class AnvilUpdate : MonoBehaviour
         PointerOJ.GetComponent<Window_pointer>().SetTarget(new Vector3(transform.position.x, transform.position.y+1,0));
         menuObject = GameObject.FindGameObjectWithTag("MenuManager");
         menuManager = menuObject.GetComponent<MenuManager>();
+        AnvilUI = GameObject.FindGameObjectWithTag("AnvilUI");
+        find = AnvilUI.GetComponent<FindButtonWithTag>();
+        AcceptButton = find.AcceptButton();
+        ButtonAcceptButton = AcceptButton.GetComponent<Button>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -38,10 +49,14 @@ public class AnvilUpdate : MonoBehaviour
         CharacterInfo_1 player=collision.GetComponent<CharacterInfo_1>();
         if (player != null)
         {
-            Debug.Log("TAKE");
+            ButtonAcceptButton.onClick.AddListener(DestroyAnvil);
             menuManager.GetComponentInParent<MenuManager>().AnvilUpgradeScene();
-            //do somthing............
         }
+    }
+
+    public void DestroyAnvil()
+    {
+        Destroy(gameObject);
     }
 
     private Vector3 CreateRandomPosition()

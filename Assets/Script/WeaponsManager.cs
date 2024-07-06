@@ -20,6 +20,8 @@ public class WeaponsManager : MonoBehaviour
     [SerializeField]
     Transform weaponObjectTranform;
 
+    [SerializeField] StageEventManager stageEventManager;
+
     //Danh sach vu khi
     [SerializeField]
     WeaponData gunWeapon;
@@ -83,9 +85,34 @@ public class WeaponsManager : MonoBehaviour
             {
                 if(item.weaponData == weaponData)
                 {
-                    item.weaponObject.GetComponent<WeaponBase>().LevelUp();
+                    if(item.weaponObject.GetComponent<WeaponData>().stats.level < 7)
+                    {
+                        item.weaponObject.GetComponent<WeaponBase>().LevelUp();
+                    }
+                    else
+                    {
+
+                    }
+
+                    if(item.weaponObject.GetComponent<WeaponData>().stats.level == 7)
+                    {
+                        CheckCollab(item);
+                    }
+
                     break;
                 }
+            }
+        }
+    }
+
+    private void CheckCollab(weaponEnquip weapon)
+    {
+        foreach (var item in weapons_lst)
+        {
+            if(item.weaponData == weapon.weaponData.weaponColabData && item.weaponObject.GetComponent<WeaponData>().stats.level == 7)
+            {
+                stageEventManager.SetColab();
+                break;
             }
         }
     }

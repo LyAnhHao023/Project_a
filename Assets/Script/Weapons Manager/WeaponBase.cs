@@ -51,6 +51,8 @@ public abstract class WeaponBase : MonoBehaviour
 
     public abstract void LevelUp();
 
+    //public abstract void OverLevelUp();
+
     public abstract void Attack();
 
     public abstract void SetCharacterStats();

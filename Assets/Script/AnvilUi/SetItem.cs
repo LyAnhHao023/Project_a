@@ -9,6 +9,7 @@ public class SetItem : MonoBehaviour
     [SerializeField] Image Icon;
     [SerializeField] Button IconButton;
 
+    [SerializeField] GameObject inventoryItemInfo;
     [SerializeField] SetInventoryItemInfo setInventoryItemInfo;
     [SerializeField] ChanceSet chanceSet;
 
@@ -40,5 +41,6 @@ public class SetItem : MonoBehaviour
     {
         setInventoryItemInfo.Set(upgradeData);
         chanceSet.SetUpgrade(upgradeData, type);
+        inventoryItemInfo.SetActive(true);
     }
 }

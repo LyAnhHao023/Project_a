@@ -17,8 +17,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject buffTable;
     [SerializeField] private GameObject missionUI;
     [SerializeField] private GameObject _UpgradeAnvilUI;
-    [SerializeField] private GameObject _UpgradeAnvilResultUI;
-    [SerializeField] private GameObject _UpgradeAnvilInfoHolderUI;
 
     private UpgradeSlotManager _slotManager;
 
@@ -63,8 +61,6 @@ public class MenuManager : MonoBehaviour
         levelUpEffect.SetActive(false);
         missionUI.SetActive(false);
         _UpgradeAnvilUI.SetActive(false);
-        _UpgradeAnvilResultUI.SetActive(false);
-        _UpgradeAnvilInfoHolderUI.SetActive(false);
 
         isGameOver = false;
         isSelectBuff = false;
@@ -255,8 +251,6 @@ public class MenuManager : MonoBehaviour
         _UpgradeAnvilUI.SetActive(false);
         Inventory.SetActive(true);
         SkillHolder.SetActive(true);
-        _UpgradeAnvilResultUI.SetActive(false);
-        _UpgradeAnvilInfoHolderUI.SetActive(false);
         Unpause();
     }
 }

@@ -13,27 +13,17 @@ public class StageEventManager : MonoBehaviour
 
     [SerializeField] EnemyData BoxDropPrefab;
     [SerializeField] GameObject AnvilUpdatePrefab;
-    [SerializeField] GameObject AnvilColabPrefab;
 
     [SerializeField] float TimeBoxDrop = 15f;
     [SerializeField] float TimeAnvilUpdateDrop = 20f;
-    [SerializeField] float TimeAnvilColabDrop = 60f;
 
     [SerializeField]
     Timer timerScript;
 
     float timerBoxDrop;
     float timerAnvilUpdateDrop;
-    float timerAnvilColabDrop;
 
     int eventIndex=0;
-
-    int totalColab = 0;
-
-    public void SetColab()
-    {
-        totalColab+=1;
-    }
 
     private void Start()
     {
@@ -45,18 +35,6 @@ public class StageEventManager : MonoBehaviour
     {
         timerBoxDrop -= Time.deltaTime;
         timerAnvilUpdateDrop -= Time.deltaTime;
-
-        if (totalColab > 0)
-        {
-            timerAnvilColabDrop -= Time.deltaTime;
-
-            if(timerAnvilColabDrop <= 0)
-            {
-                totalColab -= 1;
-                timerAnvilColabDrop = TimeAnvilColabDrop;
-                SpawAnvilColabDrop();
-            }
-        }
 
         if (timerBoxDrop <= 0)
         {
@@ -83,12 +61,6 @@ public class StageEventManager : MonoBehaviour
     private void SpawAnvilUpdateDrop()
     {
         GameObject anvil= Instantiate(AnvilUpdatePrefab);
-        anvil.transform.SetParent(GameObject.Find("===ObjectDrop===").transform);
-    }
-
-    private void SpawAnvilColabDrop()
-    {
-        GameObject anvil = Instantiate(AnvilColabPrefab);
         anvil.transform.SetParent(GameObject.Find("===ObjectDrop===").transform);
     }
 

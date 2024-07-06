@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class ChanceSet : MonoBehaviour
@@ -11,8 +10,6 @@ public class ChanceSet : MonoBehaviour
     [SerializeField] Text Chance;
     [SerializeField] Text Price;
     [SerializeField] CharacterInfo_1 Character;
-    [SerializeField] GameObject ResultTable;
-    [SerializeField] AnvilUpgradeResult upgradeResult;
 
     int baseUpgradePrice = 100;
     float baseChance = 100f;
@@ -57,11 +54,6 @@ public class ChanceSet : MonoBehaviour
         return -1;
     }
 
-    private void Start()
-    {
-        ResultTable.SetActive(false);
-    }
-
     void UpdateRate()
     {
         foreach (var item in items)
@@ -87,34 +79,15 @@ public class ChanceSet : MonoBehaviour
         upgradeData = data;
         this.type = type;
         upgradePrice = baseUpgradePrice * data.level;
-        SetOverlay(type);
+        if (Character.coins < upgradePrice)
+            Overlay.SetActive(true);
+        else
+            Overlay.SetActive(false);
         Price.text = upgradePrice.ToString();
         ChanceCal();
         Chance.text = string.Format("{0}%", succesChance);
 
-        ResultTable.SetActive(false);
-
         UpgradeButon.onClick.AddListener(Onclick);
-    }
-
-    private void SetOverlay(bool type)
-    {
-        if (Character.coins < upgradePrice)
-        {
-            if(type)
-            {
-                Overlay.SetActive(true);
-            }
-            else
-            {
-                if (upgradeData.maxed)
-                    Overlay.SetActive(false);
-                else
-                    Overlay.SetActive(true);
-            }
-        }
-        else
-            Overlay.SetActive(false);
     }
 
     void ChanceCal()
@@ -135,8 +108,18 @@ public class ChanceSet : MonoBehaviour
     {
         int succesed = GetRandomType(items);
 
-        ResultTable.SetActive(true);
+        if(succesed > 0)
+        {
 
-        upgradeResult.Set(upgradeData, succesed, type, upgradePrice);
+        }
+        else
+        {
+            Upgrade(type);
+        }
+    }
+
+    void Upgrade(bool type)
+    {
+        Character.AddUpgrade(upgradeData, type);
     }
 }

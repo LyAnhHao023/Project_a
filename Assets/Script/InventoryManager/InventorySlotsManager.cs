@@ -11,7 +11,7 @@ public class InventorySlotsManager : MonoBehaviour
     {
         for (int i = 0; i < inventorySlots.Count; i++)
         {
-            weaponSlots[i].SetWeaponSlot(inventorySlots[i], inventorySlots[i].icon);
+            weaponSlots[i].SetWeaponSlot(inventorySlots[i], inventorySlots[i].icon, inventorySlots[i].overLevel);
         }
     }
 

@@ -374,7 +374,10 @@ public class LevelUpSelectBuff : MonoBehaviour
                     item.acquired = false;
                     item.itemsData.level = item.UpgradeInfos[item.itemsData.level].level;
                     if (item.itemsData.level == item.UpgradeInfos.Count)
+                    {
+                        itemA.maxed = true;
                         break;
+                    }
                     item.description = item.UpgradeInfos[item.itemsData.level].description;
                     break;
                 }
@@ -387,7 +390,10 @@ public class LevelUpSelectBuff : MonoBehaviour
                 itemA.acquired = false;
                 itemA.itemsData.level = itemA.UpgradeInfos[itemA.itemsData.level].level;
                 if (itemA.itemsData.level == itemA.UpgradeInfos.Count)
+                {
+                    itemA.maxed = true;
                     return;
+                }
                 itemA.description = itemA.UpgradeInfos[itemA.itemsData.level].description;
             }
         }

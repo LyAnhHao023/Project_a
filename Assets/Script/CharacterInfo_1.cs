@@ -291,6 +291,10 @@ public class CharacterInfo_1 : MonoBehaviour
                         if(weapon.weaponData.name == upgradeDatas[id].weaponData.name)
                         {
                             weapon.level = upgradeDatas[id].level;
+                            if(weapon.level == 7)
+                            {
+                                weapon.maxed = true;
+                            }
                             break;
                         }
                     }

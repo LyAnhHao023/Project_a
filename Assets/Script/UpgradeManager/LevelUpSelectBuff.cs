@@ -324,6 +324,7 @@ public class LevelUpSelectBuff : MonoBehaviour
                     if (item.level == 7)
                     {
                         weaponA.maxed = true;
+                        item.maxed = true;
                         break;
                     }
                     item.description = item.UpgradeInfos[item.level].description;

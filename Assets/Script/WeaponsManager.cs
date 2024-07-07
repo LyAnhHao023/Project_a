@@ -91,16 +91,17 @@ public class WeaponsManager : MonoBehaviour
             {
                 if(item.weaponData == weaponData)
                 {
-                    if(item.weaponObject.GetComponent<WeaponData>().stats.level < 7)
+                    if(item.weaponObject.GetComponent<WeaponBase>().weaponStats.level < 7)
                     {
                         item.weaponObject.GetComponent<WeaponBase>().LevelUp();
+                        break;
                     }
                     else
                     {
-
+                        item.weaponObject.GetComponent<WeaponBase>().OverLevelUp();
                     }
 
-                    if(item.weaponObject.GetComponent<WeaponData>().stats.level == 7)
+                    if(item.weaponObject.GetComponent<WeaponBase>().weaponStats.level == 7)
                     {
                         CheckCollab(item);
                     }

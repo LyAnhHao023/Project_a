@@ -49,9 +49,12 @@ public abstract class WeaponBase : MonoBehaviour
         weaponStats.dmg += damage;
     }
 
-    public abstract void LevelUp();
+    public void OverLevelUp()
+    {
+        weaponStats.dmg += 1;
+    }
 
-    //public abstract void OverLevelUp();
+    public abstract void LevelUp();
 
     public abstract void Attack();
 

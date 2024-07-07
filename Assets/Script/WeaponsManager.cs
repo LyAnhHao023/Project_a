@@ -54,10 +54,10 @@ public class WeaponsManager : MonoBehaviour
     int i = 0;
     float timer = 5;
 
-    private void Start()
+    /*private void Start()
     {
         AddWeapon(SuperWallSpikePrefab);
-    }
+    }*/
 
     //private void Update()
     //{

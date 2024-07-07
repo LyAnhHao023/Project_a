@@ -101,6 +101,7 @@ public class LevelUpSelectBuff : MonoBehaviour
             item.maxed = false;
             item.acquired = false;
             item.level = 1;
+            item.overLevel = 0;
 
             switch ((int)item.upgradeType)
             {
@@ -323,7 +324,6 @@ public class LevelUpSelectBuff : MonoBehaviour
                     item.level = item.UpgradeInfos[item.level].level;
                     if (item.level == 7)
                     {
-                        weaponA.maxed = true;
                         item.maxed = true;
                         break;
                     }

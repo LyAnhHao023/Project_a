@@ -10,9 +10,11 @@ public class ChanceSet : MonoBehaviour
     [SerializeField] Button UpgradeButon;
     [SerializeField] Text Chance;
     [SerializeField] Text Price;
+    [SerializeField] GameObject ChanceHolder;
     [SerializeField] CharacterInfo_1 Character;
     [SerializeField] GameObject ResultTable;
     [SerializeField] AnvilUpgradeResult upgradeResult;
+    [SerializeField] GameObject ImageAnimaton;
 
     int baseUpgradePrice = 100;
     float baseChance = 100f;
@@ -60,6 +62,9 @@ public class ChanceSet : MonoBehaviour
     private void Start()
     {
         ResultTable.SetActive(false);
+        ChanceHolder.SetActive(false);
+
+        UpgradeButon.onClick.AddListener(Onclick);
     }
 
     void UpdateRate()
@@ -92,9 +97,9 @@ public class ChanceSet : MonoBehaviour
         ChanceCal();
         Chance.text = string.Format("{0}%", succesChance);
 
+        ChanceHolder.SetActive(true);
         ResultTable.SetActive(false);
-
-        UpgradeButon.onClick.AddListener(Onclick);
+        ImageAnimaton.SetActive(true);
     }
 
     private void SetOverlay(bool type)
@@ -119,13 +124,23 @@ public class ChanceSet : MonoBehaviour
 
     void ChanceCal()
     {
-        if(upgradeData.maxed)
+        if(!upgradeData.maxed)
         {
             succesChance = baseChance;
         }
         else
         {
-            succesChance = baseChance - upgradeData.overLevel * upgradeData.overLevel;
+            succesChance = baseChance - (upgradeData.overLevel - 1) * 15;
+
+            if(succesChance < 25)
+            {
+                succesChance = 25f;
+            }
+
+            if(succesChance > 100)
+            {
+                succesChance = 100;
+            }
         }
 
         UpdateRate();

@@ -24,7 +24,6 @@ public class AnvilUpgradeResult : MonoBehaviour
     {
         ResultText.SetActive(false);
         ResultButton.SetActive(false);
-        ImageAnimation.SetActive(true);
     }
 
     public void Set(UpgradeData upgradeData, int succesed, bool type, int prices)
@@ -59,20 +58,27 @@ public class AnvilUpgradeResult : MonoBehaviour
         }
 
         animator.SetBool("Upgrade", false);
-        ImageAnimation.SetActive(false);
 
         SetResult();
     }
 
     private void SetResult()
     {
+        ImageAnimation.SetActive(false);
         if (result)
         {
             Character.coins -= upgradePrice;
         }
 
+        string overLevelText = "";
+
+        if (data.maxed)
+        {
+            overLevelText = string.Format("+{0}", data.overLevel);
+        }
+
         ResultsText.text = result ? "THÀNH CÔNG" : "THẤT BẠI";
-        BuffResult.text = string.Format("{0} Lv.{1}", data.name, data.level);
+        BuffResult.text = string.Format("{0} Lv.{1}" + overLevelText, data.name, data.level);
         ResultText.SetActive(true);
         ResultButton.SetActive(true);
     }

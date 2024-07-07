@@ -471,11 +471,16 @@ public class CharacterInfo_1 : MonoBehaviour
                 if (weapon.weaponData.name == upgradeData.weaponData.name && upgradeData.maxed)
                 {
                     upgradeData.overLevel += 1;
+                    break;
                 }
 
                 if (weapon.weaponData.name == upgradeData.weaponData.name)
                 {
                     weapon.level += 1;
+                    if (weapon.level == 7)
+                    {
+                        weapon.maxed = true;
+                    }
                     break;
                 }
             }

@@ -29,6 +29,7 @@ public class WeaponData : ScriptableObject
 {
     public string name;
     public WeaponStats stats;
+    public bool maxed;
     public GameObject weaponBasePrefab;
     public WeaponData weaponColabData;
 }

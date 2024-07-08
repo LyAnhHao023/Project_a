@@ -94,6 +94,7 @@ public class BombScript : WeaponBase
                 {
                     //Throw 3 bombs.
                     numberBombDrop = 3;
+                    weaponData.maxed = true;
                 }
                 break;
 

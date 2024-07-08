@@ -26,7 +26,53 @@ public class WindMagicWeapon : WeaponBase
 
     public override void LevelUp()
     {
-        throw new System.NotImplementedException();
+        weaponStats.level++;
+        switch (weaponStats.level)
+        {
+            case 2:
+                {
+                    //Increase area by 40%.
+                    BuffWeaponSizeByPersent(0.4f);
+
+                }
+                break;
+            case 3:
+                {
+                    //Increase damage by 30%.
+                    BuffWeaponDamageByPersent(0.3f);
+                }
+                break;
+            case 4:
+                {
+                    //Increase area by 40%.
+                    BuffWeaponSizeByPersent(0.4f);
+                    //Increase frequency of hits by 30%.
+                    weaponStats.timeAttack -= weaponData.stats.timeAttack * 30 / 100;
+                }
+                break;
+            case 5:
+                {
+                    //can active 2 axe at sametime, Increase damage by 30%.
+                    BuffWeaponDamageByPersent(0.2f);
+                    numActiveTornado = 3;
+                }
+                break;
+            case 6:
+                {
+                    //Increase damage by 60%.
+                    BuffWeaponDamageByPersent(0.6f);
+                }
+                break;
+            case 7:
+                {
+                    //Increase damage by 50%.
+                    BuffWeaponDamageByPersent(0.5f);
+                    weaponData.maxed = true;
+                }
+                break;
+
+            default: break;
+        }
     }
 
     public override void SetCharacterStats()

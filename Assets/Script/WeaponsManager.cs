@@ -52,28 +52,21 @@ public class WeaponsManager : MonoBehaviour
     public List<weaponEnquip> weapons_lst=new List<weaponEnquip>(5);
 
     int i = 0;
-    float timer = 5;
+    float timer = 10;
+    float time = 10;
 
-    /*private void Start()
+    private void Update()
     {
-        AddWeapon(SuperWallSpikePrefab);
-    }*/
+        if(timer <= 0)
+        {
+            foreach (var item in weapons_lst)
+            {
+                CheckCollab(item);
+            }
 
-    //private void Update()
-    //{
-    //    timer -= Time.deltaTime;
-    //    if (timer < 0 && i == 0)
-    //    {
-    //        i++;
-    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //    }
-    //}
+            timer = time;
+        }
+    }
 
     public void AddWeapon(WeaponData weaponData)
     {
@@ -91,7 +84,7 @@ public class WeaponsManager : MonoBehaviour
             {
                 if(item.weaponData == weaponData)
                 {
-                    if(item.weaponObject.GetComponent<WeaponBase>().weaponStats.level < 7)
+                    if(!item.weaponObject.GetComponent<WeaponBase>().weaponData.maxed)
                     {
                         item.weaponObject.GetComponent<WeaponBase>().LevelUp();
                         break;
@@ -101,7 +94,7 @@ public class WeaponsManager : MonoBehaviour
                         item.weaponObject.GetComponent<WeaponBase>().OverLevelUp();
                     }
 
-                    if(item.weaponObject.GetComponent<WeaponBase>().weaponStats.level == 7)
+                    if(item.weaponObject.GetComponent<WeaponBase>().weaponData.maxed)
                     {
                         CheckCollab(item);
                     }
@@ -110,6 +103,22 @@ public class WeaponsManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void RemoveWeapon(WeaponData weaponData)
+    {
+        weaponEnquip removeItem = null;
+        for (int i = 0; i < weapons_lst.Count; i++)
+        {
+            if (weapons_lst[i].weaponData.name == weaponData.name)
+            {
+                removeItem = weapons_lst[i];
+                break;
+            }
+        }
+
+        Destroy(removeItem.weaponObject);
+        weapons_lst.Remove(removeItem);
     }
 
     private void CheckCollab(weaponEnquip weapon)

@@ -150,6 +150,7 @@ public class ToxinZonesScript : WeaponBase
                 {
                     //Add small knockback on hit.
                     isKnockBack = true;
+                    weaponData.maxed = true;
                 }
                 break;
 

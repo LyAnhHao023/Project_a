@@ -272,7 +272,7 @@ public class CharacterInfo_1 : MonoBehaviour
         menuManager.LevelUpScene(upgradeDatas);
         currentExp -= maxExpValue;
         level += 1;
-        maxExpValue += Mathf.FloorToInt((float)(maxExpValue * 0.5));
+        maxExpValue += Mathf.FloorToInt((float)(maxExpValue * 0.2));
         expBar.SetMaxExp(level, maxExpValue);
     }
 
@@ -494,6 +494,37 @@ public class CharacterInfo_1 : MonoBehaviour
             itemsManager.AddItem(upgradeData.itemsData);
             inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
         }
+    }
+
+    public void AddCollab(UpgradeData collab)
+    {
+        UpgradeData remove1 = null;
+        UpgradeData remove2 = null;
+
+        for(int i = 0; i < weaponSlotsManager.Count; i++)
+        {
+            if (weaponSlotsManager[i].weaponData == collab.colabInfo.weapon1 || weaponSlotsManager[i].weaponData == collab.colabInfo.weapon2)
+            {
+                if(remove1 == null)
+                    remove1 = weaponSlotsManager[i];
+                else if(remove2 == null)
+                    remove2 = weaponSlotsManager[i];
+            }
+        }
+
+        weaponSlotsManager.Remove(remove1);
+        weaponSlotsManager.Remove(remove2);
+
+        levelUpSelectBuff.RemoveEquipWeapon(remove1);
+        weaponsManager.RemoveWeapon(remove1.weaponData);
+
+        levelUpSelectBuff.RemoveEquipWeapon(remove2);
+        weaponsManager.RemoveWeapon(remove2.weaponData);
+
+        //levelUpSelectBuff.AddCollabWeapon(collab);
+        //weaponSlotsManager.Add(collab);
+
+        inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
     }
 
     public void TakeDamage(int damage)

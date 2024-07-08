@@ -19,14 +19,13 @@ public class ShopManager : MonoBehaviour
 
     private void Awake()
     {
+        PlayerPrefs.SetInt("Coins", 100000);
+        PlayerPrefs.Save();
         Set();
     }
 
     public void Set()
     {
-        /*PlayerPrefs.SetInt("Coins", 10000);
-        PlayerPrefs.Save();*/
-
         totalCoin = PlayerPrefs.GetInt("Coins", 0);
         coinText.text = totalCoin.ToString();
         totalPoint = PlayerPrefs.GetInt("TotalPoints", 0);

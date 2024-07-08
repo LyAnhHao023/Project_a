@@ -149,6 +149,7 @@ public class AxeWeapon : WeaponBase
                 {
                     //Add small knockback on hit.
                     isKnockBack = true;
+                    weaponData.maxed = true;
                 }
                 break;
 

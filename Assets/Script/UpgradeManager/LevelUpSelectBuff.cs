@@ -29,6 +29,7 @@ public class LevelUpSelectBuff : MonoBehaviour
     public List<UpgradeData> itemUpgradeList = new List<UpgradeData>();
     public List<UpgradeData> statUpgrade = new List<UpgradeData>();
     public UpgradeData GainCoin;
+    public List<UpgradeData> collabList = new List<UpgradeData>();
 
     public List<UpgradeData> weaponAcquiredList = new List<UpgradeData>();
     public List<UpgradeData> itemAcquiredList = new List<UpgradeData>();
@@ -133,6 +134,12 @@ public class LevelUpSelectBuff : MonoBehaviour
                 case 5: //GainCoin
                     {
                         GainCoin = item;
+                    }
+                    break;
+                case 6: //Collab
+                    {
+                        collabList.Add(item);
+                        item.maxed = true;
                     }
                     break;
             }
@@ -370,9 +377,10 @@ public class LevelUpSelectBuff : MonoBehaviour
         {
             foreach (var item in itemUpgradeList)
             {
-                if (item.weaponData == itemA.weaponData && itemA.itemsData.level < itemA.UpgradeInfos.Count)
+                if (item.itemsData == itemA.itemsData && item.itemsData.level < item.UpgradeInfos.Count)
                 {
                     item.acquired = false;
+                    itemA.level += 1;
                     item.itemsData.level = item.UpgradeInfos[item.itemsData.level].level;
                     if (item.itemsData.level == item.UpgradeInfos.Count)
                     {
@@ -398,5 +406,27 @@ public class LevelUpSelectBuff : MonoBehaviour
                 itemA.description = itemA.UpgradeInfos[itemA.itemsData.level].description;
             }
         }
+    }
+
+    public void RemoveEquipWeapon(UpgradeData upgradeData)
+    {
+        UpgradeData removeItem = null;
+        for(int i = 0; i< weaponAcquiredList.Count; i++)
+        {
+            if (weaponAcquiredList[i].weaponData = upgradeData.weaponData)
+            {
+                removeItem = weaponAcquiredList[i];
+            }
+        }
+
+        weaponAcquiredList.Remove(removeItem);
+    }
+
+    public void AddCollabWeapon(UpgradeData upgradeData)
+    {
+        weaponAcquiredList.Add(upgradeData);
+        upgradeData.acquired = true;
+        upgradeData.maxed = true;
+        UpdateRate(2, true);
     }
 }

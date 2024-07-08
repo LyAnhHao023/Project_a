@@ -10,7 +10,8 @@ public enum UpgradeType
     WeaponUnlock = 2,
     ItemUnlock = 3,
     StatUpgrade = 4,
-    GainCoin = 5
+    GainCoin = 5,
+    Collab = 6
 }
 
 [Serializable]
@@ -18,6 +19,13 @@ public class UpgradeInfo
 {
     public int level;
     public string description;
+}
+
+[Serializable]
+public class ColabInfo
+{
+    public WeaponData weapon1;
+    public WeaponData weapon2;
 }
 
 [CreateAssetMenu]
@@ -34,6 +42,8 @@ public class UpgradeData : ScriptableObject
     public bool acquired;
 
     public List<UpgradeInfo> UpgradeInfos;
+
+    public ColabInfo colabInfo;
 
     public bool maxed;
 }

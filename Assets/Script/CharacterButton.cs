@@ -22,8 +22,6 @@ public class CharacterButton : MonoBehaviour
 
     public void Set(CharacterData characterData)
     {
-        characterData.acquired = PlayerPrefs.GetInt(characterData.name + "lv", 0) == 1 ? true : false;
-
         CharData = characterData;
         CharacterImage.sprite = characterData.image;
         CharacterLocker.SetActive(!characterData.acquired);

@@ -9,6 +9,9 @@ public class AnvilColab : MonoBehaviour
 
     [SerializeField] Vector2 spawArea;
 
+    MenuManager menuManager;
+    GameObject menuObject;
+
     private void Start()
     {
         Transform playerPos = GameObject.FindGameObjectWithTag("Player").transform;
@@ -22,9 +25,13 @@ public class AnvilColab : MonoBehaviour
 
         transform.position = position;
 
+        menuObject = GameObject.FindGameObjectWithTag("MenuManager");
+        menuManager = menuObject.GetComponent<MenuManager>();
+
 
         PointerOJ.GetComponent<Window_pointer>().SetTarget(new Vector3(transform.position.x, transform.position.y + 1, 0));
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -32,7 +39,13 @@ public class AnvilColab : MonoBehaviour
         if (player != null)
         {
             //do somthing............
+            menuManager.GetComponentInParent<MenuManager>().OpenCollabAnvilScene();
         }
+    }
+
+    public void DestroyAnvil()
+    {
+        Destroy(gameObject);
     }
 
     private Vector3 CreateRandomPosition()

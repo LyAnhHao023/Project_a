@@ -158,6 +158,7 @@ public class WallSpikeWeapon : WeaponBase
                 {
                     //Throw 3 bombs.
                     numWallActive = 3;
+                    weaponData.maxed = true;
                 }
                 break;
 

@@ -26,14 +26,17 @@ public class SetItemShop : MonoBehaviour
         goodsInfo = infoHolder.GetComponent<SetGoodsInfo>();
     }
 
+    private void Start()
+    {
+        ButtonHolder.onClick.AddListener(Onclick);
+    }
+
     public void Set(GoodsData goodsData)
     {
         goods = goodsData;
         Icon.sprite = goodsData.icon;
         Level.text = SetLevelText(goodsData);
         Locker.SetActive(goodsData.level>0?false:true);
-
-        ButtonHolder.onClick.AddListener(Onclick);
     }
 
     string SetLevelText(GoodsData goods)

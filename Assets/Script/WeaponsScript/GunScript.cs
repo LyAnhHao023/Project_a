@@ -173,6 +173,7 @@ public class GunScript : WeaponBase
                 {
                     //Throw 3 bombs.
                     isPenetrating = true;
+                    weaponData.maxed = true;
                 }
                 break;
 

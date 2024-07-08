@@ -17,14 +17,17 @@ public class SetItem : MonoBehaviour
 
     bool type;
 
+    private void Start()
+    {
+        IconButton.onClick.AddListener(Onclick);
+    }
+
     public void SetWeaponSlot(UpgradeData weaponData)
     {
         upgradeData = weaponData;
         Icon.sprite = weaponData.icon;
         IconHodler.SetActive(true);
         type = true;
-
-        IconButton.onClick.AddListener(Onclick);
     }
 
     public void SetItemSlot(UpgradeData itemData)
@@ -33,8 +36,6 @@ public class SetItem : MonoBehaviour
         Icon.sprite = itemData.icon;
         IconHodler.SetActive(true);
         type = false;
-
-        IconButton.onClick.AddListener(Onclick);
     }
 
     void Onclick()

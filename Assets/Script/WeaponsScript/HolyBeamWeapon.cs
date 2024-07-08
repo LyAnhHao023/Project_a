@@ -133,6 +133,7 @@ public class HolyBeamWeapon : WeaponBase
                 {
                     //Fire an additional beam from behind
                     isActiveTwoBeam = true;
+                    weaponData.maxed = true;
                 }
                 break;
 

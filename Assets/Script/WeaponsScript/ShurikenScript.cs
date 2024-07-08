@@ -131,6 +131,7 @@ public class ShurikenScript : WeaponBase
                 {
                     //Increase size dmg by 50%.
                     BuffWeaponDamageByPersent(0.5f);
+                    weaponData.maxed = true;
                 }
                 break;
 

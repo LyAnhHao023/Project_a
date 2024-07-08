@@ -30,6 +30,11 @@ public class SetGoodsInfo : MonoBehaviour
         totalPoints = PlayerPrefs.GetInt("TotalPoints", 0);
     }
 
+    private void Start()
+    {
+        button.onClick.AddListener(Onclick);
+    }
+
     void ButtonCheck(GoodsData goods)
     {
         if (totalCoins < goods.price || (goods.name.ToLower() == "army" && totalPoints < goods.price) || goods.level == goods.maxLevel)
@@ -56,8 +61,6 @@ public class SetGoodsInfo : MonoBehaviour
         SetNextPrice();
 
         ButtonCheck(goods);
-
-        button.onClick.AddListener(Onclick);
     }
 
     public void SetInfo(GoodsData goods)
@@ -102,6 +105,11 @@ public class SetGoodsInfo : MonoBehaviour
     {
         if(goodsData.goodsName != "Army")
             totalCoins -= goodsData.price;
+
+        if((int)goodsData.type == 1)
+        {
+            goodsData.characterData.acquired = true;
+        }
 
         goodsData.level+=1;
         SetNextPrice();

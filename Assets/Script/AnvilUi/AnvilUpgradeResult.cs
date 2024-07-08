@@ -72,13 +72,13 @@ public class AnvilUpgradeResult : MonoBehaviour
 
         string overLevelText = "";
 
-        if (data.maxed)
+        if (data.maxed && type)
         {
             overLevelText = string.Format("+{0}", data.overLevel);
         }
 
         ResultsText.text = result ? "THÀNH CÔNG" : "THẤT BẠI";
-        BuffResult.text = string.Format("{0} Lv.{1}" + overLevelText, data.name, data.level);
+        BuffResult.text = string.Format("{0} Lv.{1}" + overLevelText, data.buffName, type ? data.level : data.itemsData.level);
         ResultText.SetActive(true);
         ResultButton.SetActive(true);
     }

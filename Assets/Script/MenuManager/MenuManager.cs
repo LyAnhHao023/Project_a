@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.EventSystems;
@@ -19,8 +20,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject _UpgradeAnvilUI;
     [SerializeField] private GameObject _UpgradeAnvilResultUI;
     [SerializeField] private GameObject _UpgradeAnvilInfoHolderUI;
+    [SerializeField] private GameObject _CollabAnvilUI;
 
     private UpgradeSlotManager _slotManager;
+    private CollabSlotManager _collabSlotManager;
 
     /*[SerializeField] private GameObject _mainMenuFirst;*/
     /*[SerializeField] private GameObject _settingsMenuFirst;*/
@@ -36,6 +39,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Vector3 startBuffTableStep;
     [SerializeField] Vector3 openChestStep;
     [SerializeField] Vector3 startOpenChestStep;
+    [SerializeField] Vector3 missionStep;
+    [SerializeField] Vector3 startMissionStep;
     [SerializeField] float tweenTime;
     [SerializeField] LeanTweenType tweenType;
 
@@ -52,6 +57,9 @@ public class MenuManager : MonoBehaviour
 
     private bool isSelectBuff;
 
+    float timer = 10;
+    bool missionShow = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,21 +69,33 @@ public class MenuManager : MonoBehaviour
         _levelUpUI.SetActive(false);
         _OpenChestUI.SetActive(false);
         levelUpEffect.SetActive(false);
-        missionUI.SetActive(false);
         _UpgradeAnvilUI.SetActive(false);
         _UpgradeAnvilResultUI.SetActive(false);
         _UpgradeAnvilInfoHolderUI.SetActive(false);
+        _CollabAnvilUI.SetActive(false);
 
         isGameOver = false;
         isSelectBuff = false;
         isPaused = false;
 
         _slotManager = _UpgradeAnvilUI.GetComponent<UpgradeSlotManager>();
+        _collabSlotManager = _CollabAnvilUI.GetComponent<CollabSlotManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(timer >= 0)
+        {
+            timer -= Time.deltaTime;
+        }
+
+        if(timer < 0 && !missionShow)
+        {
+            missionUI.LeanMoveLocal(startMissionStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
+            missionShow = true;
+        }
+
         if (InputManager.instance.MenuOpenCloseInput)
         {
             if (!isGameOver && !isSelectBuff)
@@ -113,7 +133,7 @@ public class MenuManager : MonoBehaviour
     {
         _mainMenuCanvas.SetActive(true);
         _settingsMenuCanvas.SetActive(false);
-        missionUI.SetActive(true);
+        missionUI.LeanMoveLocal(missionStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
 
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -130,7 +150,7 @@ public class MenuManager : MonoBehaviour
     {
         _mainMenuCanvas.SetActive(false);
         _settingsMenuCanvas.SetActive(false);
-        missionUI.SetActive(false);
+        missionUI.LeanMoveLocal(startMissionStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
 
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -157,9 +177,9 @@ public class MenuManager : MonoBehaviour
 
         _gameOverUI.SetActive(true);
 
-        EventSystem.current.SetSelectedGameObject(null);
+        missionUI.LeanMoveLocal(missionStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
 
-        missionUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
 
         int totalK = PlayerPrefs.GetInt("TotalKill", 0) + StaticData.totalKill;
         PlayerPrefs.SetInt("TotalKill", totalK);
@@ -253,6 +273,33 @@ public class MenuManager : MonoBehaviour
         isSelectBuff = false;
 
         _UpgradeAnvilUI.SetActive(false);
+        Inventory.SetActive(true);
+        SkillHolder.SetActive(true);
+        _UpgradeAnvilResultUI.SetActive(false);
+        _UpgradeAnvilInfoHolderUI.SetActive(false);
+        Unpause();
+    }
+
+    public void OpenCollabAnvilScene()
+    {
+        _collabSlotManager.SetWeapon(characterInfo.weaponSlotsManager);
+        _collabSlotManager.SetPassiveItem(characterInfo.itemSlotsManager);
+        _CollabAnvilUI.SetActive(true);
+        Inventory.SetActive(false);
+        SkillHolder.SetActive(false);
+        isPaused = true;
+        isSelectBuff = true;
+
+        Time.timeScale = 0f;
+
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    public void CloseCollabAnvilScene()
+    {
+        isSelectBuff = false;
+
+        _CollabAnvilUI.SetActive(false);
         Inventory.SetActive(true);
         SkillHolder.SetActive(true);
         _UpgradeAnvilResultUI.SetActive(false);

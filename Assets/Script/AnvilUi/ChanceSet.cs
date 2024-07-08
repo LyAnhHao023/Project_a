@@ -91,7 +91,14 @@ public class ChanceSet : MonoBehaviour
     {
         upgradeData = data;
         this.type = type;
-        upgradePrice = baseUpgradePrice * data.level;
+        if (type)
+        {
+            upgradePrice = baseUpgradePrice * data.level;
+        }
+        else
+        {
+            upgradePrice = baseUpgradePrice * data.itemsData.level;
+        }
         SetOverlay(type);
         Price.text = upgradePrice.ToString();
         ChanceCal();
@@ -113,9 +120,9 @@ public class ChanceSet : MonoBehaviour
             else
             {
                 if (upgradeData.maxed)
-                    Overlay.SetActive(false);
-                else
                     Overlay.SetActive(true);
+                else
+                    Overlay.SetActive(false);
             }
         }
         else

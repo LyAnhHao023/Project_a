@@ -29,6 +29,7 @@ public class AxeWeapon : WeaponBase
         SetCharacterStats();
         BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        weaponData.maxed = false;
     }
 
 

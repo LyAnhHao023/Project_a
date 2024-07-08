@@ -9,9 +9,16 @@ public class ShopManager : MonoBehaviour
     [SerializeField] Text pointsText;
     [SerializeField] GameObject goodsInfoHolder;
 
+    [SerializeField] GameObject skillTreeSystemManager;
+
     public GameObject goodsInfo()
     {
         return goodsInfoHolder;
+    }
+
+    public GameObject SkillTree()
+    {
+        return skillTreeSystemManager;
     }
 
     int totalCoin;

@@ -72,7 +72,7 @@ public class AnvilUpgradeResult : MonoBehaviour
 
         string overLevelText = "";
 
-        if (data.maxed && type)
+        if (data.maxed && type && data.overLevel != 0)
         {
             overLevelText = string.Format("+{0}", data.overLevel);
         }

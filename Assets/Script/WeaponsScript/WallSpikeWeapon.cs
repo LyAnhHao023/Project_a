@@ -29,6 +29,7 @@ public class WallSpikeWeapon : WeaponBase
         playerMove = GetComponentInParent<playerMove>();
 
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        weaponData.maxed = false;
     }
 
     public override void Update()

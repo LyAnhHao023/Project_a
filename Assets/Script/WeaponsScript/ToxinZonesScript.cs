@@ -24,6 +24,7 @@ public class ToxinZonesScript : WeaponBase
         //currentSizeWeapon=transform.localScale.x;
 
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        weaponData.maxed = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

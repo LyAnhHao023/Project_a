@@ -11,23 +11,33 @@ public class WizardSkillTreeManager : MonoBehaviour
     [SerializeField] Text SkillName;
     [SerializeField] Image SkillIcon;
     [SerializeField] Text SkillDescription;
+    [SerializeField] GameObject ClassLocker;
 
     int currentLevel;
 
     public void Set(int level)
     {
-        for(int i = 0; i< level; i++)
+        currentLevel = level;
+
+        for (int i = 0; i < level; i++)
         {
             skillList[i].isUpgrade = true;
+        }
+
+        if (level > 0)
+        {
+            ClassLocker.SetActive(false);
+        }
+        else
+        {
+            ClassLocker.SetActive(true);
         }
     }
 
     public void SetInfo()
     {
-        if (currentLevel != 0)
-        {
-            SkillName.text = skillList[currentLevel - 1].skillName;
-            SkillDescription.text = skillList[currentLevel - 1].skillDescription;
-        }
+        SkillName.text = skillList[currentLevel].skillName;
+        SkillDescription.text = skillList[currentLevel].skillDescription;
+        SkillIcon.sprite = skillList[currentLevel].skillIcon;
     }
 }

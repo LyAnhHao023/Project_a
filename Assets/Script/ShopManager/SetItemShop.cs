@@ -14,8 +14,11 @@ public class SetItemShop : MonoBehaviour
     private ShopManager shopManager;
     private SetGoodsInfo goodsInfo;
     GameObject infoHolder;
+    GameObject SkillTree;
 
     GoodsData goods;
+
+    SkillTreeSystemManager skillTreeSystem; 
 
     private void Awake()
     {
@@ -23,7 +26,11 @@ public class SetItemShop : MonoBehaviour
 
         infoHolder = shopManager.goodsInfo();
 
+        SkillTree = shopManager.SkillTree();
+
         goodsInfo = infoHolder.GetComponent<SetGoodsInfo>();
+
+        skillTreeSystem = SkillTree.GetComponent<SkillTreeSystemManager>();
     }
 
     private void Start()
@@ -57,6 +64,17 @@ public class SetItemShop : MonoBehaviour
     void Onclick()
     {
         infoHolder.SetActive(true);
+        SkillTree.SetActive(false);
+
+        if ((int)goods.type == 1)
+        {
+            if(goods.level == goods.maxLevel)
+            {
+                SkillTree.SetActive(true);
+                skillTreeSystem.SetSkillTree(goods.characterData.skillTree);
+                skillTreeSystem.Set();
+            }
+        }
 
         goodsInfo.Set(goods, goodsHolder);
     }

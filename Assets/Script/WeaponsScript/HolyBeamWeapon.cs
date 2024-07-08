@@ -25,6 +25,7 @@ public class HolyBeamWeapon : WeaponBase
         BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
 
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        weaponData.maxed = false;
     }
 
     public void ApllyDmg(Collider2D collision)

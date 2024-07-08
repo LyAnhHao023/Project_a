@@ -44,6 +44,7 @@ public class GunScript : WeaponBase
         BuffWeaponSizeByPersent(characterInfo_1.weaponSize);
 
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        weaponData.maxed = false;
     }
 
     public override void Update()

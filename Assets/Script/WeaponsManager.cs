@@ -110,14 +110,14 @@ public class WeaponsManager : MonoBehaviour
         weaponEnquip removeItem = null;
         for (int i = 0; i < weapons_lst.Count; i++)
         {
-            if (weapons_lst[i].weaponData.name == weaponData.name)
+            if (weapons_lst[i].weaponData == weaponData)
             {
+                Destroy(weapons_lst[i].weaponObject);
                 removeItem = weapons_lst[i];
                 break;
             }
         }
 
-        Destroy(removeItem.weaponObject);
         weapons_lst.Remove(removeItem);
     }
 
@@ -125,10 +125,13 @@ public class WeaponsManager : MonoBehaviour
     {
         foreach (var item in weapons_lst)
         {
-            if(item.weaponData == weapon.weaponData.weaponColabData && item.weaponObject.GetComponent<WeaponData>().stats.level == 7)
+            if(item.weaponObject.GetComponent<WeaponBase>().weaponStats.level == 7)
             {
-                stageEventManager.SetColab();
-                break;
+                if (item.weaponData == weapon.weaponData.weaponColabData)
+                {
+                    stageEventManager.SetColab();
+                    break;
+                }
             }
         }
     }

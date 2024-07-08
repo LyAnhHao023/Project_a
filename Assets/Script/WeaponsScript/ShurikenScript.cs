@@ -21,6 +21,7 @@ public class ShurikenScript : WeaponBase
         BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
 
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        weaponData.maxed = false;
     }
 
     public override void Attack()

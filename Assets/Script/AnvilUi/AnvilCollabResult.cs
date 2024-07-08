@@ -10,6 +10,7 @@ public class AnvilCollabResult : MonoBehaviour
     [SerializeField] GameObject ImageAnimation;
     [SerializeField] Animator animator;
     [SerializeField] Image BuffIcon;
+    [SerializeField] GameObject BuffIconHolder;
     [SerializeField] CharacterInfo_1 Character;
 
     UpgradeData data;
@@ -50,6 +51,7 @@ public class AnvilCollabResult : MonoBehaviour
     private void SetResult()
     {
         ImageAnimation.SetActive(false);
+        BuffIconHolder.SetActive(true);
 
         BuffIcon.sprite = data.icon;
 

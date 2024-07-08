@@ -22,6 +22,7 @@ public class BombScript : WeaponBase
         SetCharacterStats();
         BuffWeaponSizeByPersent(GetComponentInParent<CharacterInfo_1>().weaponSize);
         ObjectDrops = GameObject.Find("===ObjectDrop===").transform;
+        weaponData.maxed = false;
     }
 
     public override void Update()

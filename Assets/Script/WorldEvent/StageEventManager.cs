@@ -47,8 +47,8 @@ public class StageEventManager : MonoBehaviour
         timerBoxDrop -= Time.deltaTime;
         timerAnvilUpdateDrop -= Time.deltaTime;
 
-        //if (totalColab > 0)
-        //{
+        if (totalColab > 0)
+        {
             timerAnvilColabDrop -= Time.deltaTime;
 
             if(timerAnvilColabDrop <= 0)
@@ -57,7 +57,7 @@ public class StageEventManager : MonoBehaviour
                 timerAnvilColabDrop = TimeAnvilColabDrop;
                 SpawAnvilColabDrop();
             }
-        //}
+        }
 
         if (timerBoxDrop <= 0)
         {

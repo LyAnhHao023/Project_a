@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AnvilColab : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class AnvilColab : MonoBehaviour
 
     MenuManager menuManager;
     GameObject menuObject;
+
+    GameObject AnvilUI;
+    GameObject AcceptButton;
+
+    FindButtonWithTag find;
+    Button ButtonAcceptButton;
 
     private void Start()
     {
@@ -27,6 +34,10 @@ public class AnvilColab : MonoBehaviour
 
         menuObject = GameObject.FindGameObjectWithTag("MenuManager");
         menuManager = menuObject.GetComponent<MenuManager>();
+        AnvilUI = GameObject.FindGameObjectWithTag("AnvilUI");
+        find = AnvilUI.GetComponent<FindButtonWithTag>();
+        AcceptButton = find.CollabButton();
+        ButtonAcceptButton = AcceptButton.GetComponent<Button>();
 
 
         PointerOJ.GetComponent<Window_pointer>().SetTarget(new Vector3(transform.position.x, transform.position.y + 1, 0));
@@ -39,6 +50,7 @@ public class AnvilColab : MonoBehaviour
         if (player != null)
         {
             //do somthing............
+            ButtonAcceptButton.onClick.AddListener(DestroyAnvil);
             menuManager.GetComponentInParent<MenuManager>().OpenCollabAnvilScene();
         }
     }

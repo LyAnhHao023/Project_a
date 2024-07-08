@@ -9,27 +9,25 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] GameObject level;
     [SerializeField] Text levelText;
 
-    public void SetWeaponSlot(UpgradeData weaponData, Sprite icon, int OverLevel)
+    public void ClearSlot()
     {
-        if(weaponData != null)
-        {
-            this.icon.sprite = icon;
-            level.SetActive(true);
+        this.icon.sprite = null;
+        level.SetActive(false);
 
-            string overLevelText = "";
+        levelText.text = "";
+    }
 
-            if (OverLevel > 0)
-                overLevelText = string.Format("+{0}", OverLevel);
+    public void SetWeaponSlot(WeaponInfo weaponData)
+    {
+        this.icon.sprite = weaponData.Icon;
+        level.SetActive(true);
 
-            levelText.text = string.Format("Lv. {0}" + overLevelText, weaponData.level);
-        }
-        else
-        {
-            this.icon.sprite = null;
-            level.SetActive(false);
+        string overLevelText = "";
 
-            levelText.text = "";
-        }
+        if (weaponData.Overlevel > 0)
+            overLevelText = string.Format("+{0}", weaponData.Overlevel);
+
+        levelText.text = string.Format("Lv. {0}" + overLevelText, weaponData.level);
     }
 
     public void SetItemSlot(ItemsData itemData, Sprite icon)

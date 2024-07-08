@@ -64,11 +64,13 @@ public class LevelUpSelectBuff : MonoBehaviour
         foreach (var item in items)
         {
             if (item.active)
+            {
                 weights += item.weight;
 
-            if (randomValue <= weights)
-            {
-                return item.type;
+                if (randomValue <= weights)
+                {
+                    return item.type;
+                }
             }
         }
 
@@ -427,6 +429,5 @@ public class LevelUpSelectBuff : MonoBehaviour
         weaponAcquiredList.Add(upgradeData);
         upgradeData.acquired = true;
         upgradeData.maxed = true;
-        UpdateRate(2, true);
     }
 }

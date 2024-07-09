@@ -9,9 +9,9 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] GameObject level;
     [SerializeField] Text levelText;
 
-    public void ClearSlot()
+    public void ClearSlot(Sprite icon)
     {
-        this.icon.sprite = null;
+        this.icon.sprite = icon;
         level.SetActive(false);
 
         levelText.text = "";

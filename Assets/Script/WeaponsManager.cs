@@ -129,6 +129,7 @@ public class WeaponsManager : MonoBehaviour
             {
                 if (item.weaponData == weapon.weaponData.weaponColabData)
                 {
+                    Debug.Log("CO TRANG BI COLLAB");
                     stageEventManager.SetColab();
                     break;
                 }

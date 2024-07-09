@@ -30,7 +30,7 @@ public class SetItemShop : MonoBehaviour
 
         goodsInfo = infoHolder.GetComponent<SetGoodsInfo>();
 
-        skillTreeSystem = SkillTree.GetComponent<SkillTreeSystemManager>();
+        skillTreeSystem = GameObject.FindGameObjectWithTag("ShopManager").GetComponent<SkillTreeSystemManager>();
     }
 
     private void Start()
@@ -70,8 +70,8 @@ public class SetItemShop : MonoBehaviour
         {
             if(goods.level == goods.maxLevel)
             {
-                SkillTree.SetActive(true);
-                skillTreeSystem.SetSkillTree(goods.characterData.skillTree);
+                SkillTree.SetActive(true);      
+                skillTreeSystem.SetSkillTree(goods.characterData);
                 skillTreeSystem.Set();
             }
         }

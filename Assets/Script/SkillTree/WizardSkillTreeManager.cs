@@ -11,12 +11,19 @@ public class WizardSkillTreeManager : MonoBehaviour
     [SerializeField] Text SkillName;
     [SerializeField] Image SkillIcon;
     [SerializeField] Text SkillDescription;
+    [SerializeField] GameObject SkillContainer;
     [SerializeField] GameObject ClassLocker;
+    [SerializeField] SetSkillPrice skillPrice;
+    [SerializeField] GameObject BuyButton;
+    [SerializeField] SkillTreeSystemManager skillTreeSystemManager;
 
     int currentLevel;
 
-    public void Set(int level)
+    CharacterData characterData;
+
+    public void Set(int level, CharacterData characterData = null)
     {
+        this.characterData = skillTreeSystemManager.GetCharacterData();
         currentLevel = level;
 
         for (int i = 0; i < level; i++)
@@ -24,7 +31,7 @@ public class WizardSkillTreeManager : MonoBehaviour
             skillList[i].isUpgrade = true;
         }
 
-        if (level > 0)
+        if(level > 0)
         {
             ClassLocker.SetActive(false);
         }
@@ -36,8 +43,19 @@ public class WizardSkillTreeManager : MonoBehaviour
 
     public void SetInfo()
     {
-        SkillName.text = skillList[currentLevel].skillName;
-        SkillDescription.text = skillList[currentLevel].skillDescription;
-        SkillIcon.sprite = skillList[currentLevel].skillIcon;
+        if (currentLevel != 10)
+        {
+            SkillContainer.SetActive(skillList[currentLevel].isUpgrade);
+            SkillName.text = skillList[currentLevel].skillName;
+            SkillDescription.text = skillList[currentLevel].skillDescription;
+            SkillIcon.sprite = skillList[currentLevel].skillIcon;
+            skillPrice.Set(this.characterData, skillList[currentLevel], 2);
+        }
+    }
+
+    public void Onclick()
+    {
+        BuyButton.SetActive(true);
+        skillPrice.Set(characterData, skillList[currentLevel], 2);
     }
 }

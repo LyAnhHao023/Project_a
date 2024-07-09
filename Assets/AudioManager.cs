@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource SFX;
 
     [Header("-----AudioClipGamePlay-----")]
+    public AudioClip[] MainMenuBGM;
     public AudioClip Background;
     public AudioClip LevelUp;
     public AudioClip Lose;
@@ -37,8 +38,33 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        backGroundMusicSource.clip = Background;
+        backGroundMusicSource.clip = SetBGM();
         backGroundMusicSource.Play();
+    }
+
+    private void Update()
+    {
+        if (!backGroundMusicSource.isPlaying)
+        {
+            backGroundMusicSource.clip = SetBGM();
+            backGroundMusicSource.Play();
+        }
+    }
+
+    private AudioClip SetBGM()
+    {
+        if(MainMenuBGM != null)
+        {
+            backGroundMusicSource.loop = false;
+            return MainMenuBGM[Random.Range(0, MainMenuBGM.Length)];
+        }
+
+        if (MainMenuBGM == null)
+        {
+            backGroundMusicSource.loop = true;
+        }
+
+        return Background;
     }
 
     public void PlaySFX(AudioClip audioClip)

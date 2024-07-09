@@ -31,6 +31,11 @@ public class ShopManager : MonoBehaviour
         Set();
     }*/
 
+    private void Update()
+    {
+        Set();
+    }
+
     public void Set()
     {
         totalCoin = PlayerPrefs.GetInt("Coins", 0);

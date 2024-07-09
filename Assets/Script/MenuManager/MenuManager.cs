@@ -51,6 +51,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject Inventory;
     [SerializeField] GameObject SkillHolder;
 
+    [SerializeField] AudioManager audioManager;
+
     private bool isPaused;
 
     private bool isGameOver;
@@ -191,6 +193,8 @@ public class MenuManager : MonoBehaviour
 
         GameOverText.text = stageComplete ? "CLEAR STAGE" : "GAME OVER";
 
+        audioManager.PlaySFX(stageComplete?audioManager.Win:audioManager.Lose);
+
     }
 
     public void LevelUpScene(List<UpgradeData> upgradeDatas)
@@ -198,6 +202,7 @@ public class MenuManager : MonoBehaviour
         isSelectBuff = true;
         isPaused = true;
 
+        audioManager.PlaySFX(audioManager.LevelUp);
 
         statShow.LeanMoveLocal(statShowStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
         buffTable.LeanMoveLocal(buffTableStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);

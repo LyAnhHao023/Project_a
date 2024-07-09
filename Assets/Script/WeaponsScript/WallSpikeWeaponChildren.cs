@@ -73,6 +73,11 @@ public class WallSpikeWeaponChildren : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (collision.gameObject.layer == 6)
+        {
+            positonAttack=transform.position;
+        }
+
         EnemyBase enemy = collision.gameObject.GetComponent<EnemyBase>();
 
         if (enemy != null && attack && !idEnemy.Contains(enemy.GetInstanceID()))
@@ -95,6 +100,11 @@ public class WallSpikeWeaponChildren : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
+        if (collision.gameObject.layer == 6)
+        {
+            positonAttack = transform.position;
+        }
+
         EnemyBase enemy=collision.gameObject.GetComponent<EnemyBase>();
 
         if (enemy != null&& attack&& !idEnemy.Contains(enemy.GetInstanceID())) 

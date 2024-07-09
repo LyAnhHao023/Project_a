@@ -64,7 +64,8 @@ public class ZombieScript : EnemyBase
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject == targetGameObject&& timeAttack <= 0)
+        CharacterInfo_1 player=collision.gameObject.GetComponent<CharacterInfo_1>();
+        if (player !=null&& timeAttack <= 0)
         {
             Attack();
         }

@@ -337,7 +337,7 @@ TextureImporter:
         serializedVersion: 2
         x: 128
         y: 128
-        width: 33
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -357,7 +357,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 127
+        y: 128
         width: 32
         height: 32
       alignment: 0
@@ -1235,34 +1235,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fantasy_epicweapons_pack1_nobg_47
-      rect:
-        serializedVersion: 2
-        x: 226
-        y: 17
-        width: 13
-        height: 13
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3266e5a626e0eacf0800000000000000
-      internalID: -239237914349902301
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: fantasy_epicweapons_pack1_nobg_48
       rect:
         serializedVersion: 2
-        x: 235
-        y: 1
-        width: 20
-        height: 20
+        x: 227
+        y: 2
+        width: 27
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

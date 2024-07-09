@@ -6,16 +6,18 @@ using UnityEngine;
 public class SkilTreeManager : MonoBehaviour
 {
     [SerializeField]
-    ItemsData BigWeaponItemPrefab;
+    UpgradeData BigWeaponItemPrefab;
     [SerializeField]
-    ItemsData ReduceCdSkillPrefab;
+    UpgradeData ReduceCdSkillPrefab;
     [SerializeField ]
-    ItemsData BuffCritPrefab;
+    UpgradeData BuffCritPrefab;
 
     [SerializeField]
     ItemsData HealHpPerSeconds;
     [SerializeField]
     ItemsData FlameFoot;
+
+    [SerializeField] CharacterInfo_1 characterInfo;
 
     float healthPercent = 0;
     float attackPercent = 0;
@@ -79,7 +81,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceDmgTake += 0.02f;
                         attackPercent += 0.05f;
                         reduceDmgTake += 0.03f;
-                        GetComponent<PassiveItemsManager>().AddItem(BigWeaponItemPrefab);
+                        characterInfo.AddItem(BigWeaponItemPrefab);
                         break;
                     }
                 case 7:
@@ -89,7 +91,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceDmgTake += 0.02f;
                         attackPercent += 0.05f;
                         reduceDmgTake += 0.03f;
-                        GetComponent<PassiveItemsManager>().AddItem(BigWeaponItemPrefab);
+                        characterInfo.AddItem(BigWeaponItemPrefab);
                         healthPercent += 0.05f;
                         break;
                     }
@@ -100,7 +102,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceDmgTake += 0.02f;
                         attackPercent += 0.05f;
                         reduceDmgTake += 0.03f;
-                        GetComponent<PassiveItemsManager>().AddItem(BigWeaponItemPrefab);
+                        characterInfo.AddItem(BigWeaponItemPrefab);
                         healthPercent += 0.05f;
                         reduceDmgTake += 0.03f;
                         break;
@@ -112,7 +114,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceDmgTake += 0.02f;
                         attackPercent += 0.05f;
                         reduceDmgTake += 0.03f;
-                        GetComponent<PassiveItemsManager>().AddItem(BigWeaponItemPrefab);
+                        characterInfo.AddItem(BigWeaponItemPrefab);
                         healthPercent += 0.05f;
                         reduceDmgTake += 0.03f;
                         attackPercent += 0.05f;
@@ -131,7 +133,7 @@ public class SkilTreeManager : MonoBehaviour
                         //reduce dmg take 3%
                         reduceDmgTake += 0.03f;
                         //add BigWeaponItem at begin
-                        GetComponent<PassiveItemsManager>().AddItem(BigWeaponItemPrefab);
+                        characterInfo.AddItem(BigWeaponItemPrefab);
                         //buff 5% hp
                         healthPercent += 0.05f;
                         // readuce dmg take 3%
@@ -191,7 +193,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceCdSkill += 0.02f;
                         attackPercent += 0.03f;
                         speed += 0.1f;
-                        GetComponent<PassiveItemsManager>().AddItem(ReduceCdSkillPrefab);
+                        characterInfo.AddItem(ReduceCdSkillPrefab);
                         break;
                     }
                 case 7:
@@ -201,7 +203,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceCdSkill += 0.02f;
                         attackPercent += 0.03f;
                         speed += 0.1f;
-                        GetComponent<PassiveItemsManager>().AddItem(ReduceCdSkillPrefab);
+                        characterInfo.AddItem(ReduceCdSkillPrefab);
                         reduceCdSkill += 0.05f;
                         break;
                     }
@@ -212,7 +214,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceCdSkill += 0.02f;
                         attackPercent += 0.03f;
                         speed += 0.1f;
-                        GetComponent<PassiveItemsManager>().AddItem(ReduceCdSkillPrefab);
+                        characterInfo.AddItem(ReduceCdSkillPrefab);
                         reduceCdSkill += 0.05f;
                         speed += 0.15f;
                         break;
@@ -224,7 +226,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceCdSkill += 0.02f;
                         attackPercent += 0.03f;
                         speed += 0.1f;
-                        GetComponent<PassiveItemsManager>().AddItem(ReduceCdSkillPrefab);
+                        characterInfo.AddItem(ReduceCdSkillPrefab);
                         reduceCdSkill += 0.05f;
                         speed += 0.15f;
                         reduceCdSkill += 0.05f;
@@ -237,7 +239,7 @@ public class SkilTreeManager : MonoBehaviour
                         reduceCdSkill += 0.02f;
                         attackPercent += 0.03f;
                         speed += 0.1f;
-                        GetComponent<PassiveItemsManager>().AddItem(ReduceCdSkillPrefab);
+                        characterInfo.AddItem(ReduceCdSkillPrefab);
                         reduceCdSkill += 0.05f;
                         speed += 0.15f;
                         reduceCdSkill += 0.05f;
@@ -294,7 +296,7 @@ public class SkilTreeManager : MonoBehaviour
                         critDmgPercent += 5f;
                         critPercent += 0.3f;
                         critDmgPercent += 10f;
-                        GetComponent<PassiveItemsManager>().AddItem(BuffCritPrefab);
+                        characterInfo.AddItem(BuffCritPrefab);
                         break;
                     }
                 case 7:
@@ -304,7 +306,7 @@ public class SkilTreeManager : MonoBehaviour
                         critDmgPercent += 5f;
                         critPercent += 0.3f;
                         critDmgPercent += 10f;
-                        GetComponent<PassiveItemsManager>().AddItem(BuffCritPrefab);
+                        characterInfo.AddItem(BuffCritPrefab);
                         speed += 0.3f;
                         break;
                     }
@@ -315,7 +317,7 @@ public class SkilTreeManager : MonoBehaviour
                         critDmgPercent += 5f;
                         critPercent += 0.3f;
                         critDmgPercent += 10f;
-                        GetComponent<PassiveItemsManager>().AddItem(BuffCritPrefab);
+                        characterInfo.AddItem(BuffCritPrefab);
                         speed += 0.3f;
                         critPercent += 5f;
                         break;
@@ -327,7 +329,7 @@ public class SkilTreeManager : MonoBehaviour
                         critDmgPercent += 5f;
                         critPercent += 0.3f;
                         critDmgPercent += 10f;
-                        GetComponent<PassiveItemsManager>().AddItem(BuffCritPrefab);
+                        characterInfo.AddItem(BuffCritPrefab);
                         speed += 0.3f;
                         critPercent += 5f;
                         critDmgPercent += 15f;
@@ -340,7 +342,7 @@ public class SkilTreeManager : MonoBehaviour
                         critDmgPercent += 5f;
                         critPercent += 0.3f;
                         critDmgPercent += 10f;
-                        GetComponent<PassiveItemsManager>().AddItem(BuffCritPrefab);
+                        characterInfo.AddItem(BuffCritPrefab);
                         speed += 0.3f;
                         critPercent += 5f;
                         critDmgPercent += 15f;

@@ -545,6 +545,14 @@ public class CharacterInfo_1 : MonoBehaviour
         }
     }
 
+    public void AddItem(UpgradeData upgradeData)
+    {
+        upgradeData.acquired = true;
+        levelUpSelectBuff.ItemNextUpgradeInfo(upgradeData);
+        itemsManager.AddItem(upgradeData.itemsData);
+        inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
+    }
+
     public void AddCollab(UpgradeData collab)
     {
         UpgradeData remove1 = null;

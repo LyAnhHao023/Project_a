@@ -12,7 +12,7 @@ public class SetCollabHolder : MonoBehaviour
     public void Set(UpgradeData upgradeData)
     {
         Icon.sprite = upgradeData.icon;
-        Name.text = upgradeData.name;
+        Name.text = upgradeData.buffName;
         Description.text = upgradeData.description;
     }
 }

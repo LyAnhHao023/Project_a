@@ -62,7 +62,6 @@ public class CharacterData : ScriptableObject
     public CharacterStats stats;
     public GameObject animatorPrefab;
     public WeaponData beginerWeapon;
-    public string Story;
     public SkillInfo skillInfo;
     public bool acquired = false;
     public SkillTree skillTree;

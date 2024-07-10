@@ -53,7 +53,7 @@ public class AudioManager : MonoBehaviour
 
     private AudioClip SetBGM()
     {
-        if(MainMenuBGM != null)
+        if(MainMenuBGM != null && Background == null)
         {
             backGroundMusicSource.loop = false;
             return MainMenuBGM[Random.Range(0, MainMenuBGM.Length)];

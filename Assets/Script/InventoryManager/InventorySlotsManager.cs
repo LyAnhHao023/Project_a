@@ -8,7 +8,7 @@ public class InventorySlotsManager : MonoBehaviour
     [SerializeField] List<InventorySlot> itemSlots = new List<InventorySlot>();
     [SerializeField] Sprite baseWeaponIcon;
 
-    public void WeaponSlotUpdate(List<WeaponInfo> inventorySlots)
+    public void WeaponSlotUpdate(List<UpgradeData> inventorySlots)
     {
         for (int i = 0; i < inventorySlots.Count; i++)
         {

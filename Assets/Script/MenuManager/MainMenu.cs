@@ -32,6 +32,6 @@ public class MainMenu : MonoBehaviour
     public void StartGame(int id)
     {
         StaticData.LevelType = id;
-        SceneManager.LoadScene(mapData.Map.name);
+        SceneManager.LoadScene(mapData.name);
     }
 }

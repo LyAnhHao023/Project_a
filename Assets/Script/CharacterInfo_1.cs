@@ -8,37 +8,11 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
-public class WeaponInfo
-{
-    public WeaponData WeaponData;
-    public int level;
-    public Sprite Icon;
-    public int Overlevel;
-
-    public WeaponInfo(WeaponData weaponData, int level, Sprite icon, int Overlevel)
-    {
-        this.WeaponData = weaponData;
-        this.level = level;
-        Icon = icon;
-        this.Overlevel = Overlevel;
-    }
-
-    public void LevelUp()
-    {
-        if(level == 7)
-        {
-            Overlevel += 1;
-        }
-        else
-        {
-            level += 1;
-        }
-    }
-}
-
 public class CharacterInfo_1 : MonoBehaviour
 {
     public MissionManager missionManager;
+
+    public UpgradeData secondweapon;
 
     List<MissionObject> missionObjects;
 
@@ -78,7 +52,6 @@ public class CharacterInfo_1 : MonoBehaviour
     public List<UpgradeData> upgradeDatasFromChest;
     public List<UpgradeData> weaponSlotsManager = new List<UpgradeData>();
     public List<UpgradeData> itemSlotsManager = new List<UpgradeData>();
-    public List<WeaponInfo> weaponSlot = new List<WeaponInfo>();
 
     [SerializeField] WeaponsManager weaponsManager;
     [SerializeField] PassiveItemsManager itemsManager;
@@ -188,19 +161,22 @@ public class CharacterInfo_1 : MonoBehaviour
         shieldMaxValue = 0;
         shieldCurrentValue = 0;
 
-        foreach (var item in levelUpSelectBuff.weaponList)
+        UpgradeData data = null;
+
+        data = levelUpSelectBuff.weaponList.Find(item => item.weaponData == characterData.beginerWeapon);
+
+        if(data != null)
         {
-            if (item.weaponData == characterData.beginerWeapon)
-            {
-                weaponSlotsManager.Add(item);
-                WeaponInfo weaponInfo = new WeaponInfo(item.weaponData, item.level, item.icon, item.overLevel);
-                weaponSlot.Add(weaponInfo);
-                weaponsManager.AddWeapon(item.weaponData);
-                levelUpSelectBuff.WeaponAcquired(item);
-                inventorySlotsManager.WeaponSlotUpdate(weaponSlot);
-                break;
-            }
+            weaponSlotsManager.Add(data);
+            weaponsManager.AddWeapon(data.weaponData);
+            levelUpSelectBuff.WeaponAcquired(data);
         }
+
+        weaponSlotsManager.Add(secondweapon);
+        weaponsManager.AddWeapon(secondweapon.weaponData);
+        levelUpSelectBuff.WeaponAcquired(secondweapon);
+
+        inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
 
         level = 1;
         maxExpValue = 10;
@@ -319,21 +295,21 @@ public class CharacterInfo_1 : MonoBehaviour
                     levelUpSelectBuff.WeaponNextUpgradeInfo(upgradeDatas[id]);
                     weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
 
-                    for(int i = 0; i < weaponSlotsManager.Count; i++)
+                    UpgradeData data = null;
+
+                    data = weaponSlotsManager.Find(item => item.weaponData.name == upgradeDatas[id].weaponData.name);
+
+                    if (data != null)
                     {
-                        if (weaponSlotsManager[i].weaponData.name == upgradeDatas[id].weaponData.name)
+                        data.level = upgradeDatas[id].level;
+
+                        if (data.level == 7)
                         {
-                            weaponSlotsManager[i].level = upgradeDatas[id].level;
-                            weaponSlot[i].LevelUp();
-                            if (weaponSlotsManager[i].level == 7)
-                            {
-                                weaponSlotsManager[i].maxed = true;
-                            }
-                            break;
+                            data.maxed = true;
                         }
                     }
 
-                    inventorySlotsManager.WeaponSlotUpdate(weaponSlot);
+                    inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
                 }
                 break;
             case 1: //ItemUpgrade
@@ -347,12 +323,8 @@ public class CharacterInfo_1 : MonoBehaviour
             case 2: //WeaponUnlock
                 {
                     weaponSlotsManager.Add(upgradeDatas[id]);
-
-                    WeaponInfo weaponInfo = new WeaponInfo(upgradeDatas[id].weaponData, upgradeDatas[id].level, upgradeDatas[id].icon, upgradeDatas[id].overLevel);
-                    weaponSlot.Add(weaponInfo);
-
                     weaponsManager.AddWeapon(upgradeDatas[id].weaponData);
-                    inventorySlotsManager.WeaponSlotUpdate(weaponSlot);
+                    inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
                     upgradeDatas[id].acquired = true;
 
                     levelUpSelectBuff.WeaponAcquired(upgradeDatas[id]);
@@ -418,21 +390,21 @@ public class CharacterInfo_1 : MonoBehaviour
                     levelUpSelectBuff.WeaponNextUpgradeInfo(upgradeDatasFromChest[id]);
                     weaponsManager.AddWeapon(upgradeDatasFromChest[id].weaponData);
 
-                    for(int i = 0; i < weaponSlotsManager.Count; i++)
+                    UpgradeData data = null;
+
+                    data = weaponSlotsManager.Find(item => item.weaponData.name == upgradeDatasFromChest[id].weaponData.name);
+
+                    if(data != null)
                     {
-                        if (weaponSlotsManager[i].weaponData.name == upgradeDatasFromChest[id].weaponData.name)
+                        data.level = upgradeDatasFromChest[id].level;
+
+                        if(data.level == 7)
                         {
-                            weaponSlotsManager[i].level = upgradeDatasFromChest[id].level;
-                            weaponSlot[i].LevelUp();
-                            if (weaponSlotsManager[i].level == 7)
-                            {
-                                weaponSlotsManager[i].maxed = true;
-                            }
-                            break;
+                            data.maxed = true;
                         }
                     }
 
-                    inventorySlotsManager.WeaponSlotUpdate(weaponSlot);
+                    inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
                 }
                 break;
             case 1: //ItemUpgrade
@@ -446,12 +418,8 @@ public class CharacterInfo_1 : MonoBehaviour
             case 2: //WeaponUnlock
                 {
                     weaponSlotsManager.Add(upgradeDatasFromChest[id]);
-
-                    WeaponInfo weaponInfo = new WeaponInfo(upgradeDatasFromChest[id].weaponData, upgradeDatasFromChest[id].level, upgradeDatasFromChest[id].icon, upgradeDatasFromChest[id].overLevel);
-                    weaponSlot.Add(weaponInfo);
-
                     weaponsManager.AddWeapon(upgradeDatasFromChest[id].weaponData);
-                    inventorySlotsManager.WeaponSlotUpdate(weaponSlot);
+                    inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
                     upgradeDatasFromChest[id].acquired = true;
 
                     levelUpSelectBuff.WeaponAcquired(upgradeDatasFromChest[id]);
@@ -509,32 +477,51 @@ public class CharacterInfo_1 : MonoBehaviour
     {
         if (type)
         {
-            upgradeData.acquired = true;
-            levelUpSelectBuff.WeaponNextUpgradeInfo(upgradeData);
-            weaponsManager.AddWeapon(upgradeData.weaponData);
 
-            for (int i = 0; i < weaponSlotsManager.Count; i++)
+            UpgradeData data = null;
+
+            data = weaponSlotsManager.Find(item => item.weaponData.name == upgradeData.weaponData.name);
+
+            if(data != null)
+            {
+                if (data.maxed)
+                {
+                    data.overLevel += 1;
+                }
+                else
+                {
+                    data.level += 1;
+                    upgradeData.acquired = true;
+                    weaponsManager.AddWeapon(upgradeData.weaponData);
+                    levelUpSelectBuff.WeaponNextUpgradeInfo(upgradeData);
+                    if (data.level == 7)
+                    {
+                        data.maxed = true;
+                    }
+                }
+            }
+
+
+            /*for (int i = 0; i < weaponSlotsManager.Count; i++)
             {
                 if (weaponSlotsManager[i].weaponData.name == upgradeData.weaponData.name && upgradeData.maxed)
                 {
                     upgradeData.overLevel += 1;
-                    weaponSlot[i].LevelUp();
                     break;
                 }
 
                 if (weaponSlotsManager[i].weaponData.name == upgradeData.weaponData.name)
                 {
                     weaponSlotsManager[i].level += 1;
-                    weaponSlot[i].LevelUp();
                     if (weaponSlotsManager[i].level == 7)
                     {
                         weaponSlotsManager[i].maxed = true;
                     }
                     break;
                 }
-            }
+            }*/
 
-            inventorySlotsManager.WeaponSlotUpdate(weaponSlot);
+            inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
         }
         else
         {
@@ -557,30 +544,27 @@ public class CharacterInfo_1 : MonoBehaviour
     {
         UpgradeData remove1 = null;
         UpgradeData remove2 = null;
-        WeaponInfo weaponRemove1 = null;
-        WeaponInfo weaponRemove2 = null;
 
-        for(int i = 0; i < weaponSlotsManager.Count; i++)
+        /*for(int i = 0; i < weaponSlotsManager.Count; i++)
         {
             if (weaponSlotsManager[i].weaponData == collab.colabInfo.weapon1 || weaponSlotsManager[i].weaponData == collab.colabInfo.weapon2)
             {
                 if(remove1 == null)
                 {
                     remove1 = weaponSlotsManager[i];
-                    weaponRemove1 = weaponSlot[i];
                 }
                 else if(remove2 == null)
                 {
                     remove2 = weaponSlotsManager[i];
-                    weaponRemove2 = weaponSlot[i];
                 }
             }
-        }
+        }*/
+
+        remove1 = weaponSlotsManager.Find(item => item.weaponData == collab.colabInfo.weapon1);
+        remove2 = weaponSlotsManager.Find(item => item.weaponData == collab.colabInfo.weapon2);
 
         weaponSlotsManager.Remove(remove1);
         weaponSlotsManager.Remove(remove2);
-        weaponSlot.Remove(weaponRemove1);
-        weaponSlot.Remove(weaponRemove2);
 
         levelUpSelectBuff.RemoveEquipWeapon(remove1);
         weaponsManager.RemoveWeapon(remove1.weaponData);
@@ -588,10 +572,11 @@ public class CharacterInfo_1 : MonoBehaviour
         levelUpSelectBuff.RemoveEquipWeapon(remove2);
         weaponsManager.RemoveWeapon(remove2.weaponData);
 
+        weaponsManager.AddWeapon(collab.weaponData);
         levelUpSelectBuff.AddCollabWeapon(collab);
         weaponSlotsManager.Add(collab);
 
-        inventorySlotsManager.WeaponSlotUpdate(weaponSlot);
+        inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
     }
 
     public void TakeDamage(int damage)

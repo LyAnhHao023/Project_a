@@ -17,15 +17,15 @@ public class InventorySlot : MonoBehaviour
         levelText.text = "";
     }
 
-    public void SetWeaponSlot(WeaponInfo weaponData)
+    public void SetWeaponSlot(UpgradeData weaponData)
     {
-        this.icon.sprite = weaponData.Icon;
+        this.icon.sprite = weaponData.icon;
         level.SetActive(true);
 
         string overLevelText = "";
 
-        if (weaponData.Overlevel > 0)
-            overLevelText = string.Format("+{0}", weaponData.Overlevel);
+        if (weaponData.overLevel > 0)
+            overLevelText = string.Format("+{0}", weaponData.overLevel);
 
         levelText.text = string.Format("Lv. {0}" + overLevelText, weaponData.level);
     }

@@ -22,4 +22,9 @@ public class BuffAreaGainExpItem : ItemBase
             capsuleExp.isFollow = true;
         }
     }
+
+    public override void Update()
+    {
+        transform.localScale += new Vector3(0.00005f, 0.00005f, 0.00005f);
+    }
 }

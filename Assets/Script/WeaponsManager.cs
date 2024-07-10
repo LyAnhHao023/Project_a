@@ -55,17 +55,21 @@ public class WeaponsManager : MonoBehaviour
     float timer = 10;
     float time = 10;
 
-    private void Update()
+    private void Start()
     {
-        if(timer <= 0)
-        {
-            foreach (var item in weapons_lst)
-            {
-                CheckCollab(item);
-            }
+        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+        weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
 
-            timer = time;
-        }
+        weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
+        weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
+        weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
+        weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
+        weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
+        weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
     }
 
     public void AddWeapon(WeaponData weaponData)
@@ -80,26 +84,24 @@ public class WeaponsManager : MonoBehaviour
         else
         {
             //Do update weapon
-            foreach(var item in  weapons_lst)
+
+            weaponEnquip data = null;
+
+            data = weapons_lst.Find(item => item.weaponData == weaponData);
+
+            if (data != null)
             {
-                if(item.weaponData == weaponData)
+                if (!data.weaponObject.GetComponent<WeaponBase>().weaponData.maxed)
                 {
-                    if(!item.weaponObject.GetComponent<WeaponBase>().weaponData.maxed)
+                    data.weaponObject.GetComponent<WeaponBase>().LevelUp();
+                    if (data.weaponObject.GetComponent<WeaponBase>().weaponData.maxed)
                     {
-                        item.weaponObject.GetComponent<WeaponBase>().LevelUp();
-                        break;
+                        CheckCollab(data);
                     }
-                    else
-                    {
-                        item.weaponObject.GetComponent<WeaponBase>().OverLevelUp();
-                    }
-
-                    if(item.weaponObject.GetComponent<WeaponBase>().weaponData.maxed)
-                    {
-                        CheckCollab(item);
-                    }
-
-                    break;
+                }
+                else
+                {
+                    data.weaponObject.GetComponent<WeaponBase>().OverLevelUp();
                 }
             }
         }
@@ -123,16 +125,15 @@ public class WeaponsManager : MonoBehaviour
 
     private void CheckCollab(weaponEnquip weapon)
     {
-        foreach (var item in weapons_lst)
+        weaponEnquip data = null;
+
+        data = weapons_lst.Find(item => item.weaponObject.GetComponent<WeaponBase>().weaponStats.level == 7);
+
+        if(data != null)
         {
-            if(item.weaponObject.GetComponent<WeaponBase>().weaponStats.level == 7)
+            if (data.weaponData == weapon.weaponData.weaponColabData)
             {
-                if (item.weaponData == weapon.weaponData.weaponColabData)
-                {
-                    Debug.Log("CO TRANG BI COLLAB");
-                    stageEventManager.SetColab();
-                    break;
-                }
+                stageEventManager.SetColab();
             }
         }
     }

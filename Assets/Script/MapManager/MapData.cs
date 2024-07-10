@@ -23,7 +23,6 @@ public class MissionInfo
 [CreateAssetMenu]
 public class MapData : ScriptableObject
 {
-    public SceneAsset Map;
     public string Name;
     public Sprite Icon;
     public string key;

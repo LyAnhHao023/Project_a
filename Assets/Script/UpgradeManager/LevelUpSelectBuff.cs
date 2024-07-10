@@ -210,15 +210,13 @@ public class LevelUpSelectBuff : MonoBehaviour
                                 {
                                     UpgradeData randomUpdate = weaponAcquiredList[Random.Range(0, weaponAcquiredList.Count)];
 
-                                    foreach (var item in weaponUpgradeList)
+                                    UpgradeData upgradeData = null;
+
+                                    upgradeData =  weaponUpgradeList.Find(item => item.weaponData.name == randomUpdate.weaponData.name && item.level < 7);
+
+                                    if (upgradeData != null)
                                     {
-                                        if (item.weaponData.name == randomUpdate.weaponData.name && item.level < 7)
-                                        {
-                                            randomUp = item;
-                                            break;
-                                        }
-                                        else if (item.weaponData.name == randomUpdate.weaponData.name && item.level == 7)
-                                            break;
+                                        randomUp = upgradeData;
                                     }
                                 }
                                 break;
@@ -226,15 +224,13 @@ public class LevelUpSelectBuff : MonoBehaviour
                                 {
                                     UpgradeData randomUpdate = itemAcquiredList[Random.Range(0, itemAcquiredList.Count)];
 
-                                    foreach (var item in itemUpgradeList)
+                                    UpgradeData upgradeData = null;
+
+                                    upgradeData = itemUpgradeList.Find(item => item.itemsData.name == randomUpdate.itemsData.name && item.level < item.UpgradeInfos.Count);
+
+                                    if (upgradeData != null)
                                     {
-                                        if (item.itemsData.name == randomUpdate.itemsData.name && item.itemsData.level < item.UpgradeInfos.Count)
-                                        {
-                                            randomUp = item;
-                                            break;
-                                        }
-                                        else if (item.itemsData.name == randomUpdate.itemsData.name && item.itemsData.level == item.UpgradeInfos.Count)
-                                            break;
+                                        randomUp = upgradeData;
                                     }
                                 }
                                 break;
@@ -310,20 +306,25 @@ public class LevelUpSelectBuff : MonoBehaviour
     {
         if ((int)weaponA.upgradeType == 2)
         {
-            foreach (var item in weaponUpgradeList)
+            UpgradeData data = null;
+
+            data = weaponUpgradeList.Find(item => item.weaponData == weaponA.weaponData);
+
+            if(data != null)
             {
-                if (item.weaponData == weaponA.weaponData && item.level < 7)
+                if(data.level < 7)
                 {
-                    item.acquired = false;
-                    item.level = item.UpgradeInfos[item.level].level;
-                    if (item.level == 7)
+                    data.acquired = false;
+                    data.level = data.UpgradeInfos[data.level].level;
+                    if (data.level == 7)
                     {
-                        item.maxed = true;
-                        RemoveEquipWeapon(item);
-                        break;
+                        weaponA.maxed = true;
+                        RemoveEquipWeapon(weaponA);
                     }
-                    item.description = item.UpgradeInfos[item.level].description;
-                    break;
+                    else
+                    {
+                        data.description = data.UpgradeInfos[data.level].description;
+                    }
                 }
             }
         }
@@ -335,16 +336,15 @@ public class LevelUpSelectBuff : MonoBehaviour
                 weaponA.level = weaponA.UpgradeInfos[weaponA.level].level;
                 if (weaponA.level == 7)
                 {
-                    foreach (var item in weaponAcquiredList)
-                    {
-                        if (weaponA.weaponData == item.weaponData)
-                        {
-                            item.maxed = true;
-                            RemoveEquipWeapon(item);
-                            break;
-                        }
-                    }
+                    UpgradeData data = null;
 
+                    data = weaponAcquiredList.Find(item => item.weaponData = weaponA.weaponData);
+
+                    if(data != null)
+                    {
+                        data.maxed = true;
+                        RemoveEquipWeapon(data);
+                    }
                     return;
                 }
                 weaponA.description = weaponA.UpgradeInfos[weaponA.level].description;
@@ -364,21 +364,26 @@ public class LevelUpSelectBuff : MonoBehaviour
     {
         if ((int)itemA.upgradeType == 3)
         {
-            foreach (var item in itemUpgradeList)
+            UpgradeData data = null;
+
+            data = itemUpgradeList.Find(item => item.itemsData = itemA.itemsData);
+
+            if(data != null)
             {
-                if (item.itemsData == itemA.itemsData && item.itemsData.level < item.UpgradeInfos.Count)
+                if(data.level < data.UpgradeInfos.Count)
                 {
-                    item.acquired = false;
+                    data.acquired = false;
                     itemA.level += 1;
-                    item.itemsData.level = item.UpgradeInfos[item.itemsData.level].level;
-                    if (item.itemsData.level == item.UpgradeInfos.Count)
+                    data.itemsData.level = data.UpgradeInfos[data.itemsData.level].level;
+                    if(data.level == data.UpgradeInfos.Count)
                     {
                         itemA.maxed = true;
-                        RemoveEquipItem(item);
-                        break;
+                        RemoveEquipItem(data);
                     }
-                    item.description = item.UpgradeInfos[item.itemsData.level].description;
-                    break;
+                    else
+                    {
+                        data.description = data.UpgradeInfos[data.itemsData.level].description;
+                    }
                 }
             }
         }
@@ -390,15 +395,14 @@ public class LevelUpSelectBuff : MonoBehaviour
                 itemA.itemsData.level = itemA.UpgradeInfos[itemA.itemsData.level].level;
                 if (itemA.itemsData.level == itemA.UpgradeInfos.Count)
                 {
+                    UpgradeData data = null;
 
-                    foreach (var item in itemAcquiredList)
+                    data = itemAcquiredList.Find(item => item.itemsData == itemA.itemsData);
+
+                    if(data != null)
                     {
-                        if (itemA.itemsData.name == item.itemsData.name)
-                        {
-                            item.maxed = true;
-                            RemoveEquipItem(item);
-                            break;
-                        }
+                        data.maxed = true;
+                        RemoveEquipItem(data);
                     }
                     return;
                 }
@@ -410,29 +414,25 @@ public class LevelUpSelectBuff : MonoBehaviour
     public void RemoveEquipWeapon(UpgradeData upgradeData)
     {
         UpgradeData removeItem = null;
-        for (int i = 0; i < weaponAcquiredList.Count; i++)
-        {
-            if (weaponAcquiredList[i].weaponData == upgradeData.weaponData)
-            {
-                removeItem = weaponAcquiredList[i];
-            }
-        }
 
-        weaponAcquiredList.Remove(removeItem);
+        removeItem = weaponAcquiredList.Find(item => item.weaponData == upgradeData.weaponData);
+
+        if(removeItem != null)
+        {
+            weaponAcquiredList.Remove(removeItem);
+        }
     }
 
     public void RemoveEquipItem(UpgradeData upgradeData)
     {
         UpgradeData removeItem = null;
-        for (int i = 0; i < itemAcquiredList.Count; i++)
-        {
-            if (itemAcquiredList[i].itemsData.name == upgradeData.itemsData.name)
-            {
-                removeItem = itemAcquiredList[i];
-            }
-        }
 
-        itemAcquiredList.Remove(removeItem);
+        removeItem = itemAcquiredList.Find(item => item.itemsData == upgradeData.itemsData);
+
+        if(removeItem != null)
+        {
+            itemAcquiredList.Remove(removeItem);
+        }
     }
 
     public void AddCollabWeapon(UpgradeData upgradeData)

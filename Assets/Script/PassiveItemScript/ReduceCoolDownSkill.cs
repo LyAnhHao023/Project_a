@@ -18,8 +18,11 @@ public class ReduceCoolDownSkill : ItemBase
         //save time base cd
         cdBase = player.skillInfor.cdSkill;
         ItemEffect();
+    }
 
-
+    public override void ItemEffect()
+    {
+        player.skillInfor.cdSkill -= cdBase * persentReduce;
     }
 
     public override void SetItemStat()
@@ -57,10 +60,5 @@ public class ReduceCoolDownSkill : ItemBase
 
             default: break;
         }
-    }
-
-    public override void ItemEffect()
-    {
-        player.skillInfor.cdSkill -= cdBase * persentReduce;
     }
 }

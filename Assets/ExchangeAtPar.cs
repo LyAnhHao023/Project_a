@@ -15,20 +15,6 @@ public class ExchangeAtPar : ItemBase
 
     bool isActiveBuff = false;
 
-    public override void ItemEffect()
-    {
-        player.attackPercent += persentDmgBuff;
-        player.reduceDmgTake += persentReduceDmgTake;
-        isActiveBuff = true;
-    }
-
-    private void DeActiveBuff()
-    {
-        player.attackPercent -= persentDmgBuff;
-        player.reduceDmgTake -= persentReduceDmgTake;
-        isActiveBuff = false;
-    }
-
     public override void SetItemStat()
     {
         switch (level)
@@ -84,8 +70,20 @@ public class ExchangeAtPar : ItemBase
             {
                 DeActiveBuff();
             }
-
-            
         }
+    }
+
+    public override void ItemEffect()
+    {
+        player.attackPercent += persentDmgBuff;
+        player.reduceDmgTake += persentReduceDmgTake;
+        isActiveBuff = true;
+    }
+
+    private void DeActiveBuff()
+    {
+        player.attackPercent -= persentDmgBuff;
+        player.reduceDmgTake -= persentReduceDmgTake;
+        isActiveBuff = false;
     }
 }

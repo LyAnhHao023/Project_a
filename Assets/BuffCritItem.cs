@@ -14,17 +14,6 @@ public class BuffCritItem : ItemBase
 
     CharacterStats characterStats;
 
-    public override void ItemEffect()
-    {
-        currentBuff += 1;
-        characterStats.crit += 1;
-    }
-
-    private void ResetBuff()
-    {
-        characterStats.crit -= currentBuff;
-        currentBuff = 0;
-    }
 
     public override void SetItemStat()
     {
@@ -58,6 +47,17 @@ public class BuffCritItem : ItemBase
         {
             ResetBuff();
         }
-        
+
+    }
+    public override void ItemEffect()
+    {
+        currentBuff += 1;
+        characterStats.crit += 1;
+    }
+
+    private void ResetBuff()
+    {
+        characterStats.crit -= currentBuff;
+        currentBuff = 0;
     }
 }

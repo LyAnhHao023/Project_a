@@ -84,14 +84,14 @@ public class PassiveItemsManager : MonoBehaviour
         else
         {
             //do update
-            foreach (var item in itemsEquip_lst)
+            ItemsEnquip data = null;
+
+            data = itemsEquip_lst.Find(item => item.itemData == itemData);
+
+            if(data != null)
             {
-                if (item.itemData == itemData)
-                {
-                    item.itemObject.GetComponent<ItemBase>().level = itemData.level;
-                    item.itemObject.GetComponent<ItemBase>().SetItemStat();
-                    break;
-                }
+                data.itemObject.GetComponent<ItemBase>().level = itemData.level;
+                data.itemObject.GetComponent<ItemBase>().SetItemStat();
             }
         }
     }

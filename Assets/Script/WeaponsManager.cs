@@ -55,7 +55,7 @@ public class WeaponsManager : MonoBehaviour
     float timer = 10;
     float time = 10;
 
-    private void Start()
+    /*private void Start()
     {
         weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
         weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
@@ -70,7 +70,7 @@ public class WeaponsManager : MonoBehaviour
         weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
         weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
         weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    }
+    }*/
 
     public void AddWeapon(WeaponData weaponData)
     {

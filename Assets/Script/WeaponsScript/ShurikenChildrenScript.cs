@@ -56,7 +56,7 @@ public class ShurikenChildrenScript : MonoBehaviour
             if (shurikenNum == 1)
             {
                 radius += 0.01f;
-                angleRos += 5;
+                angleRos+=angleRos == 360 ? 0:5 ;
                 // Tính toán vị trí mới của vật thể dựa trên góc và bán kính xoáy ốc
                 float x = ShurikenParent.position.x - Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
                 float y = ShurikenParent.position.y - Mathf.Sin(angle * Mathf.Deg2Rad) * radius;

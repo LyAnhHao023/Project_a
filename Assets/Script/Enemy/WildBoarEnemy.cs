@@ -125,6 +125,9 @@ public class WildBoarEnemy : EnemyBase
         if (collision.gameObject == targetGameObject && timeApllyDmg <= 0)
         {
             Attack();
+        }else if (collision.gameObject.layer == 6)
+        {
+            StopRush();
         }
     }
 

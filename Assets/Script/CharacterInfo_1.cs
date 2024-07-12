@@ -472,7 +472,7 @@ public class CharacterInfo_1 : MonoBehaviour
             case 5: //GainCoin
                 {
                     coins += 50;
-                    countSys.SetCoinCount(coins);
+                    countSys.SetCoinCount(StaticData.totalCoin);
                 }
                 break;
         }

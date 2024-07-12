@@ -150,6 +150,9 @@ public class CharacterInfo_1 : MonoBehaviour
         baseSpeed = characterStats.speed;
         baseHealth = characterStats.maxHealth;
 
+        //load skill tree manager
+        GetComponent<SkilTreeManager>().LoadBuffSkillTree(skillTree);
+
         statUpdate();
 
         maxHealth = characterStats.maxHealth;
@@ -172,9 +175,9 @@ public class CharacterInfo_1 : MonoBehaviour
             levelUpSelectBuff.WeaponAcquired(data);
         }
 
-        weaponSlotsManager.Add(secondweapon);
+        /*weaponSlotsManager.Add(secondweapon);
         weaponsManager.AddWeapon(secondweapon.weaponData);
-        levelUpSelectBuff.WeaponAcquired(secondweapon);
+        levelUpSelectBuff.WeaponAcquired(secondweapon);*/
 
         inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
 
@@ -190,9 +193,6 @@ public class CharacterInfo_1 : MonoBehaviour
         statShow.SetAttack(characterStats.strenght);
         statShow.SetSpeed(Mathf.FloorToInt(characterStats.speed));
         statShow.SetCrit(characterStats.crit);
-
-        //load skill tree manager
-        GetComponent<SkilTreeManager>().LoadBuffSkillTree(skillTree);
     }
 
     // Update is called once per frame
@@ -200,7 +200,12 @@ public class CharacterInfo_1 : MonoBehaviour
     {
         countSys.SetCoinCount(coins);
         elapsedTime += Time.deltaTime;
-        timerToHealth -= Time.deltaTime;
+
+        if(hpRegen != 0)
+        {
+            timerToHealth -= Time.deltaTime;
+        }
+
         if (timerToHealth <= 0)
         {
             HealthByNumber(hpRegen);
@@ -535,6 +540,7 @@ public class CharacterInfo_1 : MonoBehaviour
     public void AddItem(UpgradeData upgradeData)
     {
         upgradeData.acquired = true;
+        itemSlotsManager.Add(upgradeData);
         levelUpSelectBuff.ItemNextUpgradeInfo(upgradeData);
         itemsManager.AddItem(upgradeData.itemsData);
         inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3c6a03c4f5e0e8f468a102d8440253e8
+guid: 783264229c270d3438a7674ace38ad85
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1783808350427418317
-    second: 50_0
+      213: 1540027712993040515
+    second: AssassinHood_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -98,13 +98,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 50_0
+      name: AssassinHood_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 24
-        height: 24
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,8 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 331f56d91c3ae37e0800000000000000
-      internalID: -1783808350427418317
+      spriteID: 3881539ab074f5510800000000000000
+      internalID: 1540027712993040515
       vertices: []
       indices: 
       edges: []
@@ -129,7 +129,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      50_0: -1783808350427418317
+      AssassinHood_0: 1540027712993040515
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

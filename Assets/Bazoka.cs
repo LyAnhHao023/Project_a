@@ -13,7 +13,7 @@ public class Bazoka : WeaponBase
     GameObject fireEffect;
 
 
-    float bulletForce = 6;
+    float bulletForce = 20;
 
     CharacterStats characterStats;
 

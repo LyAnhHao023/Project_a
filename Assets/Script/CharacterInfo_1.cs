@@ -680,11 +680,11 @@ public class CharacterInfo_1 : MonoBehaviour
 
     public void statUpdate()
     {
-        characterStats.strenght = baseAttack + Mathf.FloorToInt((float)baseAttack * attackPercent);
+        characterStats.strenght = baseAttack + Mathf.CeilToInt((float)baseAttack * attackPercent);
         characterStats.crit = baseCrit + critPercent;
         characterStats.critDmg=baseCritDmg+critDamagePercent;
-        characterStats.maxHealth = baseHealth + Mathf.FloorToInt((float)baseHealth * healthPercent);
-        characterStats.speed = baseSpeed + Mathf.FloorToInt((float)baseSpeed * speedPercent);
+        characterStats.maxHealth = baseHealth + Mathf.CeilToInt((float)baseHealth * healthPercent);
+        characterStats.speed = baseSpeed + baseSpeed * speedPercent;
         statShow.SetAttack(characterStats.strenght);
         statShow.SetCrit(characterStats.crit);
         maxHealth = characterStats.maxHealth;

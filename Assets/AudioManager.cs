@@ -21,6 +21,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip PickUpCoin;
     public AudioClip TakeDmg;
     public AudioClip Warning;
+    public AudioClip AnvilDrop;
 
     [Header("-----AudioClipWeapon-----")]
     public AudioClip Axe;

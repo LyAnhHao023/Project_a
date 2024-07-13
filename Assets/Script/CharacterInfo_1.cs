@@ -541,6 +541,7 @@ public class CharacterInfo_1 : MonoBehaviour
     {
         upgradeData.acquired = true;
         itemSlotsManager.Add(upgradeData);
+        levelUpSelectBuff.ItemAcquired(upgradeData);
         levelUpSelectBuff.ItemNextUpgradeInfo(upgradeData);
         itemsManager.AddItem(upgradeData.itemsData);
         inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);

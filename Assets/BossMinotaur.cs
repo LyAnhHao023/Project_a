@@ -71,6 +71,7 @@ public class BossMinotaur : EnemyBase
         camera = GameObject.FindGameObjectWithTag("VirturalCamera").GetComponent<CinemachineVirtualCamera>();
 
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager.SetBackGround(audioManager.BossFight);
 
     }
 

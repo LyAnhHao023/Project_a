@@ -37,6 +37,8 @@ public class LazerMonster : EnemyBase
     GameObject mainMenu;
     MenuManager menuManager;
 
+    AudioSource audioSource;
+
 
     private void Awake()
     {
@@ -44,6 +46,9 @@ public class LazerMonster : EnemyBase
         mainMenu = GameObject.FindGameObjectWithTag("MenuManager");
         menuManager = mainMenu.GetComponent<MenuManager>();
 
+        AudioManager audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager.SetBackGround(audioManager.BossFight);
+        audioSource=GetComponent<AudioSource>(); 
     }
 
     public override void SetTarget(GameObject GameObject)
@@ -67,6 +72,7 @@ public class LazerMonster : EnemyBase
         if(timerSkillLazer < 0)
         {
             timerSkillLazer = 4f;
+            audioSource.Play(); 
             LazerSkillPrefab.SetActive(true);
         }
     }

@@ -152,7 +152,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      hammer_08_0: -5335458187041427781
+      hammer_08_1: -7038942852263651565
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

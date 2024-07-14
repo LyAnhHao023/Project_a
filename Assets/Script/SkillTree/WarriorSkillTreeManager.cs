@@ -56,6 +56,6 @@ public class WarriorSkillTreeManager : MonoBehaviour
     public void Onclick()
     {
         BuyButton.SetActive(true);
-        skillPrice.Set(this.characterData, skillList[currentLevel], 1);
+        //skillPrice.Set(this.characterData, skillList[currentLevel], 1);
     }
 }

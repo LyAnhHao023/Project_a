@@ -76,6 +76,11 @@ public class MenuManager : MonoBehaviour
         _UpgradeAnvilInfoHolderUI.SetActive(false);
         _CollabAnvilUI.SetActive(false);
 
+        if(StaticData.LevelType > 1)
+        {
+            missionUI.SetActive(false);
+        }
+
         isGameOver = false;
         isSelectBuff = false;
         isPaused = false;
@@ -193,8 +198,9 @@ public class MenuManager : MonoBehaviour
 
         GameOverText.text = stageComplete ? "CLEAR STAGE" : "GAME OVER";
 
-        audioManager.PlaySFX(stageComplete?audioManager.Win:audioManager.Lose);
+        audioManager.SetCompleteStage(true);
 
+        audioManager.PlaySFX(stageComplete?audioManager.Win:audioManager.Lose);
     }
 
     public void LevelUpScene(List<UpgradeData> upgradeDatas)

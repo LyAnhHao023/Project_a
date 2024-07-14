@@ -30,6 +30,12 @@ public class SetGoodsInfo : MonoBehaviour
         totalPoints = PlayerPrefs.GetInt("TotalPoints", 0);
     }
 
+    private void Update()
+    {
+        totalCoins = PlayerPrefs.GetInt("Coins", 0);
+        totalPoints = PlayerPrefs.GetInt("TotalPoints", 0);
+    }
+
     private void Start()
     {
         button.onClick.AddListener(Onclick);

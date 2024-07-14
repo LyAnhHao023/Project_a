@@ -56,6 +56,9 @@ public class MagicicanBossScript : EnemyBase
     [SerializeField]
     AudioClip TeleEnd;
 
+    GameObject mainMenu;
+    MenuManager menuManager;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -64,6 +67,9 @@ public class MagicicanBossScript : EnemyBase
 
         AudioManager audioManager =GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         audioManager.SetBackGround(audioManager.BossFight);
+        
+        mainMenu = GameObject.FindGameObjectWithTag("MenuManager");
+        menuManager = mainMenu.GetComponent<MenuManager>();
     }
 
     public override void SetTarget(GameObject GameObject)
@@ -186,6 +192,7 @@ public class MagicicanBossScript : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
+            StaticData.bigBossKill++;
             GetComponent <Collider2D>().enabled = false;
             if (AIPath != null)
             {
@@ -196,6 +203,26 @@ public class MagicicanBossScript : EnemyBase
                 GetComponent<EnemyMove>().canMove = false;
             }
             animator.SetBool("Dead", true);
+
+            if (StaticData.MapSelect != null)
+            {
+                if (StaticData.LevelType == 0)
+                {
+                    menuManager.GameOverScreen(true);
+                    PlayerPrefs.SetInt("Stage" + StaticData.MapSelect.key, 1);
+                    PlayerPrefs.Save();
+                    PlayerPrefs.SetInt(StaticData.MapSelect.key, 1);
+                    PlayerPrefs.Save();
+                }
+
+                if (StaticData.LevelType == 2 && StaticData.bigBossKill >= 3)
+                {
+                    menuManager.GameOverScreen(true);
+                    PlayerPrefs.SetInt("Challange" + StaticData.MapSelect.key, 1);
+                    PlayerPrefs.Save();
+                }
+            }
+
             Destroy(gameObject, 1f);
             Drop();
             return true;

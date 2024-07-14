@@ -38,6 +38,19 @@ public class AudioManager : MonoBehaviour
     public AudioClip BoombBat;
     public AudioClip WildBoar;
 
+    private bool completeStage;
+
+    public void SetCompleteStage(bool completeStage)
+    {
+        this.completeStage = completeStage;
+    }
+
+    private void Awake()
+    {
+
+        completeStage = false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,10 +60,15 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        if (!backGroundMusicSource.isPlaying)
+        if (!backGroundMusicSource.isPlaying && !completeStage)
         {
             backGroundMusicSource.clip = SetBGM();
             backGroundMusicSource.Play();
+        }
+
+        if (completeStage)
+        {
+            StopMusic();
         }
     }
 
@@ -75,6 +93,11 @@ public class AudioManager : MonoBehaviour
         backGroundMusicSource.Stop();
         backGroundMusicSource.clip = audioClip;
         backGroundMusicSource.Play();
+    }
+    
+    public void StopMusic()
+    {
+        backGroundMusicSource.Stop();
     }
 
     public void PlaySFX(AudioClip audioClip)

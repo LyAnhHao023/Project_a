@@ -17,7 +17,6 @@ public class IncreaseHitSpeed : ItemBase
     {
         level = 1;
         SetItemStat();
-        isJustEnquip = StaticData.isJustEnquip;
     }
 
     public override void ItemEffect()
@@ -32,19 +31,17 @@ public class IncreaseHitSpeed : ItemBase
             item.weaponObject.GetComponent<WeaponBase>().weaponStats.timeAttack -= curentTimeAttack * persentSpeedIncrease/100;
             Debug.Log(item.weaponObject.GetComponent<WeaponBase>().weaponStats.timeAttack+"Sau khi tang");
         }
-        StaticData.isJustEnquip = false;
+        isJustEnquip=false;
     }
 
     public override void Update()
     {
-        isJustEnquip = StaticData.isJustEnquip;
         if (!isJustEnquip)
         {
             if (weaponEnquips_lst.Count < GetComponentInParent<WeaponsManager>().weapons_lst.Count)
             {
                 float curentTimeAttack = weaponEnquips_lst.Last().weaponObject.GetComponent<WeaponBase>().weaponStats.timeAttack;
                 weaponEnquips_lst.Last().weaponObject.GetComponent<WeaponBase>().weaponStats.timeAttack -= curentTimeAttack * totalPersentSpeedIncrease / 100;
-                StaticData.isJustEnquip = false;
             }
         }
         

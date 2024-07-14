@@ -56,6 +56,6 @@ public class WizardSkillTreeManager : MonoBehaviour
     public void Onclick()
     {
         BuyButton.SetActive(true);
-        skillPrice.Set(characterData, skillList[currentLevel], 2);
+        //skillPrice.Set(characterData, skillList[currentLevel], 2);
     }
 }

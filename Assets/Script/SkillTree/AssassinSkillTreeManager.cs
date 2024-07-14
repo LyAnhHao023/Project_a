@@ -56,6 +56,6 @@ public class AssassinSkillTreeManager : MonoBehaviour
     public void Onclick()
     {
         BuyButton.SetActive(true);
-        skillPrice.Set(characterData, skillList[currentLevel], 3);
+        //skillPrice.Set(characterData, skillList[currentLevel], 3);
     }
 }

@@ -12,6 +12,16 @@ public class SetSkillPrice : MonoBehaviour
     
     public CharacterData characterData;
 
+    private void Awake()
+    {
+        totalCoins = PlayerPrefs.GetInt("Coins", 0);
+    }
+
+    private void Update()
+    {
+        totalCoins = PlayerPrefs.GetInt("Coins", 0);
+    }
+
     public void SetCharacterData(CharacterData characterData)
     {
         this.characterData = characterData;
@@ -30,28 +40,42 @@ public class SetSkillPrice : MonoBehaviour
         this.skill = skill;
         SkillPrice.text = skill.prices.ToString();
 
-        totalCoins = PlayerPrefs.GetInt("Coins", 0);
+        PriceCheck();
+
+        MaxLevelCheck();
     }
 
     private void PriceCheck()
     {
-        if(skill.prices >= totalCoins)
+        Debug.Log(skill.prices.ToString());
+
+        if (totalCoins >= skill.prices)
         {
+            Debug.Log("CO THE MUA");
             ButtonOverlay.SetActive(false);
-            transform.GetComponent<Button>().enabled = false;
+            transform.GetComponent<Button>().enabled = true;
         }
         else
         {
+            Debug.Log("KHONG THE MUA");
             ButtonOverlay.SetActive(true);
-            transform.GetComponent<Button>().enabled = true;
+            transform.GetComponent<Button>().enabled = false;
+        }
+    }
+
+    private void MaxLevelCheck()
+    {
+        if(characterData.skillTree.level >= 10)
+        {
+            SkillPrice.text = "MAX";
+            ButtonOverlay.SetActive(true);
+            transform.GetComponent<Button>().enabled = false;
         }
     }
 
     public void Onclick()
     {
         totalCoins -= skill.prices;
-
-        PriceCheck();
 
         PlayerPrefs.SetInt("Coins", totalCoins);
         PlayerPrefs.Save();

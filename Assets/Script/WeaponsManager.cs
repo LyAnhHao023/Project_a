@@ -79,7 +79,7 @@ public class WeaponsManager : MonoBehaviour
             GameObject weaponObject = Instantiate(weaponData.weaponBasePrefab, weaponObjectTranform);
             weaponObject.GetComponent<WeaponBase>().SetData(weaponData);
             weaponEnquip newWeaponEnquip = new weaponEnquip(weaponData, weaponObject);
-            weapons_lst.Add(newWeaponEnquip);z
+            weapons_lst.Add(newWeaponEnquip);
         }
         else
         {

@@ -24,12 +24,11 @@ public class ShopManager : MonoBehaviour
     int totalCoin;
     int totalPoint;
 
-    /*private void Awake()
+    private void Awake()
     {
-        PlayerPrefs.SetInt("Coins", 100000);
+        PlayerPrefs.SetInt("Coins", 10000);
         PlayerPrefs.Save();
-        Set();
-    }*/
+    }
 
     private void Update()
     {

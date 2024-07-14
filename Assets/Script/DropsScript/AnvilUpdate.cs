@@ -42,6 +42,9 @@ public class AnvilUpdate : MonoBehaviour
         find = AnvilUI.GetComponent<FindButtonWithTag>();
         AcceptButton = find.AcceptButton();
         ButtonAcceptButton = AcceptButton.GetComponent<Button>();
+
+        AudioManager audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager.PlaySFX(audioManager.AnvilDrop);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

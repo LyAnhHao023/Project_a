@@ -61,6 +61,9 @@ public class MagicicanBossScript : EnemyBase
         animator = GetComponent<Animator>();
         AIPath = GetComponent<AIPath>();
         audioSource = GetComponent<AudioSource>();
+
+        AudioManager audioManager =GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager.SetBackGround(audioManager.BossFight);
     }
 
     public override void SetTarget(GameObject GameObject)

@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     [Header("-----AudioClipGamePlay-----")]
     public AudioClip[] MainMenuBGM;
     public AudioClip Background;
+    public AudioClip BossFight;
     public AudioClip LevelUp;
     public AudioClip Lose;
     public AudioClip Win;
@@ -21,6 +22,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip PickUpCoin;
     public AudioClip TakeDmg;
     public AudioClip Warning;
+    public AudioClip AnvilDrop;
+    public AudioClip UpgradeAnvil;
 
     [Header("-----AudioClipWeapon-----")]
     public AudioClip Axe;
@@ -65,6 +68,13 @@ public class AudioManager : MonoBehaviour
         }
 
         return Background;
+    }
+
+    public void SetBackGround(AudioClip audioClip)
+    {
+        backGroundMusicSource.Stop();
+        backGroundMusicSource.clip = audioClip;
+        backGroundMusicSource.Play();
     }
 
     public void PlaySFX(AudioClip audioClip)

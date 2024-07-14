@@ -41,6 +41,8 @@ public class AnvilColab : MonoBehaviour
 
 
         PointerOJ.GetComponent<Window_pointer>().SetTarget(new Vector3(transform.position.x, transform.position.y + 1, 0));
+        AudioManager audioManager= GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager.PlaySFX(audioManager.AnvilDrop);
     }
 
 

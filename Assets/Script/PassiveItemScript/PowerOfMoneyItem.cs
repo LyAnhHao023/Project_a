@@ -33,7 +33,7 @@ public class PowerOfMoneyItem : ItemBase
         {
             int persentBuff = player.coins - coinCurrent;
             player.attackPercent += persentBuff * persentAttackBuffFloat;
-            //player.statUpdate();
+            player.statUpdate();
             coinCurrent = player.coins;
         }
     }

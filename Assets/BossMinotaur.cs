@@ -61,6 +61,14 @@ public class BossMinotaur : EnemyBase
     [SerializeField]
     AudioClip slashSound;
 
+    GameObject mainMenu;
+    MenuManager menuManager;
+
+    private void Awake()
+    {
+        mainMenu = GameObject.FindGameObjectWithTag("MenuManager");
+        menuManager = mainMenu.GetComponent<MenuManager>();
+    }
 
     private void Start()
     {
@@ -187,9 +195,30 @@ public class BossMinotaur : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
+            StaticData.bigBossKill++;
             GetComponent<AIPath>().canMove = false;
             GetComponent<Collider2D>().enabled = false;
             animator.SetBool("Dead", true);
+
+            if (StaticData.MapSelect != null)
+            {
+                if (StaticData.LevelType == 0)
+                {
+                    menuManager.GameOverScreen(true);
+                    PlayerPrefs.SetInt("Stage" + StaticData.MapSelect.key, 1);
+                    PlayerPrefs.Save();
+                    PlayerPrefs.SetInt(StaticData.MapSelect.key, 1);
+                    PlayerPrefs.Save();
+                }
+
+                if (StaticData.LevelType == 2 && StaticData.bigBossKill >= 3)
+                {
+                    menuManager.GameOverScreen(true);
+                    PlayerPrefs.SetInt("Challange" + StaticData.MapSelect.key, 1);
+                    PlayerPrefs.Save();
+                }
+            }
+
             Destroy(gameObject, 1f);
             Drop();
             return true;

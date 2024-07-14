@@ -10,5 +10,5 @@ public class StaticData : MonoBehaviour
     public static int totalCoin = 0;
     public static int bigBossKill = 0;
     public static MapData MapSelect = null;
-    public static int missionCompleteNum = 0;
+    public static int missionCompleteNum = 0;z
 }

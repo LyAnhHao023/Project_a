@@ -17,12 +17,10 @@ public class PowerOfMoneyItem : ItemBase
         SetItemStat();
         player = GetComponentInParent<CharacterInfo_1>();
         coinCurrent = player.coins;
-        GameObject.Find("===SpawEnemy===").GetComponent<SpawEnemy>().PlusOrMinusEnemyStats(0,0,0,0, persentDropCoinBuffInt, 0,0);
     }
 
     private void FixedUpdate()
     {
-        SetItemStat();
         ItemEffect();
     }
 
@@ -63,5 +61,7 @@ public class PowerOfMoneyItem : ItemBase
                 }
                 break;
         }
+
+        GameObject.Find("===SpawEnemy===").GetComponent<SpawEnemy>().PlusOrMinusEnemyStats(0, 0, 0, 0, persentDropCoinBuffInt, 0, 0);
     }
 }

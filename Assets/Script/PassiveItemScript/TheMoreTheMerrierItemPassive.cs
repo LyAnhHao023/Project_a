@@ -40,32 +40,32 @@ public class TheMoreTheMerrierItemPassive : ItemBase
         {
             case 1:
                 {
-                    timeSpawEnemyMinus = 0.1f;
+                    timeSpawEnemyMinus = 0.2f;
                 }
                 break;
             case 2:
                 {
-                    timeSpawEnemyMinus = 0.1f; // total 0.4f
+                    timeSpawEnemyMinus = 0.1f; // total 0.3f
                 }
                 break;
             case 3:
                 {
-                    timeSpawEnemyMinus = 0.1f; // total 0.5f
+                    timeSpawEnemyMinus = 0.1f; // total 0.4f
                 }
                 break;
             case 4:
                 {
-                    timeSpawEnemyMinus = 0.1f; // total 0.8f
+                    timeSpawEnemyMinus = 0.1f; // total 0.5f
                 }
                 break;
             case 5:
                 {
-                    timeSpawEnemyMinus = 0.1f; // total 1f
+                    timeSpawEnemyMinus = 0.1f; // total 0.6f
                 }
                 break;
             case 6:
                 {
-                    timeSpawEnemyMinus = 0.1f; // total 1.5f
+                    timeSpawEnemyMinus = 0.1f; // total 0.7f
                 }
                 break;
         }

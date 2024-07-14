@@ -32,7 +32,7 @@ public class StageEventManager : MonoBehaviour
 
     public void SetColab()
     {
-        totalColab+=1;
+        totalColab = 1;
     }
 
     private void Start()

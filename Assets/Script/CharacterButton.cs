@@ -12,12 +12,20 @@ public class CharacterButton : MonoBehaviour
     GameObject CharacterHolder;
     SetCharacterShow setCharacterShow;
 
-    private CharacterData CharData;
+    private CharacterData CharData = null;
 
     private void Awake()
     {
         CharacterHolder = GameObject.FindGameObjectWithTag("CharacterHolder");
         setCharacterShow = CharacterHolder.GetComponent<SetCharacterShow>();
+    }
+
+    private void Update()
+    {
+        if(CharacterHolder != null)
+        {
+            Set(CharData);
+        }
     }
 
     public void Set(CharacterData characterData)

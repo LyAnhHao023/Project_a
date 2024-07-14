@@ -51,26 +51,34 @@ public class WeaponsManager : MonoBehaviour
 
     public List<weaponEnquip> weapons_lst=new List<weaponEnquip>(5);
 
-    int i = 0;
-    float timer = 10;
+    /*int i = 0;
+    float timer = 5;
     float time = 10;
 
-    //private void Start()
-    //{
-    //    //weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //    //weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //    //weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //    //weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //    //weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //    //weapons_lst.First().weaponObject.GetComponent<WeaponBase>().LevelUp();
+    bool active = false;
 
-    //    //weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //    //weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //    //weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //    //weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //    //weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //    //weapons_lst.Last().weaponObject.GetComponent<WeaponBase>().LevelUp();
-    //}
+    private void Update()
+    {
+        timer -= Time.deltaTime;
+
+        if (timer <= 0 && !active)
+        {
+            active = true;
+            AddWeapon(ToxinZonesWeapon);
+            AddWeapon(ToxinZonesWeapon);
+            AddWeapon(ToxinZonesWeapon);
+            AddWeapon(ToxinZonesWeapon);
+            AddWeapon(ToxinZonesWeapon);
+            AddWeapon(ToxinZonesWeapon);
+
+            AddWeapon(WallSpikeWeapon);
+            AddWeapon(WallSpikeWeapon);
+            AddWeapon(WallSpikeWeapon);
+            AddWeapon(WallSpikeWeapon);
+            AddWeapon(WallSpikeWeapon);
+            AddWeapon(WallSpikeWeapon);
+        }
+    }*/
 
     public void AddWeapon(WeaponData weaponData)
     {
@@ -94,8 +102,10 @@ public class WeaponsManager : MonoBehaviour
                 if (!data.weaponObject.GetComponent<WeaponBase>().weaponData.maxed)
                 {
                     data.weaponObject.GetComponent<WeaponBase>().LevelUp();
+
                     if (data.weaponObject.GetComponent<WeaponBase>().weaponData.maxed)
                     {
+                        Debug.Log("KIEM TRA COLLAB");
                         CheckCollab(data);
                     }
                 }
@@ -127,14 +137,13 @@ public class WeaponsManager : MonoBehaviour
     {
         weaponEnquip data = null;
 
-        data = weapons_lst.Find(item => item.weaponObject.GetComponent<WeaponBase>().weaponStats.level == 7);
+        data = weapons_lst.Find(item => item.weaponObject.GetComponent<WeaponBase>().weaponStats.level == 7 && item.weaponData == weapon.weaponData.weaponColabData);
 
         if(data != null)
         {
-            if (data.weaponData == weapon.weaponData.weaponColabData)
-            {
-                stageEventManager.SetColab();
-            }
+
+            Debug.Log("XUAT HIEN COLLAB");
+            stageEventManager.SetColab();
         }
     }
 }

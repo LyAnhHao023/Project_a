@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip Warning;
     public AudioClip AnvilDrop;
     public AudioClip UpgradeAnvil;
+    public AudioClip CollabAnvilBonk;
 
     [Header("-----AudioClipWeapon-----")]
     public AudioClip Axe;
@@ -103,6 +104,11 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX(AudioClip audioClip)
     {
         SFX.PlayOneShot(audioClip);
+    }
+
+    public void ClearSFX()
+    {
+        SFX.Stop();
     }
 
     public void SetMasterVolume(float level)

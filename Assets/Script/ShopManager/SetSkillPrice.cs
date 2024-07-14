@@ -51,13 +51,11 @@ public class SetSkillPrice : MonoBehaviour
 
         if (totalCoins >= skill.prices)
         {
-            Debug.Log("CO THE MUA");
             ButtonOverlay.SetActive(false);
             transform.GetComponent<Button>().enabled = true;
         }
         else
         {
-            Debug.Log("KHONG THE MUA");
             ButtonOverlay.SetActive(true);
             transform.GetComponent<Button>().enabled = false;
         }

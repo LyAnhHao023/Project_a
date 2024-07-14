@@ -7,8 +7,6 @@ public class SetCollabAcceptButton : MonoBehaviour
 {
     [SerializeField] GameObject Overlay;
     [SerializeField] Button AcceptButton;
-    [SerializeField] GameObject ImageAnimation;
-    [SerializeField] GameObject ResultIcon;
     [SerializeField] GameObject ColabResultUI;
     [SerializeField] AnvilCollabResult setColabResult;
 
@@ -35,9 +33,6 @@ public class SetCollabAcceptButton : MonoBehaviour
         }
 
         CheckColab();
-
-        ImageAnimation.SetActive(true);
-        ResultIcon.SetActive(false);
     }
 
     public void RemoveData(UpgradeData data)

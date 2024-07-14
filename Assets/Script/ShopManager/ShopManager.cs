@@ -11,6 +11,9 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] GameObject skillTreeSystemManager;
 
+    [SerializeField] GameObject Reset;
+    [SerializeField] GameObject ResetOverlay;
+
     public GameObject goodsInfo()
     {
         return goodsInfoHolder;
@@ -19,6 +22,16 @@ public class ShopManager : MonoBehaviour
     public GameObject SkillTree()
     {
         return skillTreeSystemManager;
+    }
+
+    public GameObject ResetButton()
+    {
+        return Reset;
+    }
+
+    public GameObject ResetButtonOverlay()
+    {
+        return ResetOverlay;
     }
 
     int totalCoin;

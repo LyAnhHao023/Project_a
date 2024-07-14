@@ -17,6 +17,9 @@ public class SetGoodsInfo : MonoBehaviour
 
     [SerializeField] ShopManager shopManager;
 
+    [SerializeField] GameObject SkillTree;
+    [SerializeField] SkillTreeSystemManager SetSkillTree;
+
     private GoodsData goodsData;
 
     SetItemShop goodsHolder;
@@ -115,6 +118,9 @@ public class SetGoodsInfo : MonoBehaviour
         if((int)goodsData.type == 1)
         {
             goodsData.characterData.acquired = true;
+            SkillTree.SetActive(true);
+            SetSkillTree.SetSkillTree(goodsData.characterData);
+            SetSkillTree.Set();
         }
 
         goodsData.level+=1;

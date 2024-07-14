@@ -30,14 +30,14 @@ public class ShurikenChildrenScript : MonoBehaviour
         GetComponentInParent<ShurikenScript>().ApllyDmg(collision);
     }
 
-    void Update()
+    private void Update()
     {
         if(Time.deltaTime != 0f)
         {
             if(shurikenNum == 0)
             {
-                radius += 0.01f;
-                angleRos += 5;
+                radius += 0.006f;
+                angleRos += angleRos == 360 ? 0 : 5;
                 // Tính toán vị trí mới của vật thể dựa trên góc và bán kính xoáy ốc
                 float x = ShurikenParent.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
                 float y = ShurikenParent.position.y + Mathf.Sin(angle * Mathf.Deg2Rad) * radius;

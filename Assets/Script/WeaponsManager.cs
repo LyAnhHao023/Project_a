@@ -167,7 +167,6 @@ public class WeaponsManager : MonoBehaviour
 
         if(data != null)
         {
-
             Debug.Log("XUAT HIEN COLLAB");
             stageEventManager.SetColab();
         }

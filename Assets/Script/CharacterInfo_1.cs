@@ -49,7 +49,6 @@ public class CharacterInfo_1 : MonoBehaviour
     [SerializeField] LevelUpSelectBuff levelUpSelectBuff;
 
     public List<UpgradeData> upgradeDatas;
-    public List<UpgradeData> upgradeDatasFromChest;
     public List<UpgradeData> weaponSlotsManager = new List<UpgradeData>();
     public List<UpgradeData> itemSlotsManager = new List<UpgradeData>();
 
@@ -290,7 +289,7 @@ public class CharacterInfo_1 : MonoBehaviour
         menuManager.LevelUpScene(upgradeDatas);
         currentExp -= maxExpValue;
         level += 1;
-        maxExpValue += 3;
+        maxExpValue += 0;
         expBar.SetMaxExp(level, maxExpValue);
     }
 
@@ -306,7 +305,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
                     UpgradeData data = null;
 
-                    data = weaponSlotsManager.Find(item => item.weaponData.name == upgradeDatas[id].weaponData.name);
+                    data = weaponSlotsManager.Find(item => item.weaponData == upgradeDatas[id].weaponData);
 
                     if (data != null)
                     {
@@ -391,23 +390,23 @@ public class CharacterInfo_1 : MonoBehaviour
         menuManager.LevelUpDone();
     }
 
-    public void UpgradeFromChest(int id)
+    public void UpgradeFromChest(UpgradeData upgradeDatasFromChest)
     {
-        switch ((int)upgradeDatasFromChest[id].upgradeType)
+        switch ((int)upgradeDatasFromChest.upgradeType)
         {
             case 0: //WeaponUpgrade
                 {
-                    upgradeDatasFromChest[id].acquired = true;
-                    levelUpSelectBuff.WeaponNextUpgradeInfo(upgradeDatasFromChest[id]);
-                    weaponsManager.AddWeapon(upgradeDatasFromChest[id].weaponData);
+                    upgradeDatasFromChest.acquired = true;
+                    levelUpSelectBuff.WeaponNextUpgradeInfo(upgradeDatasFromChest);
+                    weaponsManager.AddWeapon(upgradeDatasFromChest.weaponData);
 
                     UpgradeData data = null;
 
-                    data = weaponSlotsManager.Find(item => item.weaponData.name == upgradeDatasFromChest[id].weaponData.name);
+                    data = weaponSlotsManager.Find(item => item.weaponData.name == upgradeDatasFromChest.weaponData.name);
 
                     if(data != null)
                     {
-                        data.level = upgradeDatasFromChest[id].level;
+                        data.level = upgradeDatasFromChest.level;
 
                         if(data.level == 7)
                         {
@@ -420,33 +419,33 @@ public class CharacterInfo_1 : MonoBehaviour
                 break;
             case 1: //ItemUpgrade
                 {
-                    upgradeDatasFromChest[id].acquired = true;
-                    levelUpSelectBuff.ItemNextUpgradeInfo(upgradeDatasFromChest[id]);
-                    itemsManager.AddItem(upgradeDatasFromChest[id].itemsData);
+                    upgradeDatasFromChest.acquired = true;
+                    levelUpSelectBuff.ItemNextUpgradeInfo(upgradeDatasFromChest);
+                    itemsManager.AddItem(upgradeDatasFromChest.itemsData);
                     inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
                 }
                 break;
             case 2: //WeaponUnlock
                 {
-                    weaponSlotsManager.Add(upgradeDatasFromChest[id]);
-                    weaponsManager.AddWeapon(upgradeDatasFromChest[id].weaponData);
+                    weaponSlotsManager.Add(upgradeDatasFromChest);
+                    weaponsManager.AddWeapon(upgradeDatasFromChest.weaponData);
                     inventorySlotsManager.WeaponSlotUpdate(weaponSlotsManager);
-                    upgradeDatasFromChest[id].acquired = true;
+                    upgradeDatasFromChest.acquired = true;
 
-                    levelUpSelectBuff.WeaponAcquired(upgradeDatasFromChest[id]);
+                    levelUpSelectBuff.WeaponAcquired(upgradeDatasFromChest);
                 }
                 break;
             case 3: //ItemUnlock
                 {
-                    upgradeDatas[id].level = 0;
-                    itemSlotsManager.Add(upgradeDatasFromChest[id]);
-                    itemsManager.AddItem(upgradeDatasFromChest[id].itemsData);
+                    upgradeDatasFromChest.level = 0;
+                    itemSlotsManager.Add(upgradeDatasFromChest);
+                    itemsManager.AddItem(upgradeDatasFromChest.itemsData);
                     inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
-                    upgradeDatasFromChest[id].acquired = true;
+                    upgradeDatasFromChest.acquired = true;
 
-                    levelUpSelectBuff.ItemAcquired(upgradeDatasFromChest[id]);
+                    levelUpSelectBuff.ItemAcquired(upgradeDatasFromChest);
 
-                    if (upgradeDatasFromChest[id].itemsData.name == "SlowHealth")
+                    if (upgradeDatasFromChest.itemsData.name == "SlowHealth")
                     {
                         slowHealthAcquired = true;
                     }
@@ -454,22 +453,22 @@ public class CharacterInfo_1 : MonoBehaviour
                 break;
             case 4: //StatUpgrade
                 {
-                    if (upgradeDatasFromChest[id].buffName.Contains("ATK"))
+                    if (upgradeDatasFromChest.buffName.Contains("ATK"))
                     {
                         attackPercent += 0.1f;
                         statUpdate();
                     }
-                    if (upgradeDatasFromChest[id].buffName.Contains("CRT"))
+                    if (upgradeDatasFromChest.buffName.Contains("CRT"))
                     {
                         critPercent += 2;
                         statUpdate();
                     }
-                    if (upgradeDatasFromChest[id].buffName.Contains("HP"))
+                    if (upgradeDatasFromChest.buffName.Contains("HP"))
                     {
                         healthPercent += 0.1f;
                         statUpdate();
                     }
-                    if (upgradeDatasFromChest[id].buffName.Contains("SPD"))
+                    if (upgradeDatasFromChest.buffName.Contains("SPD"))
                     {
                         speedPercent += 0.05f;
                         statUpdate();
@@ -580,10 +579,8 @@ public class CharacterInfo_1 : MonoBehaviour
         weaponSlotsManager.Remove(remove1);
         weaponSlotsManager.Remove(remove2);
 
-        levelUpSelectBuff.RemoveEquipWeapon(remove1);
         weaponsManager.RemoveWeapon(remove1.weaponData);
 
-        levelUpSelectBuff.RemoveEquipWeapon(remove2);
         weaponsManager.RemoveWeapon(remove2.weaponData);
 
         weaponsManager.AddWeapon(collab.weaponData);

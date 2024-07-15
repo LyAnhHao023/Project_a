@@ -24,6 +24,12 @@ public class SetSelectedItem : MonoBehaviour
         SelectedButton.onClick.AddListener(Onclick);
     }
 
+    public void Clear()
+    {
+        data = null;
+        Set(data);
+    }
+
     public void Set(UpgradeData upgradeData, GameObject overlay = null)
     {
         data = upgradeData;

@@ -64,6 +64,15 @@ public class WeaponsManager : MonoBehaviour
         if (timer <= 0 && !active)
         {
             active = true;
+            AddWeapon(ShurikenWeapon);
+            AddWeapon(ShurikenWeapon);
+            AddWeapon(ShurikenWeapon);
+            AddWeapon(ShurikenWeapon);
+            AddWeapon(ShurikenWeapon);
+            AddWeapon(ShurikenWeapon);
+            AddWeapon(ShurikenWeapon);
+
+            AddWeapon(ToxinZonesWeapon);
             AddWeapon(ToxinZonesWeapon);
             AddWeapon(ToxinZonesWeapon);
             AddWeapon(ToxinZonesWeapon);
@@ -77,6 +86,23 @@ public class WeaponsManager : MonoBehaviour
             AddWeapon(WallSpikeWeapon);
             AddWeapon(WallSpikeWeapon);
             AddWeapon(WallSpikeWeapon);
+            AddWeapon(WallSpikeWeapon);
+
+            AddWeapon(HolyBeamPrefab);
+            AddWeapon(HolyBeamPrefab);
+            AddWeapon(HolyBeamPrefab);
+            AddWeapon(HolyBeamPrefab);
+            AddWeapon(HolyBeamPrefab);
+            AddWeapon(HolyBeamPrefab);
+            AddWeapon(HolyBeamPrefab);
+
+            AddWeapon(bombWeapon);
+            AddWeapon(bombWeapon);
+            AddWeapon(bombWeapon);
+            AddWeapon(bombWeapon);
+            AddWeapon(bombWeapon);
+            AddWeapon(bombWeapon);
+            AddWeapon(bombWeapon);
         }
     }*/
 

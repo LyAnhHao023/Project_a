@@ -290,7 +290,7 @@ public class CharacterInfo_1 : MonoBehaviour
         menuManager.LevelUpScene(upgradeDatas);
         currentExp -= maxExpValue;
         level += 1;
-        maxExpValue += Mathf.FloorToInt((float)(maxExpValue * 0.15 - level * 0.2));
+        maxExpValue += 5;
         expBar.SetMaxExp(level, maxExpValue);
     }
 

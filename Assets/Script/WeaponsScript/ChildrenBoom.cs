@@ -22,6 +22,9 @@ public class ChildrenBoom : MonoBehaviour
 
     AudioManager audioManager;
 
+    [HideInInspector]
+    public int dmg;
+
     private void Awake()
     {
         exploderPrefab.SetActive(false);

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BombExploder : MonoBehaviour
 {
-    WeaponBase wp;
+    int dmg;
     CharacterStats characterStats;
     CharacterInfo_1 player;
    [SerializeField]
@@ -14,7 +14,7 @@ public class BombExploder : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<CharacterInfo_1>();
         characterStats = player.GetComponentInParent<CharacterInfo_1>().characterStats;
-        wp = player.GetComponentInChildren<BombScript>().GetComponent<WeaponBase>();
+        dmg = bombPrefab.GetComponent<ChildrenBoom>().dmg;
         bombPrefab.GetComponent<Rigidbody2D>().velocity= Vector3.zero;
     }
 
@@ -30,11 +30,11 @@ public class BombExploder : MonoBehaviour
     private void ApplyDmg(EnemyBase enemy)
     {
         bool isCrit = UnityEngine.Random.value * 100 < characterStats.crit;
-        int dmg = (int)(isCrit ?
-            (wp.weaponStats.dmg + characterStats.strenght) * characterStats.critDmg : (wp.weaponStats.dmg + characterStats.strenght));
+        int damage = (int)(isCrit ?
+            (dmg + characterStats.strenght) * characterStats.critDmg : (dmg + characterStats.strenght));
 
-        wp.PostDmg(dmg, enemy.transform.position, isCrit);
-        bool isDead = enemy.EnemyTakeDmg(dmg);
+        MessengerSystem.instance.DmgPopUp(damage.ToString(), enemy.transform.position, isCrit);
+        bool isDead = enemy.EnemyTakeDmg(damage);
         if (isDead)
         {
             player.GetComponentInParent<CharacterInfo_1>().KilledMonster();

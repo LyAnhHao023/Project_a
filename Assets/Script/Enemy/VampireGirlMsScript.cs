@@ -1,4 +1,5 @@
-﻿using Pathfinding;
+﻿using Cinemachine;
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,9 +32,17 @@ public class VampireGirlMsScript : EnemyBase
 
     [SerializeField] bool isBoss=false;
 
+    CinemachineVirtualCamera camera;
+
+    AudioManager audioManager;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
+
+        camera = GameObject.FindGameObjectWithTag("VirturalCamera").GetComponent<CinemachineVirtualCamera>();
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
     }
 
@@ -81,7 +90,7 @@ public class VampireGirlMsScript : EnemyBase
 
     private void DestroyOb()
     {
-        Destroy(gameObject, 0.4f);
+        Destroy(gameObject, 0.6f);
         Drop();
     }
 
@@ -141,11 +150,27 @@ public class VampireGirlMsScript : EnemyBase
             }
             GetComponent<Collider2D>().enabled = false;
             animator.SetBool("Dead", true);
+            audioManager.PlaySFX(audioManager.BossDead);
+            //Shake Camera
+            if(enemyData.isBoss)
+            {
+                audioManager.PlaySFX(audioManager.BossDead);
+                CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+                _cbmcp.m_AmplitudeGain = 2f;
+                StartCoroutine(StopShake());
+            }
             DestroyOb();
             return true;
         }
         return false;
     }
 
-    
+    private IEnumerator StopShake()
+    {
+        yield return new WaitForSeconds(0.5f);
+        CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        _cbmcp.m_AmplitudeGain = 0f;
+    }
+
+
 }

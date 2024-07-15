@@ -221,6 +221,13 @@ public class BossMinotaur : EnemyBase
             }
 
             Destroy(gameObject, 1f);
+
+            audioManager.PlaySFX(audioManager.BossDead);
+
+            CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            _cbmcp.m_AmplitudeGain = 2f;
+            StartCoroutine(StopShake());
+
             Drop();
             return true;
         }

@@ -1,4 +1,5 @@
-﻿using Pathfinding;
+﻿using Cinemachine;
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,9 +30,15 @@ public class WolfEnemy : EnemyBase
 
     [SerializeField] bool isBoss=false;
 
+    AudioManager audioManager;
+
+    CinemachineVirtualCamera camera;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        camera = GameObject.FindGameObjectWithTag("VirturalCamera").GetComponent<CinemachineVirtualCamera>();
 
     }
 
@@ -70,7 +77,7 @@ public class WolfEnemy : EnemyBase
 
     private void DestroyOb()
     {
-        Destroy(gameObject, 0.42f);
+        Destroy(gameObject, 0.6f);
         Drop();
     }
 
@@ -123,8 +130,24 @@ public class WolfEnemy : EnemyBase
             GetComponent<Collider2D>().enabled = false;
             animator.SetBool("Dead", true);
             DestroyOb();
+
+            if (enemyData.isBoss)
+            {
+                audioManager.PlaySFX(audioManager.BossDead);
+                CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+                _cbmcp.m_AmplitudeGain = 2f;
+                StartCoroutine(StopShake());
+            }
+
             return true;
         }
         return false;
+    }
+
+    private IEnumerator StopShake()
+    {
+        yield return new WaitForSeconds(0.5f);
+        CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        _cbmcp.m_AmplitudeGain = 0f;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Pathfinding;
+﻿using Cinemachine;
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,7 +40,8 @@ public class LazerMonster : EnemyBase
 
     AudioSource audioSource;
 
-
+    CinemachineVirtualCamera camera;
+    AudioManager audioManager;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -48,7 +50,10 @@ public class LazerMonster : EnemyBase
 
         AudioManager audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         audioManager.SetBackGround(audioManager.BossFight);
-        audioSource=GetComponent<AudioSource>(); 
+        audioSource=GetComponent<AudioSource>();
+
+        camera = GameObject.FindGameObjectWithTag("VirturalCamera").GetComponent<CinemachineVirtualCamera>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public override void SetTarget(GameObject GameObject)
@@ -147,7 +152,13 @@ public class LazerMonster : EnemyBase
             animator.SetBool("Dead", true);
             DestroyOb();
 
-            if(StaticData.MapSelect != null)
+            audioManager.PlaySFX(audioManager.BossDead);
+            //Shake Camera
+            CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            _cbmcp.m_AmplitudeGain = 2f;
+            StartCoroutine(StopShake());
+
+            if (StaticData.MapSelect != null)
             {
                 if (StaticData.LevelType == 0)
                 {
@@ -169,5 +180,12 @@ public class LazerMonster : EnemyBase
             return true;
         }
         return false;
+    }
+
+    private IEnumerator StopShake()
+    {
+        yield return new WaitForSeconds(0.5f);
+        CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        _cbmcp.m_AmplitudeGain = 0f;
     }
 }

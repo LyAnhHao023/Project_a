@@ -124,7 +124,7 @@ public class OpenChest : MonoBehaviour
 
         buffHolder.transform.LeanScale(Vector2.zero, 0f).setIgnoreTimeScale(true);
 
-        if (currentIndex < totalBuff)
+        if (currentIndex < totalBuff - 1)
         {
             Set();
         }

@@ -13,13 +13,21 @@ public class SetItem : MonoBehaviour
     [SerializeField] SetInventoryItemInfo setInventoryItemInfo;
     [SerializeField] ChanceSet chanceSet;
 
-    UpgradeData upgradeData;
+    UpgradeData upgradeData = null;
 
     bool type;
 
     private void Start()
     {
         IconButton.onClick.AddListener(Onclick);
+    }
+
+    private void Update()
+    {
+        if (upgradeData == null)
+        {
+            IconHodler.SetActive(false);
+        }
     }
 
     public void SetWeaponSlot(UpgradeData weaponData)

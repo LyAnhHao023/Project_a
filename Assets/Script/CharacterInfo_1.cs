@@ -290,7 +290,7 @@ public class CharacterInfo_1 : MonoBehaviour
         menuManager.LevelUpScene(upgradeDatas);
         currentExp -= maxExpValue;
         level += 1;
-        maxExpValue += Mathf.FloorToInt((float)(maxExpValue * 0.5));
+        maxExpValue += Mathf.FloorToInt((float)(maxExpValue * 0.15 - level * 0.2));
         expBar.SetMaxExp(level, maxExpValue);
     }
 
@@ -341,6 +341,7 @@ public class CharacterInfo_1 : MonoBehaviour
                 break;
             case 3: //ItemUnlock
                 {
+                    upgradeDatas[id].level = 0;
                     itemSlotsManager.Add(upgradeDatas[id]);
                     itemsManager.AddItem(upgradeDatas[id].itemsData);
                     inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
@@ -386,6 +387,7 @@ public class CharacterInfo_1 : MonoBehaviour
                 break;
         }
 
+        upgradeDatas.Clear();
         menuManager.LevelUpDone();
     }
 
@@ -436,6 +438,7 @@ public class CharacterInfo_1 : MonoBehaviour
                 break;
             case 3: //ItemUnlock
                 {
+                    upgradeDatas[id].level = 0;
                     itemSlotsManager.Add(upgradeDatasFromChest[id]);
                     itemsManager.AddItem(upgradeDatasFromChest[id].itemsData);
                     inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);

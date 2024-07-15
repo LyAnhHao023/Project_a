@@ -53,30 +53,30 @@ public class IncreaseHitSpeed : ItemBase
         {
             case 1:
                 {
-                    persentSpeedIncrease = 10;
-                    totalPersentSpeedIncrease = persentSpeedIncrease; // totalPersentSpeedIncrease = 10
+                    persentSpeedIncrease = 5;
+                    totalPersentSpeedIncrease = persentSpeedIncrease; // totalPersentSpeedIncrease = 5
                 }
                 break;
             case 2:
                 {
-                    totalPersentSpeedIncrease += persentSpeedIncrease; // totalPersentSpeedIncrease = 20
+                    totalPersentSpeedIncrease += persentSpeedIncrease; // totalPersentSpeedIncrease = 10
                 }
                 break;
             case 3:
                 {
-                    totalPersentSpeedIncrease += persentSpeedIncrease; // totalPersentSpeedIncrease = 30
+                    totalPersentSpeedIncrease += persentSpeedIncrease; // totalPersentSpeedIncrease = 15
                 }
                 break;
             case 4:
                 {
-                    persentSpeedIncrease = 20;
-                    totalPersentSpeedIncrease += persentSpeedIncrease; // totalPersentSpeedIncrease = 50
+                    persentSpeedIncrease = 10;
+                    totalPersentSpeedIncrease += persentSpeedIncrease; // totalPersentSpeedIncrease = 25
                 }
                 break;
             case 5:
                 {
-                    persentSpeedIncrease = 25;
-                    totalPersentSpeedIncrease += persentSpeedIncrease; // totalPersentSpeedIncrease = 75
+                    persentSpeedIncrease = 15;
+                    totalPersentSpeedIncrease += persentSpeedIncrease; // totalPersentSpeedIncrease = 40
                 }
                 break;
         }

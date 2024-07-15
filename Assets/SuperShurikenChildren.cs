@@ -14,7 +14,6 @@ public class SuperShurikenChildren : MonoBehaviour
     public float radius = 2f; // Bán kính của đường tròn
     public float rotationSpeed = 45f;
 
-    int angleRos=0;
 
     [SerializeField]
     bool styleMove=false;
@@ -57,12 +56,6 @@ public class SuperShurikenChildren : MonoBehaviour
 
     void Update()
     {
-        angleRos += 5;
-        if(angleRos > 360)
-        {
-            angleRos = 0;
-        }
-        transform.rotation=Quaternion.Euler(0,0, angleRos);
         MoveAlongCircle();
 
         timer -= Time.deltaTime;

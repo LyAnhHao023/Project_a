@@ -289,7 +289,7 @@ public class CharacterInfo_1 : MonoBehaviour
         menuManager.LevelUpScene(upgradeDatas);
         currentExp -= maxExpValue;
         level += 1;
-        maxExpValue += 0;
+        maxExpValue += 5;
         expBar.SetMaxExp(level, maxExpValue);
     }
 
@@ -553,10 +553,13 @@ public class CharacterInfo_1 : MonoBehaviour
         inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
     }
 
+    public UpgradeData remove1 = null;
+    public UpgradeData remove2 = null;
+
     public void AddCollab(UpgradeData collab)
     {
-        UpgradeData remove1 = null;
-        UpgradeData remove2 = null;
+        remove1 = null;
+        remove2 = null;
 
         /*for(int i = 0; i < weaponSlotsManager.Count; i++)
         {
@@ -577,10 +580,9 @@ public class CharacterInfo_1 : MonoBehaviour
         remove2 = weaponSlotsManager.Find(item => item.weaponData == collab.colabInfo.weapon2);
 
         weaponSlotsManager.Remove(remove1);
-        weaponSlotsManager.Remove(remove2);
+        weaponSlotsManager.Remove(remove2); 
 
         weaponsManager.RemoveWeapon(remove1.weaponData);
-
         weaponsManager.RemoveWeapon(remove2.weaponData);
 
         weaponsManager.AddWeapon(collab.weaponData);

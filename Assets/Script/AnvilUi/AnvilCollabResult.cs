@@ -26,11 +26,11 @@ public class AnvilCollabResult : MonoBehaviour
     {
         data = upgradeData;
 
-        Character.AddCollab(data);
-
         BuffIcon.sprite = data.icon;
 
         BuffIconHolder.SetActive(false);
+
+        Character.AddCollab(data);
 
         StartCoroutine(WaitForAnimationEnd());
     }
@@ -58,5 +58,6 @@ public class AnvilCollabResult : MonoBehaviour
 
         ResultHolder.SetActive(true);
         colabHolder.Set(data);
+        data = null;
     }
 }

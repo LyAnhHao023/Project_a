@@ -11,7 +11,7 @@ public class SetSelectedItem : MonoBehaviour
     [SerializeField] GameObject AcceptButtonOverlay;
     [SerializeField] SetCollabAcceptButton setCollab;
 
-    private UpgradeData data = null;
+    public UpgradeData data = null;
     private GameObject itemOverlay;
 
     public UpgradeData GetData()
@@ -27,6 +27,7 @@ public class SetSelectedItem : MonoBehaviour
     public void Clear()
     {
         data = null;
+        setCollab.Clear();
         Set(data);
     }
 

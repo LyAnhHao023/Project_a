@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Services.Analytics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeightedItem
@@ -184,7 +185,7 @@ public class LevelUpSelectBuff : MonoBehaviour
 
                         int weaponNum = weaponAcquiredList.Count<UpgradeData>(item => item.level == 7); //so luong vu khi chua dat level toi da (max = 5)
 
-                        int itemNum = itemAcquiredList.Count<UpgradeData>(item => item.itemsData.level == item.UpgradeInfos.Count - 1); //so luong trang bi chua dat level toi da (max = 5)
+                        int itemNum = itemAcquiredList.Count<UpgradeData>(item => item.maxed == true); //so luong trang bi chua dat level toi da (max = 5)
 
                         if ((weaponNum == weaponAcquiredList.Count && itemNum == itemAcquiredList.Count) || (weaponNum == weaponAcquiredList.Count && itemNum == 0))
                         {
@@ -229,17 +230,21 @@ public class LevelUpSelectBuff : MonoBehaviour
                                 break;
                             case 1: //Item
                                 {
-                                    List<UpgradeData> upgradeDatas = itemAcquiredList.FindAll(item => item.maxed == false);
+                                    List<UpgradeData> upgradeDatas = null;
+                                    upgradeDatas = itemAcquiredList.FindAll(item => item.maxed == false);
 
-                                    UpgradeData randomUpdate = upgradeDatas[Random.Range(0, upgradeDatas.Count)];
-
-                                    UpgradeData upgradeData = null;
-
-                                    upgradeData = itemUpgradeList.Find(item => item.itemsData.name == randomUpdate.itemsData.name);
-
-                                    if (upgradeData != null)
+                                    if(upgradeDatas != null)
                                     {
-                                        randomUp = upgradeData;
+                                        UpgradeData randomUpdate = upgradeDatas[Random.Range(0, upgradeDatas.Count)];
+
+                                        UpgradeData upgradeData = null;
+
+                                        upgradeData = itemUpgradeList.Find(item => item.itemsData.name == randomUpdate.itemsData.name);
+
+                                        if (upgradeData != null)
+                                        {
+                                            randomUp = upgradeData;
+                                        }
                                     }
                                 }
                                 break;

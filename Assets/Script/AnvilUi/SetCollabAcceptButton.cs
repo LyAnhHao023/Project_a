@@ -12,9 +12,9 @@ public class SetCollabAcceptButton : MonoBehaviour
 
     [SerializeField] List<UpgradeData> colabList;
 
-    private UpgradeData data1;
-    private UpgradeData data2;
-    private UpgradeData colabResult;
+    public UpgradeData data1;
+    public UpgradeData data2;
+    public UpgradeData colabResult;
 
     private void Start()
     {
@@ -40,11 +40,19 @@ public class SetCollabAcceptButton : MonoBehaviour
         CheckColab();
     }
 
+    public void Clear()
+    {
+        data1 = null;
+        data2 = null;
+        colabResult = null;
+        Overlay.SetActive(true);
+    }
+
     public void RemoveData(UpgradeData data)
     {
         if(data1 != null)
         {
-            if (data.weaponData == data1.weaponData/* || data.itemsData.name == data1.itemsData.name*/)
+            if (data.weaponData == data1.weaponData /*|| data.itemsData == data1.itemsData*/)
             {
                 data1 = null;
             }
@@ -52,14 +60,14 @@ public class SetCollabAcceptButton : MonoBehaviour
         
         if(data2 != null)
         {
-            if (data.weaponData == data2.weaponData/* || data.itemsData.name == data2.itemsData.name*/)
+            if (data.weaponData == data2.weaponData /*|| data.itemsData == data2.itemsData*/)
             {
                 data2 = null;
             }
         }
 
         colabResult = null;
-        Overlay.SetActive(false);
+        Overlay.SetActive(true);
     }
 
     public void CheckColab()

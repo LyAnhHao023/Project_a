@@ -48,6 +48,7 @@ public class BombScript : WeaponBase
         newBomb.transform.parent = ObjectDrops;
         newBomb.transform.position = transform.position;
         newBomb.transform.localScale = transform.localScale;
+        newBomb.GetComponent<ChildrenBoom>().dmg=weaponStats.dmg;
     }
 
     public override void SetCharacterStats()

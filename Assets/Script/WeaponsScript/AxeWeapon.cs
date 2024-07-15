@@ -114,8 +114,8 @@ public class AxeWeapon : WeaponBase
         {
             case 2:
                 {
-                    //Increase area by 40%.
-                    BuffWeaponSizeByPersent(0.4f);
+                    //Increase area by 20%.
+                    BuffWeaponSizeByPersent(0.2f);
                    
                 }
                 break;
@@ -127,8 +127,8 @@ public class AxeWeapon : WeaponBase
                 break;
             case 4:
                 {
-                    //Increase area by 40%.
-                    BuffWeaponSizeByPersent(0.4f);
+                    //Increase area by 20%.
+                    BuffWeaponSizeByPersent(0.2f);
                     //Increase frequency of hits by 30%.
                     weaponStats.timeAttack -= weaponData.stats.timeAttack * 30 / 100;
                 }

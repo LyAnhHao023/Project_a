@@ -39,11 +39,10 @@ public class CoinScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        audioManager.PlaySFX(audioManager.PickUpCoin);
         CharacterInfo_1 c = collision.GetComponent<CharacterInfo_1>();
         if (c != null)
         {
+            audioManager.PlaySFX(audioManager.PickUpCoin);
             Destroy(gameObject);
             c.GainCoin(coins);
         }

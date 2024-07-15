@@ -38,10 +38,8 @@ public abstract class EnemyBase : MonoBehaviour
 
     public void StatsBuffByTime(float persentBuff)
     {
-        this.enemyStats.hp =(int)(this.enemyStats.hp* persentBuff);
-        this.enemyStats.dmg = (int)(this.enemyStats.dmg * persentBuff);
-        this.enemyStats.speed = (int)(this.enemyStats.speed * persentBuff);
-        this.enemyStats.timeAttack = (this.enemyStats.timeAttack * persentBuff);
+        this.enemyStats.hp =Mathf.CeilToInt((float)this.enemyStats.hp* persentBuff);
+        this.enemyStats.dmg = Mathf.CeilToInt((float)this.enemyStats.dmg * persentBuff);
     }
 
     public void IncreaseDecreaseSpeed(int speed)

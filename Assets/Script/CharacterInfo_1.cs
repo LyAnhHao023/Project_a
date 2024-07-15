@@ -95,6 +95,8 @@ public class CharacterInfo_1 : MonoBehaviour
     int shieldMaxValue;
     public int shieldCurrentValue;
 
+    bool isDie;
+
     //AudioManager
     AudioManager audioManager;
 
@@ -127,6 +129,8 @@ public class CharacterInfo_1 : MonoBehaviour
 
     private void Start()
     {
+        isDie = false;
+
         if (StaticData.SelectedCharacter != null)
             characterData = StaticData.SelectedCharacter;
 
@@ -622,6 +626,7 @@ public class CharacterInfo_1 : MonoBehaviour
 
                 if (currentHealth <= 0 || (currentSlowhealth <= 0 && slowHealthAcquired))
                 {
+                    isDie = true;
                     menuManager.GameOverScreen();
                     overCoin.SetCoinGain(coins);
                 }
@@ -732,6 +737,8 @@ public class CharacterInfo_1 : MonoBehaviour
                 {
                     item.missionHolder.GetComponent<SetMission>().SetKillMissionProgress(item.missionInfo, numberMonsterKilled);
                     if(numberMonsterKilled >= item.missionInfo.num)
+                        item.missionHolder.GetComponent<SetMission>().SetKillMissionComplete(item.missionInfo, false, numberMonsterKilled);
+                    if (numberMonsterKilled < item.missionInfo.num && isDie)
                         item.missionHolder.GetComponent<SetMission>().SetKillMissionComplete(item.missionInfo, true, numberMonsterKilled);
                 }
             }

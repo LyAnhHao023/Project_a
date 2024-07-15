@@ -32,7 +32,7 @@ public class SetMission : MonoBehaviour
 
     public void SetHPMissionComplete(MissionInfo missionInfo, bool missionFailed = false)
     {
-        if(!missionFailed)
+        if(missionFailed)
         {
             _missionInfo.color = Color.red;
             MissionProgress.color = Color.red;
@@ -57,7 +57,7 @@ public class SetMission : MonoBehaviour
 
     public void SetKillMissionComplete(MissionInfo missionInfo, bool missionFailed = false, int killProgress = 0)
     {
-        if (!missionFailed)
+        if (missionFailed)
         {
             _missionInfo.color = Color.red;
             MissionProgress.color = Color.red;

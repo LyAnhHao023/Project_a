@@ -50,8 +50,16 @@ public class WildBoarEnemy : EnemyBase
     public override void SetTarget(GameObject GameObject)
     {
         targetGameObject = GameObject;
-        gameObject.GetComponent<AIPath>().maxSpeed = enemyStats.speed;
-        GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
+
+        if (gameObject.GetComponent<AIPath>() != null)
+        {
+            GetComponent<AIPath>().maxSpeed = enemyStats.speed;
+            GetComponent<AIDestinationSetter>().SetTarget(targetGameObject);
+        }
+        else
+        {
+            gameObject.GetComponent<EnemyMove>().SetData(targetGameObject.transform, enemyStats);
+        }
     }
 
     public override void SetParentDropItem(GameObject gameObject)
@@ -86,7 +94,14 @@ public class WildBoarEnemy : EnemyBase
     {
         audioManager.PlaySFX(audioManager.WildBoar);
         isUseSkill = true;
-        GetComponent<AIPath>().canMove = false;
+        if(GetComponent<AIPath>()!=null)
+        {
+            GetComponent<AIPath>().canMove = false;
+        }
+        else
+        {
+            GetComponent<EnemyMove>().canMove = false;
+        }
         GetComponent<Collider2D>().isTrigger = true;
         animator.SetBool("Skill", true);
         StartCoroutine(DelayedAction(0.9f, Rush));
@@ -104,7 +119,14 @@ public class WildBoarEnemy : EnemyBase
     {
         isUseSkill = false;
         isKnockback = false;
-        GetComponent<AIPath>().canMove = true;
+        if (GetComponent<AIPath>() != null)
+        {
+            GetComponent<AIPath>().canMove = true;
+        }
+        else
+        {
+            GetComponent<EnemyMove>().canMove = true;
+        }
         GetComponent<Collider2D>().isTrigger = false;
         animator.SetBool("Skill", false);
         rb.velocity = Vector2.zero;
@@ -193,7 +215,14 @@ public class WildBoarEnemy : EnemyBase
         animator.SetTrigger("Hit");
         if (enemyStats.hp <= 0)
         {
-            gameObject.GetComponent<AIPath>().canMove = false;
+            if (GetComponent<AIPath>() != null)
+            {
+                GetComponent<AIPath>().canMove = false;
+            }
+            else
+            {
+                GetComponent<EnemyMove>().canMove = false;
+            }
             GetComponent<Collider2D>().enabled = false;
             animator.SetBool("Dead", true);
 

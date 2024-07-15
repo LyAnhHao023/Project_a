@@ -21,6 +21,11 @@ public class SetCollabAcceptButton : MonoBehaviour
         AcceptButton.onClick.AddListener(Onclick);
     }
 
+    private void Update()
+    {
+        CheckColab();
+    }
+
     public void SetData(UpgradeData data)
     {
         if(data1 == null)
@@ -61,14 +66,17 @@ public class SetCollabAcceptButton : MonoBehaviour
     {
         if(data1 != null && data2 != null)
         {
-            foreach (var item in  colabList)
+            UpgradeData data = null;
+
+            data = colabList.Find(item => item.colabInfo.weapon1 == data1.weaponData || item.colabInfo.weapon2 == data1.weaponData);
+
+            if(data != null)
             {
-                if((item.colabInfo.weapon1.name == data1.weaponData.name || item.colabInfo.weapon2.name == data1.weaponData.name) && (item.colabInfo.weapon1.name == data2.weaponData.name || item.colabInfo.weapon2.name == data2.weaponData.name))
+                if(data.colabInfo.weapon1 == data2.weaponData || data.colabInfo.weapon2 == data2.weaponData)
                 {
-                    colabResult = item;
+                    colabResult = data;
 
                     Overlay.SetActive(false);
-                    break;
                 }
             }
         }

@@ -48,6 +48,9 @@ public class LevelUpSelectBuff : MonoBehaviour
 
     float totalWeight;
 
+    int totalWeapon = 5;
+    int totalItem = 5;
+
     public int GetRandomType(List<WeightedItem> items)
     {
         totalWeight = 0;

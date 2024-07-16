@@ -103,11 +103,11 @@ public class SetGoodsInfo : MonoBehaviour
     {
         ButtonCheck(goodsData);
 
-        if((int)goodsData.type == 0)
-        {
+        /*if((int)goodsData.type == 0)
+        {*/
             PlayerPrefs.SetInt(goodsData.goodsName + "lv", goodsData.level);
             PlayerPrefs.Save();
-        }
+        //}
 
         if (goodsData.level < goodsData.maxLevel)
             goodsData.price = goodsData.levelInfos[goodsData.level].price;

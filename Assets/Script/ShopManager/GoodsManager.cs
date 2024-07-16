@@ -17,7 +17,7 @@ public class GoodsManager : MonoBehaviour
         {
             goodsHolder = Instantiate(goodsPerfab, goodsTranform.transform);
 
-            if ((int)goodsDatas[i].type == 0)
+            //if ((int)goodsDatas[i].type == 0)
                 goodsDatas[i].level = PlayerPrefs.GetInt(goodsDatas[i].goodsName + "lv", 0);
 
             /*if ((int)goodsDatas[i].type == 0)

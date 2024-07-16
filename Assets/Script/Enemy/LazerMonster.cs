@@ -48,12 +48,11 @@ public class LazerMonster : EnemyBase
         mainMenu = GameObject.FindGameObjectWithTag("MenuManager");
         menuManager = mainMenu.GetComponent<MenuManager>();
 
-        AudioManager audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         audioManager.SetBackGround(audioManager.BossFight);
         audioSource=GetComponent<AudioSource>();
 
         camera = GameObject.FindGameObjectWithTag("VirturalCamera").GetComponent<CinemachineVirtualCamera>();
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public override void SetTarget(GameObject GameObject)

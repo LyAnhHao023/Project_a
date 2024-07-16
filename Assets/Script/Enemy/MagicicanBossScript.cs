@@ -1,4 +1,5 @@
-﻿using Pathfinding;
+﻿using Cinemachine;
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,9 @@ public class MagicicanBossScript : EnemyBase
     GameObject mainMenu;
     MenuManager menuManager;
 
+    CinemachineVirtualCamera camera;
+    AudioManager audioManager;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -70,6 +74,9 @@ public class MagicicanBossScript : EnemyBase
         
         mainMenu = GameObject.FindGameObjectWithTag("MenuManager");
         menuManager = mainMenu.GetComponent<MenuManager>();
+
+        camera = GameObject.FindGameObjectWithTag("VirturalCamera").GetComponent<CinemachineVirtualCamera>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public override void SetTarget(GameObject GameObject)
@@ -222,12 +229,24 @@ public class MagicicanBossScript : EnemyBase
                     PlayerPrefs.Save();
                 }
             }
+            audioManager.PlaySFX(audioManager.BossDead);
+            //Shake Camera
+            CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            _cbmcp.m_AmplitudeGain = 2f;
+            StartCoroutine(StopShake());
 
             Destroy(gameObject, 1f);
             Drop();
             return true;
         }
         return false;
+    }
+
+    private IEnumerator StopShake()
+    {
+        yield return new WaitForSeconds(0.5f);
+        CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        _cbmcp.m_AmplitudeGain = 0f;
     }
 
     private void Drop()

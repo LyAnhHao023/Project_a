@@ -25,6 +25,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip AnvilDrop;
     public AudioClip UpgradeAnvil;
     public AudioClip CollabAnvilBonk;
+    public AudioClip BossDead;
 
     [Header("-----AudioClipWeapon-----")]
     public AudioClip Axe;

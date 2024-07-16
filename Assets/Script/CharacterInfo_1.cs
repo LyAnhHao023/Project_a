@@ -289,7 +289,7 @@ public class CharacterInfo_1 : MonoBehaviour
         menuManager.LevelUpScene(upgradeDatas);
         currentExp -= maxExpValue;
         level += 1;
-        maxExpValue += 5;
+        maxExpValue += 4;
         expBar.SetMaxExp(level, maxExpValue);
     }
 

@@ -1,4 +1,5 @@
-﻿using Pathfinding;
+﻿using Cinemachine;
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,9 +31,17 @@ public class ZombieBossScript : EnemyBase
     [SerializeField]
     int numberDropExp=5;
 
+    CinemachineVirtualCamera camera;
+
+    AudioManager audioManager;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
+
+        camera = GameObject.FindGameObjectWithTag("VirturalCamera").GetComponent<CinemachineVirtualCamera>();
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public override void SetTarget(GameObject GameObject)
@@ -135,9 +144,23 @@ public class ZombieBossScript : EnemyBase
                 GetComponent<EnemyMove>().canMove = false;
             }
             animator.SetBool("Dead", true);
+
+            audioManager.PlaySFX(audioManager.BossDead);
+            //Shake Camera
+            CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            _cbmcp.m_AmplitudeGain = 2f;
+            StartCoroutine(StopShake());
+
             DestroyZombie();
             return true;
         }
         return false;
+    }
+
+    private IEnumerator StopShake()
+    {
+        yield return new WaitForSeconds(0.5f);
+        CinemachineBasicMultiChannelPerlin _cbmcp = camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        _cbmcp.m_AmplitudeGain = 0f;
     }
 }

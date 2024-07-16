@@ -14,10 +14,14 @@ public class StageEventManager : MonoBehaviour
     [SerializeField] EnemyData BoxDropPrefab;
     [SerializeField] GameObject AnvilUpdatePrefab;
     [SerializeField] GameObject AnvilColabPrefab;
+    [SerializeField] EnemyData HaoLyPrefab;
 
     [SerializeField] float TimeBoxDrop = 15f;
     [SerializeField] float TimeAnvilUpdateDrop = 20f;
     [SerializeField] float TimeAnvilColabDrop = 60f;
+    [SerializeField] float timeSpawHaoLy = 180f;
+    [SerializeField] float chanceSpawHaoLy = 40f;
+    bool isSpawed=false;
 
     [SerializeField]
     Timer timerScript;
@@ -77,6 +81,15 @@ public class StageEventManager : MonoBehaviour
         {
             SpawEnemy();
             eventIndex++;
+        }
+
+        if (timerScript.elapsedTime >= timeSpawHaoLy&& !isSpawed)
+        {
+            isSpawed = true;
+            if(UnityEngine.Random.value*100<=chanceSpawHaoLy)
+            {
+                spawEnemyManager.CreateNewEnemy(HaoLyPrefab,false);
+            }
         }
 
     }

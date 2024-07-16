@@ -15,6 +15,9 @@ public class ShurikenScript : WeaponBase
 
     AudioManager audioManager;
 
+    float timeSFX = 0.5f;
+    float timerSFX;
+
     private void Start()
     {
         SetCharacterStats();
@@ -22,6 +25,13 @@ public class ShurikenScript : WeaponBase
 
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         weaponData.maxed = false;
+    }
+
+    public override void Update()
+    {
+        timerSFX-= Time.deltaTime;
+
+        base.Update();
     }
 
     public override void Attack()
@@ -62,7 +72,11 @@ public class ShurikenScript : WeaponBase
         EnemyBase enemy = collision.GetComponent<EnemyBase>();
         if (enemy != null)
         {
-            audioManager.PlaySFX(audioManager.Shuriken);
+            if (timerSFX <= 0)
+            {
+                timerSFX = timeSFX;
+                audioManager.PlaySFX(audioManager.Shuriken);
+            }
 
             bool isCrit = Random.value * 100 < characterStats.crit;
             float dmg = isCrit ?

@@ -214,17 +214,21 @@ public class LevelUpSelectBuff : MonoBehaviour
                         {
                             case 0: //Weapon
                                 {
-                                    List<UpgradeData> upgradeDatas = weaponAcquiredList.FindAll(item => item.level < 7);
+                                    List<UpgradeData> upgradeDatas = null;
+                                    upgradeDatas = weaponAcquiredList.FindAll(item => item.level < 7);
 
-                                    UpgradeData randomUpdate = upgradeDatas[Random.Range(0, upgradeDatas.Count)];
-
-                                    UpgradeData upgradeData = null;
-
-                                    upgradeData =  weaponUpgradeList.Find(item => item.weaponData.name == randomUpdate.weaponData.name && item.level < 7);
-
-                                    if (upgradeData != null)
+                                    if(upgradeDatas != null)
                                     {
-                                        randomUp = upgradeData;
+                                        UpgradeData randomUpdate = upgradeDatas[Random.Range(0, upgradeDatas.Count)];
+
+                                        UpgradeData upgradeData = null;
+
+                                        upgradeData = weaponUpgradeList.Find(item => item.weaponData.name == randomUpdate.weaponData.name && item.level < 7);
+
+                                        if (upgradeData != null)
+                                        {
+                                            randomUp = upgradeData;
+                                        }
                                     }
                                 }
                                 break;

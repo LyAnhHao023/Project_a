@@ -49,7 +49,7 @@ public class SetMission : MonoBehaviour
 
         if(StaticData.MapSelect != null)
         {
-            PlayerPrefs.SetInt(missionInfo.missionName + StaticData.MapSelect.Name, missionFailed ? 1 : 0);
+            PlayerPrefs.SetInt(missionInfo.missionName + StaticData.MapSelect.Name, missionFailed ? 0 : 1);
             PlayerPrefs.Save();
             CheckFullStar();
         }
@@ -74,7 +74,7 @@ public class SetMission : MonoBehaviour
 
         if(StaticData.MapSelect != null)
         {
-            PlayerPrefs.SetInt(missionInfo.missionName + StaticData.MapSelect.Name, missionFailed ? 1 : 0);
+            PlayerPrefs.SetInt(missionInfo.missionName + StaticData.MapSelect.Name, missionFailed ? 0 : 1);
             PlayerPrefs.Save();
             CheckFullStar();
         }

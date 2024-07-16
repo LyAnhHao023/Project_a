@@ -21,7 +21,12 @@ public class AchievementManager : MonoBehaviour
         {
             achievementHolder = Instantiate(achievementPefab, achievementTranform.transform);
 
-            achievementDatas[i].complete = PlayerPrefs.GetInt(achievementDatas[i].achieName, -1) == 1 ? true : false;
+            //achievementDatas[i].complete = PlayerPrefs.GetInt(achievementDatas[i].achieName, -1) == 1 ? true : false;
+
+            /*PlayerPrefs.SetInt(achievementDatas[i].key, 0);
+            PlayerPrefs.Save();
+
+            achievementDatas[i].complete = false;*/
 
             achievementHolder.GetComponent<SetAchievement>().Set(achievementDatas[i]);
 
@@ -29,7 +34,7 @@ public class AchievementManager : MonoBehaviour
             {
                 totalPoints += achievementDatas[i].points;
 
-                PlayerPrefs.SetInt("TotalPoints", totalPoints);
+                PlayerPrefs.SetInt("TotalPoints", 0);
                 PlayerPrefs.Save();
             }
         }

@@ -50,6 +50,8 @@ public class SetMapHolder : MonoBehaviour
 
         foreach(var item in data.missions)
         {
+            /*PlayerPrefs.SetInt(item.missionName + data.Name, 0);
+            PlayerPrefs.Save();*/
             int completed = PlayerPrefs.GetInt(item.missionName + data.Name, 0);
             item.completed = completed > 0;
             if(completed > 0)
@@ -58,6 +60,7 @@ public class SetMapHolder : MonoBehaviour
             if (numComplete >= 3)
             {
                 PlayerPrefs.SetInt("3Star" + data.key, 1);
+                PlayerPrefs.Save();
             }
         }
     }

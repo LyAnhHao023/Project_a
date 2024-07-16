@@ -630,7 +630,7 @@ public class CharacterInfo_1 : MonoBehaviour
                 {
                     isDie = true;
                     menuManager.GameOverScreen();
-                    overCoin.SetCoinGain(coins);
+                    overCoin.SetCoinGain(StaticData.totalCoin);
                 }
             }
             else

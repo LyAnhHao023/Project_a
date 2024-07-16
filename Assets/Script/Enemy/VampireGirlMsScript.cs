@@ -150,7 +150,6 @@ public class VampireGirlMsScript : EnemyBase
             }
             GetComponent<Collider2D>().enabled = false;
             animator.SetBool("Dead", true);
-            audioManager.PlaySFX(audioManager.BossDead);
             //Shake Camera
             if(enemyData.isBoss)
             {

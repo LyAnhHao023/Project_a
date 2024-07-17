@@ -18,14 +18,16 @@ public class GoodsManager : MonoBehaviour
             goodsHolder = Instantiate(goodsPerfab, goodsTranform.transform);
 
             //if ((int)goodsDatas[i].type == 0)
-                goodsDatas[i].level = PlayerPrefs.GetInt(goodsDatas[i].goodsName + "lv", 0);
 
-            /*if ((int)goodsDatas[i].type == 0)
-            {
-                PlayerPrefs.SetInt(goodsDatas[i].goodsName + "lv", 0);
-                PlayerPrefs.Save();
-            }*/
 
+            //if ((int)goodsDatas[i].type == 0)
+            //{
+                
+            //}
+
+            PlayerPrefs.SetInt(goodsDatas[i].goodsName + "lv", 0);
+            PlayerPrefs.Save();
+            goodsDatas[i].level = PlayerPrefs.GetInt(goodsDatas[i].goodsName + "lv", 0);
             goodsHolder.GetComponent<SetItemShop>().Set(goodsDatas[i]);
         }
     }

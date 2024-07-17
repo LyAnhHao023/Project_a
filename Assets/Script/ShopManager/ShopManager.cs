@@ -39,7 +39,7 @@ public class ShopManager : MonoBehaviour
 
     private void Awake()
     {
-        /*PlayerPrefs.SetInt("Coins", 50000);
+        /*PlayerPrefs.SetInt("Coins", 100000);
         PlayerPrefs.Save();*/
     }
 

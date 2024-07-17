@@ -26,6 +26,12 @@ public class GoodsManager : MonoBehaviour
                 PlayerPrefs.Save();
             }*/
 
+
+            if ((int)goodsDatas[i].type == 1 && goodsDatas[i].level == 1)
+            {
+                goodsDatas[i].characterData.acquired = true;
+            }
+
             goodsHolder.GetComponent<SetItemShop>().Set(goodsDatas[i]);
         }
     }

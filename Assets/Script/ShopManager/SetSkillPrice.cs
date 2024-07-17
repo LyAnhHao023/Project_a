@@ -83,6 +83,9 @@ public class SetSkillPrice : MonoBehaviour
         characterData.skillTree.type = type;
         characterData.skillTree.level += 1;
 
+        PriceCheck();
+        MaxLevelCheck();
+
         skillTreeSystemManager.SetSkillInfo();
     }
 }

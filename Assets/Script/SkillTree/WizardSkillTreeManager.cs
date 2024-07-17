@@ -51,6 +51,14 @@ public class WizardSkillTreeManager : MonoBehaviour
             SkillIcon.sprite = skillList[currentLevel].skillIcon;
             skillPrice.Set(this.characterData, skillList[currentLevel], 2);
         }
+        else
+        {
+            SkillContainer.SetActive(false);
+            SkillName.text = skillList[currentLevel - 1].skillName;
+            SkillDescription.text = skillList[currentLevel - 1].skillDescription;
+            SkillIcon.sprite = skillList[currentLevel - 1].skillIcon;
+            skillPrice.Set(this.characterData, skillList[currentLevel - 1], 1);
+        }
     }
 
     public void Onclick()

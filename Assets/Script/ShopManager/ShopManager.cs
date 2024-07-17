@@ -39,8 +39,8 @@ public class ShopManager : MonoBehaviour
 
     private void Awake()
     {
-        PlayerPrefs.SetInt("Coins", 100000);
-        PlayerPrefs.Save();
+        /*PlayerPrefs.SetInt("Coins", 100000);
+        PlayerPrefs.Save();*/
     }
 
     private void Update()

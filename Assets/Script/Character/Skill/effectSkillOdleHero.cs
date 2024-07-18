@@ -52,7 +52,7 @@ public class effectSkillOdleHero : MonoBehaviour
                 float dmg = isCrit ?
                     (dmgBase + characterStats.strenght) * characterStats.critDmg : (dmgBase + characterStats.strenght);
 
-                MessengerSystem.instance.DmgPopUp(dmg.ToString(), enemy.transform.position, isCrit);
+                MessengerSystem.instance.DmgPopUp(((int)dmg).ToString(), enemy.transform.position, isCrit);
 
                 bool isDead = enemy.EnemyTakeDmg((int)dmg);
                 if (isDead)

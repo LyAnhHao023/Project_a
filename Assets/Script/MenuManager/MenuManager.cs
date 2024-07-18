@@ -62,6 +62,8 @@ public class MenuManager : MonoBehaviour
     float timer = 10;
     bool missionShow = false;
 
+    CursorManager cursorManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,6 +89,8 @@ public class MenuManager : MonoBehaviour
 
         _slotManager = _UpgradeAnvilUI.GetComponent<UpgradeSlotManager>();
         _collabSlotManager = _CollabAnvilUI.GetComponent<CollabSlotManager>();
+
+        cursorManager=GameObject.FindGameObjectWithTag("cursorManager").GetComponent<CursorManager>();
     }
 
     // Update is called once per frame
@@ -133,6 +137,8 @@ public class MenuManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
 
+        cursorManager.SetCursorAttack();
+
         CloseAllMenus();
     }
 
@@ -141,6 +147,8 @@ public class MenuManager : MonoBehaviour
         _mainMenuCanvas.SetActive(true);
         _settingsMenuCanvas.SetActive(false);
         missionUI.LeanMoveLocal(missionStep, tweenTime).setEase(tweenType).setIgnoreTimeScale(true);
+
+        cursorManager.SetCurSorNormal();
 
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -201,10 +209,14 @@ public class MenuManager : MonoBehaviour
         audioManager.SetCompleteStage(true);
 
         audioManager.PlaySFX(stageComplete?audioManager.Win:audioManager.Lose);
+
+        cursorManager.SetCurSorNormal();
     }
 
     public void LevelUpScene(List<UpgradeData> upgradeDatas)
     {
+        cursorManager.SetCurSorNormal();
+
         isSelectBuff = true;
         isPaused = true;
 
@@ -250,6 +262,8 @@ public class MenuManager : MonoBehaviour
 
         Time.timeScale = 0f;
 
+        cursorManager.SetCurSorNormal();
+
         _OpenChestUI.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -275,6 +289,8 @@ public class MenuManager : MonoBehaviour
         isSelectBuff = true;
 
         Time.timeScale = 0f;
+
+        cursorManager.SetCurSorNormal();
 
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -302,6 +318,8 @@ public class MenuManager : MonoBehaviour
         isSelectBuff = true;
 
         Time.timeScale = 0f;
+
+        cursorManager.SetCurSorNormal();
 
         EventSystem.current.SetSelectedGameObject(null);
     }

@@ -30,6 +30,8 @@ public class GoodsManager : MonoBehaviour
             if ((int)goodsDatas[i].type == 1 && goodsDatas[i].level == 1)
             {
                 goodsDatas[i].characterData.acquired = true;
+                goodsDatas[i].characterData.skillTree.type = PlayerPrefs.GetInt("TreeType" + goodsDatas[i].characterData.name, 0);
+                goodsDatas[i].characterData.skillTree.level = PlayerPrefs.GetInt("TreeLevel" + goodsDatas[i].characterData.name, 0);
             }
 
             goodsHolder.GetComponent<SetItemShop>().Set(goodsDatas[i]);

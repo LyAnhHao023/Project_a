@@ -63,6 +63,8 @@ public class MagicicanBossScript : EnemyBase
     CinemachineVirtualCamera camera;
     AudioManager audioManager;
 
+    CharacterInfo_1 characterInfo;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -76,6 +78,7 @@ public class MagicicanBossScript : EnemyBase
         menuManager = mainMenu.GetComponent<MenuManager>();
 
         camera = GameObject.FindGameObjectWithTag("VirturalCamera").GetComponent<CinemachineVirtualCamera>();
+        characterInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterInfo_1>();
     }
 
     public override void SetTarget(GameObject GameObject)
@@ -214,6 +217,7 @@ public class MagicicanBossScript : EnemyBase
             {
                 if (StaticData.LevelType == 0)
                 {
+                    characterInfo.MissionCheck();
                     menuManager.GameOverScreen(true);
                     PlayerPrefs.SetInt("Stage" + StaticData.MapSelect.key, 1);
                     PlayerPrefs.Save();

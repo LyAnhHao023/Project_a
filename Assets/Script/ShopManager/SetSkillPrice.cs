@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -82,6 +83,11 @@ public class SetSkillPrice : MonoBehaviour
 
         characterData.skillTree.type = type;
         characterData.skillTree.level += 1;
+
+        PlayerPrefs.SetInt("TreeType" + characterData.name, characterData.skillTree.type);
+        PlayerPrefs.Save();
+        PlayerPrefs.SetInt("TreeLevel" + characterData.name, characterData.skillTree.level);
+        PlayerPrefs.Save();
 
         PriceCheck();
         MaxLevelCheck();

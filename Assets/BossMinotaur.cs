@@ -64,10 +64,13 @@ public class BossMinotaur : EnemyBase
     GameObject mainMenu;
     MenuManager menuManager;
 
+    CharacterInfo_1 characterInfo;
+
     private void Awake()
     {
         mainMenu = GameObject.FindGameObjectWithTag("MenuManager");
         menuManager = mainMenu.GetComponent<MenuManager>();
+        characterInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterInfo_1>();
     }
 
     private void Start()
@@ -205,6 +208,7 @@ public class BossMinotaur : EnemyBase
             {
                 if (StaticData.LevelType == 0)
                 {
+                    characterInfo.MissionCheck();
                     menuManager.GameOverScreen(true);
                     PlayerPrefs.SetInt("Stage" + StaticData.MapSelect.key, 1);
                     PlayerPrefs.Save();

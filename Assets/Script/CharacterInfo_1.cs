@@ -340,7 +340,7 @@ public class CharacterInfo_1 : MonoBehaviour
                 break;
             case 3: //ItemUnlock
                 {
-                    upgradeDatas[id].level = 0;
+                    upgradeDatas[id].level = 1;
                     itemSlotsManager.Add(upgradeDatas[id]);
                     itemsManager.AddItem(upgradeDatas[id].itemsData);
                     inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
@@ -437,7 +437,7 @@ public class CharacterInfo_1 : MonoBehaviour
                 break;
             case 3: //ItemUnlock
                 {
-                    upgradeDatasFromChest.level = 0;
+                    upgradeDatasFromChest.level = 1;
                     itemSlotsManager.Add(upgradeDatasFromChest);
                     itemsManager.AddItem(upgradeDatasFromChest.itemsData);
                     inventorySlotsManager.ItemSlotUpdate(itemSlotsManager);
@@ -734,6 +734,8 @@ public class CharacterInfo_1 : MonoBehaviour
                     healthCheck = maxHealth * ((float)item.missionInfo.num / 100);
                     if (currentHealth <= healthCheck)
                         item.missionHolder.GetComponent<SetMission>().SetHPMissionComplete(item.missionInfo, true);
+                    else
+                        item.missionHolder.GetComponent<SetMission>().SetHPMissionComplete(item.missionInfo, false);
                 }
                 if (item.missionInfo.missionType.ToString() == "Kill")
                 {

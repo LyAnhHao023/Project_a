@@ -35,6 +35,7 @@ public class MapManager : MonoBehaviour
 
             mapHolder = Instantiate(mapHolderPerfab, MapHolderTranform.transform);
             mapHolder.GetComponent<SetMapHolder>().Set(mapDatas[i]);
+
         }
 
         findAllChildren.GetData();

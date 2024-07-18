@@ -734,7 +734,8 @@ public class CharacterInfo_1 : MonoBehaviour
                     healthCheck = maxHealth * ((float)item.missionInfo.num / 100);
                     if (currentHealth <= healthCheck)
                         item.missionHolder.GetComponent<SetMission>().SetHPMissionComplete(item.missionInfo, true);
-                    else
+
+                    if (StaticData.bigBossKill > 0)
                         item.missionHolder.GetComponent<SetMission>().SetHPMissionComplete(item.missionInfo, false);
                 }
                 if (item.missionInfo.missionType.ToString() == "Kill")
